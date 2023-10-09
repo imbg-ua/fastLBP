@@ -1,0 +1,10 @@
+.vscode/
+env/
+*.npy
+*.tiff
+*.tiff
+*.jpg
+*.jpeg
+*.png
+*.zar
+**/__pycache__

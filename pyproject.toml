@@ -1,0 +1,27 @@
+[project]
+name = "fastlbp-imbg"
+version = "0.0.1"
+authors = [
+  { name="Mykhailo Koreshkov", email="koreshov.m@gmail.com" },
+]
+description = "Parallel multiradial LBP features"
+keywords = ["lbp", "texture", "features", "image processing", "parallel"]
+readme = "README.md"
+requires-python = ">=3.11"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "wheel",
+    "dask>=2023.9.3",
+    "scikit-image>=0.22.0",
+    "numpy>=1.26.0",
+    "Pillow>=10.0.1",
+    "pandas>=2.1.1",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/imbg-ua/fastLBP"
+"Bug Tracker" = "https://github.com/imbg-ua/fastLBP/issues"
