@@ -63,6 +63,7 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
     h,w,nchannels = img_data.shape
     nprows, npcols = h//patchsize, w//patchsize
     npoints_cumsum = np.cumsum(npoints_list)
+    nfeatures_per_channel = npoints_cumsum[-1]
     channel_list = range(nchannels)
 
     jobs = DataFrame(
@@ -71,11 +72,15 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
             columns=['channel','radius','img_name','label','npoints','patchsize','img_shm_name','img_pixel_dtype','img_shape_0','img_shape_1','img_shape_2', 'output_shm_name', 'output_offset']
         )
     jobs['img_name'] = img_name
+
+    channel_output_offset = 0
     for c in channel_list: 
         jobs.loc[c,'channel'] = c
         jobs.loc[c,'radius'] = radii_list
         jobs.loc[c,'npoints'] = npoints_list
-        jobs.loc[c,'output_offset'] = np.hstack([[0],npoints_cumsum[:-1]])
+        jobs.loc[c,'output_offset'] = channel_output_offset + np.hstack([[0],npoints_cumsum[:-1]])
+        channel_output_offset += nfeatures_per_channel
+    
     jobs['label'] = jobs.apply(lambda row: f"{img_name}_c{row.name[0]}_r{row.name[1]}_p{row['npoints']}", axis='columns')
     jobs['patchsize'] = patchsize
 
