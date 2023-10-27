@@ -22,7 +22,8 @@ def main():
 
     output_abs_path = fastlbp.run_skimage(
         img_data, radii_list, npoints_list, patchsize, 
-        ncpus=4, max_ram=100, outfile_name="bark_lbp.npy", img_name="bark.tiff"
+        ncpus=4, max_ram=100, outfile_name="bark_lbp.npy", img_name="bark.tiff",
+        save_intermediate_results=False
         )
 
     results = np.load(output_abs_path, mmap_mode='r')

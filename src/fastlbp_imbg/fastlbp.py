@@ -48,10 +48,10 @@ def __worker_skimage(args):
             (nprows, npcols, total_nfeatures), dtype=np.uint32, buffer=output_shm.buf)
         job_patch_histograms = all_patch_histograms[:,:,output_offset:(output_offset+job_nfeatures)]
         
-        if ((0 < job_patch_histograms) & (job_patch_histograms < np.iinfo(np.uint32).max)).any():
-            log.warning(f"run_skimage: worker {jobname}({pid}): job_patch_histograms is not zero! Possible memory corruption")
+        # if ((0 < job_patch_histograms) & (job_patch_histograms < np.iinfo(np.uint32).max)).any():
+        #     log.warning(f"run_skimage: worker {jobname}({pid}): job_patch_histograms is not zero! Possible memory corruption")
 
-        log.info(f"run_skimage: worker {jobname}({pid}): job_nfeatures={job_nfeatures}, job_patch_histograms_shape={job_patch_histograms_shape}, job_interval=[{output_offset},{output_offset+job_nfeatures-1}]")
+        # log.info(f"run_skimage: worker {jobname}({pid}): job_nfeatures={job_nfeatures}, job_patch_histograms_shape={job_patch_histograms_shape}, job_interval=[{output_offset},{output_offset+job_nfeatures-1}]")
 
         # Try to use cached data
         cached_result_mm = None
@@ -81,8 +81,8 @@ def __worker_skimage(args):
                 P=job['npoints'], R=job['radius']
             ).astype(np.uint32)
             
-            log.info(f"run_skimage: worker {jobname}({pid}): image: min={img_data[:,:,job['channel']].min()} max={img_data[:,:,job['channel']].max()} avg={img_data[:,:,job['channel']].mean()}")
-            log.info(f"run_skimage: worker {jobname}({pid}): lbp codes: min={lbp_results.min()} max={lbp_results.max()}")
+            # log.info(f"run_skimage: worker {jobname}({pid}): image: min={img_data[:,:,job['channel']].min()} max={img_data[:,:,job['channel']].max()} avg={img_data[:,:,job['channel']].mean()}")
+            # log.info(f"run_skimage: worker {jobname}({pid}): lbp codes: min={lbp_results.min()} max={lbp_results.max()}")
 
             img_data_shm.close()
 
@@ -103,7 +103,7 @@ def __worker_skimage(args):
 
         
 
-        log.info(f"run_skimage: worker {jobname}({pid}): feature vector for (4,3) = {job_patch_histograms[4,3,:]}")
+        # log.info(f"run_skimage: worker {jobname}({pid}): feature vector for (4,3) = {job_patch_histograms[4,3,:]}")
         
         output_shm.close()
 
@@ -162,9 +162,9 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
 
     img_name = __sanitize_img_name(img_name)
     outfile_name = __sanitize_outfile_name(outfile_name)
-    data_hash = hashlib.sha1(img_data.data).hexdigest()
+    # data_hash = hashlib.sha1(img_data.data).hexdigest()
 
-    pipeline_params = [data_hash, radii_list, npoints_list, patchsize, ncpus, max_ram, img_name]
+    pipeline_params = [str(img_data.shape), radii_list, npoints_list, patchsize, ncpus, max_ram, img_name]
     pipeline_hash = __create_pipeline_hash("skimage", pipeline_params)
     pipeline_name = f"{img_name}-skimage-{pipeline_hash}"
 
