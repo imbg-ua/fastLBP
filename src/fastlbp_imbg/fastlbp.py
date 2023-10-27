@@ -131,6 +131,19 @@ def __get_output_dir():
 def __get_tmp_dir(pipeline_name):
     return os.path.join("data/tmp/", pipeline_name)
 
+#####
+# PUBLIC UTILS
+
+# get radii
+# src: Ben's original pipeline
+def get_radii(n=15):
+    radius_list = [round(1.499*1.327**(float(x))) for x in range(0, n)]
+    return radius_list
+
+# get number of LBP sectors for a given radius
+# src: Ben's original pipeline
+def get_p_for_r(r):
+    return np.ceil(2*np.pi*r).astype('int')
 
 
 #####

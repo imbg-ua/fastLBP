@@ -1,5 +1,10 @@
 .vscode/
 env/
+env-test/
+data/
+build/
+build-install/
+dist/
 *.npy
 *.tiff
 *.tiff
@@ -8,3 +13,4 @@ env/
 *.png
 *.zar
 **/__pycache__
+**/*.egg-info/

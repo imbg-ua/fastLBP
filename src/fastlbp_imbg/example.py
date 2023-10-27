@@ -17,7 +17,7 @@ def main():
     print(img_data.shape)
 
     radii_list = [1,2,3,4]
-    npoints_list = [8,12,16,24] # NOTE: SHITTY VALUES TO MAKE THINGS FASTER
+    npoints_list = [8,12,16,24] 
     patchsize = 16
 
     output_abs_path = fastlbp.run_skimage(
