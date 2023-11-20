@@ -1,6 +1,23 @@
 # fastLBP
 Highly parallel LBP implementation
 
+## Installation
+
+Підготовка середовища пітона (краще робити **не** на head node)
+- Знайти десь Python 3.11 (напр. `conda create -n p11 python=3.11`)
+- Перевірити що середовище правильне 
+	- `python --version` та `pip --version`
+- Встановити пакет через 
+	- `pip install fastlbp-imbg`
+- Або вручну через 
+	- `git clone git@github.com:imbg-ua/fastLBP.git`
+	- `pip install fastLBP`
+
+Наша директорія на lustre
+`/lustre/scratch126/casm/team268im/`
+
+
+
 ## Implemented modules
 ### run_skimage
 Computes multiradial LBP of a single multichannel image in a parallel fashion.  

@@ -1,8 +1,5 @@
 import numpy as np
-import numpy.typing as npt
 import skimage as ski
-from PIL import Image
-from collections import namedtuple
 from pandas import DataFrame
 import pandas as pd
 

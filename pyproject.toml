@@ -1,6 +1,6 @@
 [project]
 name = "fastlbp-imbg"
-version = "0.0.dev15"
+version = "0.0.1"
 authors = [
   { name="Mykhailo Koreshkov", email="koreshov.m@gmail.com" },
 ]
@@ -24,7 +24,3 @@ dependencies = [
 [project.urls]
 "Homepage" = "https://github.com/imbg-ua/fastLBP"
 "Bug Tracker" = "https://github.com/imbg-ua/fastLBP/issues"
-
-[build-system]
-requires = ["setuptools", "wheel", "numpy"]
-build-backend = "setuptools.build_meta"
