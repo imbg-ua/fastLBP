@@ -10,9 +10,13 @@ log.setLevel('DEBUG')
 
 import time
 import os
+import sys
 from multiprocessing import Pool, shared_memory
 
 import hashlib
+
+from PIL import Image
+Image.MAX_IMAGE_PIXELS = None
 
 #####
 # PIPELINE WORKERS FOR INTERNAL USAGE
@@ -111,6 +115,31 @@ def __worker_skimage(args):
 
     return 0
 
+#####
+# COMMON UTILS
+
+# Estimate np array memory usage.
+# Returns size in bytes
+def estimate_ndarray_mem_usage(nptype, shape):
+    # note: ignores overhead
+    # src: https://stackoverflow.com/questions/66650703/estimating-maximum-numpy-array-size-to-fit-in-memory
+    nptype = np.dtype(nptype) if not isinstance(nptype, np.dtype) else nptype
+    n_elements = int(np.prod(shape))
+    return n_elements * nptype.itemsize
+
+# Estimate memory required to read an image using PIL.
+# Empirically it would be triple the size of the image for anything except TIFF
+# + about 50MB for libraries if not loaded yet
+def estimate_imread_mem_usage(pil_image_obj):
+    est = estimate_ndarray_mem_usage(np.uint8, (pil_image_obj.height, pil_image_obj.width, len(pil_image_obj.getbands())) )
+    est += 50_000_000    # for skimage module and its plugins  
+    if pil_image_obj == 'tiff':
+        return est
+    return 3 * est
+
+def estimate_worker_mem_usage(img_shape, npoints_list, patchsize, save_intermediate_results):
+    raise NotImplementedError()
+    return 0
 
 #####
 # MISC ROUTINES FOR INTERNAL USAGE
@@ -123,10 +152,6 @@ def __sanitize_img_name(img_name):
 def __sanitize_outfile_name(outfile_name):
     if outfile_name.endswith(".npy"): return outfile_name
     return outfile_name + ".npy"
-def __get_output_dir():
-    return os.path.join("data/out")
-def __get_tmp_dir(pipeline_name):
-    return os.path.join("data/tmp/", pipeline_name)
 
 #####
 # PUBLIC UTILS
@@ -146,52 +171,62 @@ def get_p_for_r(r):
 #####
 # PIPELINE METHODS
 
-def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=None, img_name='img', 
-                outfile_name='lbp_features_skimage.npy', save_intermediate_results=True, overwrite_output=False):
-    
+def run_skimage(img_path, radii_list, npoints_list, patchsize, ncpus, max_ram_gb=None, 
+                outdir='.', tmpdir='tmp', outfile_name=None, 
+                save_intermediate_results=True, overwrite_output=False):
+    # We will read the actual image data as late as possible.
+    img = Image.open(img_path)
+    img_shape = (img.height, img.width, len(img.getbands()))
+
     # validate params and prepare a pipeline
     assert len(radii_list) == len(npoints_list)
-    assert len(img_data.shape) == 3
+    assert img.mode in ['L', 'RGB', 'YCbCr']
+    assert len(img_shape[2]) in [1,3]
     
     t = time.perf_counter()
     
-    log.info('run_skimage: initial setup...')
+    log.info('run_skimage: sanity check...')
 
-    img_name = __sanitize_img_name(img_name)
-    outfile_name = __sanitize_outfile_name(outfile_name)
-    # data_hash = hashlib.sha1(img_data.data).hexdigest()
+    img_name = __sanitize_img_name(os.path.basename(img_path))
+    if outfile_name is None: 
+        outfile_name = f"lbp_features_{img_name}.npy"
+    else:
+        outfile_name = __sanitize_outfile_name(outfile_name)
 
-    pipeline_params = [str(img_data.shape), radii_list, npoints_list, patchsize, ncpus, max_ram, img_name]
+    pipeline_params = [str(img_shape), radii_list, npoints_list, patchsize, ncpus, max_ram_gb, img_name]
     pipeline_hash = __create_pipeline_hash("skimage", pipeline_params)
     pipeline_name = f"{img_name}-skimage-{pipeline_hash}"
 
     log.info('run_skimage: params:')
-    log.info('[data_hash, radii_list, npoints_list, patchsize, ncpus, max_ram, img_name]')
+    log.info('[data_hash, radii_list, npoints_list, patchsize, ncpus, max_ram_gb, img_name]')
     log.info(pipeline_params)
 
-    # check if output file is writable
-
-    output_fpath = os.path.join(__get_output_dir(), outfile_name)
+    output_fpath = os.path.join(outdir, outfile_name)
     output_abspath = os.path.abspath(output_fpath)
+
+    log.info('input file:', img_path)
+    log.info('output file:', output_abspath)
+
+    # check if output file is writable
     try:
         if os.path.exists(output_fpath) and not overwrite_output:
             log.error(f'run_skimage({pipeline_hash}): overwrite_output is False and output file {output_abspath} already exists. Aborting.')
             return output_abspath
-        os.makedirs(__get_output_dir(), exist_ok=True)
-        if not os.access(__get_output_dir(), os.W_OK):
+        os.makedirs(outdir, exist_ok=True)
+        if not os.access(outdir, os.W_OK):
             log.error(f'run_skimage({pipeline_hash}): output dir {os.path.dirname(output_abspath)} is not writable. Aborting.')
             return output_abspath
     except:
         log.error(f'run_skimage({pipeline_hash}): error accessing output dir {os.path.dirname(output_abspath)}. Aborting.')
         return output_abspath
 
-    log.info(f'run_skimage({pipeline_hash}): initial setup took {time.perf_counter()-t:.5g}s')
-    log.info(f'run_skimage({pipeline_hash}): creating a list of jobs...')
+    log.info(f'run_skimage({pipeline_hash}): sanity check took {time.perf_counter()-t:.5g}s')
+    log.info(f'run_skimage({pipeline_hash}): starting initial setup...')
     t = time.perf_counter()
 
     # method-specific params
 
-    h,w,nchannels = img_data.shape
+    h,w,nchannels = img_shape
     nprows, npcols = h//patchsize, w//patchsize
     nfeatures_cumsum = np.cumsum(np.array(npoints_list)+2)
     nfeatures_per_channel = nfeatures_cumsum[-1]
@@ -220,7 +255,7 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
     jobs['patchsize'] = patchsize
 
     if save_intermediate_results:
-        base_tmp_path = __get_tmp_dir(pipeline_name)
+        base_tmp_path = os.path.join(tmpdir, pipeline_name)
         jobs['tmp_fpath'] = jobs.apply(
             lambda row: f"{base_tmp_path}/{row['label']}.npy", axis='columns')
     else: 
@@ -230,19 +265,56 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
     patch_features_shape = (nprows, npcols, total_nfeatures)
     jobs['total_nfeatures'] = total_nfeatures
 
+    # MEMORY USAGE ESTIMATION
+    # actual ncpus
+    act_ncpus = ncpus
+    # 1. shared output array
+    _output_mem = estimate_ndarray_mem_usage(np.uint32, patch_features_shape)
+    # 2. shared array for input image
+    _input_mem = estimate_ndarray_mem_usage(np.uint8, img_shape)
+    # 3. memory per worker
+    _mem_per_worker = estimate_worker_mem_usage(img_shape, npoints_list, patchsize, save_intermediate_results)
+    _estimated_mem_overhead = _output_mem + _input_mem
+    # check max_ram_gb requirement
+    _max_estimated_mem_usage = _estimated_mem_overhead + ncpus * _mem_per_worker
+    log.info(f'run_skimage({pipeline_hash}): estimated mem usage for {ncpus} processes is {_max_estimated_mem_usage / 1e9 :.3g} GB')
+    log.info(f'run_skimage({pipeline_hash}):   output mem = {_output_mem / 1e6 :.3g} MB')
+    log.info(f'run_skimage({pipeline_hash}):   input mem = {_input_mem / 1e6 :.3g} MB')
+    log.info(f'run_skimage({pipeline_hash}):   per worker = {_mem_per_worker / 1e6 :.3g} MB')
+
+    if max_ram_gb is not None and max_ram_gb > 0:
+        max_ram_b = max_ram_gb * 1_000_000_000
+        if _estimated_mem_overhead + _mem_per_worker > max_ram_b:
+            # not enough ram for data and a single process
+            log.error(f'run_skimage({pipeline_hash}): NOT ENOUGH MEMORY. Estimated mem usage for a single process is greater than max_ram_gb = {max_ram_gb} GB.')
+            raise ValueError("Probably not enough memory")
+        
+        if _max_estimated_mem_usage > max_ram_b:
+            act_ncpus = (max_ram_b - _estimated_mem_overhead) // _mem_per_worker
+            log.warning(f'run_skimage({pipeline_hash}): estimated mem usage is greater than max_ram_gb = {max_ram_gb} GB')
+            log.warning(f'run_skimage({pipeline_hash}): Lowering the number of parallel processes to act_ncpus = {act_ncpus}')
+
+    #
+    # START ACTUAL PROCESSING
+    #
+
     # create shared memory for all processes
 
+    # TODO: maybe try uint16 for output?
     log.info(f"run_skimage({pipeline_hash}): creating shared memory")
-    input_img_shm = shared_memory.SharedMemory(create=True, size=img_data.nbytes)
-    patch_features_shm = shared_memory.SharedMemory(
-        create=True, size=(int(np.prod(patch_features_shape)) * np.dtype('uint32').itemsize))
+    input_img_shm = shared_memory.SharedMemory(create=True, size=_input_mem)
+    patch_features_shm = shared_memory.SharedMemory(create=True, size=_output_mem)
     
-    # copy image to shared memory 
+    # copy input image to shared memory 
+    img_data = ski.io.imread(img_path)
+    assert img_data.shape == img_shape
+    assert img_data.dtype == np.uint8
+     
     input_img_np = np.ndarray(img_data.shape, img_data.dtype, input_img_shm.buf)
     input_img_np[:] = img_data[:]
-    
+    del img_data
 
-    # output
+    # prepare output array
     patch_features = np.ndarray(patch_features_shape, np.uint32, buffer=patch_features_shm.buf)
     patch_features.fill(np.iinfo(np.uint32).max)
 
@@ -253,19 +325,19 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
     jobs['img_shape_2'] = img_data.shape[2]
     jobs['output_shm_name'] = patch_features_shm.name
 
-    log.info(f'run_skimage({pipeline_hash}): creating a list of jobs took {time.perf_counter()-t:.5g}s')
     log.info(f"run_skimage({pipeline_hash}): jobs:")
     log.info(jobs)
-    jobs.to_csv(__get_output_dir() + f"/jobs_{img_name}.csv")
+    jobs.to_csv(os.path.join(outdir, f"jobs_{img_name}.csv"))
 
     assert jobs.isna().sum().sum() == 0
+    log.info(f'run_skimage({pipeline_hash}): initial setup took {time.perf_counter()-t:.5g}s')
 
     # compute
 
     log.info(f'run_skimage({pipeline_hash}): start computation')
     t0 = time.perf_counter()
     with Pool(ncpus) as pool:
-        jobs_results = pool.map(func=__worker_skimage, iterable=jobs.iterrows())
+        _ = pool.map(func=__worker_skimage, iterable=jobs.iterrows())
     t_elapsed = time.perf_counter() - t0
     log.info(f'run_skimage({pipeline_hash}): computation finished in {t_elapsed:.5g}s. Start saving')
 

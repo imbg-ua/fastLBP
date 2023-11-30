@@ -8,6 +8,10 @@ Image.MAX_IMAGE_PIXELS = None
 ### if using fastlbp.py 
 import fastlbp
 
+
+# TODO: run_skimage has changed its signature!!!
+# TODO: run_skimage now reads img_data on its own
+
 def main():
     print("hewlo")
 
