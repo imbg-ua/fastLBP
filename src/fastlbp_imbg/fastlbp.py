@@ -13,10 +13,12 @@ import os
 from multiprocessing import Pool, shared_memory
 
 import hashlib
+import memory_profiler as mprof
 
 #####
 # PIPELINE WORKERS FOR INTERNAL USAGE
 
+@mprof.profile
 def __worker_skimage(args):
     row_id, job = args
     tmp_fpath = job['tmp_fpath']
@@ -77,6 +79,9 @@ def __worker_skimage(args):
                 img_data[:,:,job['channel']], method='uniform', 
                 P=job['npoints'], R=job['radius']
             ).astype(np.uint32)
+
+            log.info(f"run_skimage: worker {pid}: lbp phase for {jobname} took {time.perf_counter()-t0:.5g}s")
+            log.info(f"run_skimage: worker {jobname}({pid}): lbp_results shape {lbp_results.shape} size {lbp_results.nbytes}")
             
             # log.info(f"run_skimage: worker {jobname}({pid}): image: min={img_data[:,:,job['channel']].min()} max={img_data[:,:,job['channel']].max()} avg={img_data[:,:,job['channel']].mean()}")
             # log.info(f"run_skimage: worker {jobname}({pid}): lbp codes: min={lbp_results.min()} max={lbp_results.max()}")
@@ -90,6 +95,8 @@ def __worker_skimage(args):
                         minlength=job_nfeatures
                         )
                     job_patch_histograms[i,j,:] = hist
+
+            del lbp_results
 
             if tmp_fpath:
                 try:

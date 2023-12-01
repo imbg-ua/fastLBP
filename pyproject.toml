@@ -1,6 +1,6 @@
 [project]
 name = "fastlbp-imbg"
-version = "0.0.1"
+version = "0.0.1.dev1"
 authors = [
   { name="Mykhailo Koreshkov", email="koreshov.m@gmail.com" },
 ]
@@ -19,6 +19,7 @@ dependencies = [
   "numpy>=1.26.0",
   "Pillow>=10.0.1",
   "pandas>=2.1.1",
+  "memory-profiler>=0.61",
 ]
 
 [project.urls]
