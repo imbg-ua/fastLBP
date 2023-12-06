@@ -1,0 +1,3 @@
+include src/lbp.pyx
+include src/lbp.c
+exclude src/fastlbp_imbg/example.py

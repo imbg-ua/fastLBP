@@ -19,7 +19,7 @@ def main():
     img_data = img_data[:,:,None]
     print(img_data.shape)
 
-    radii_list = [1,2,3,4]
+    radii_list = [1,2,3,4,5]
     npoints_list = [ fastlbp.get_p_for_r(r) for r in radii_list ] 
     print(npoints_list)
 
@@ -35,10 +35,10 @@ def main():
         overwrite_output=False    # error if output file already exists
     )
 
-    results = np.load(output_abs_path, mmap_mode='r')
-    print(f"Shape of {output_abs_path}: ", results.shape)
-
     # Uncomment this for basic output viz
+
+    # results = np.load(output_abs_path, mmap_mode='r')
+    # print(f"Shape of {output_abs_path}: ", results.shape)
 
     # import matplotlib.pyplot as plt
     # N_samples = 30

@@ -14,6 +14,8 @@ from multiprocessing import Pool, shared_memory
 
 import hashlib
 
+from lbp import uniform_local_binary_pattern
+
 #####
 # PIPELINE WORKERS FOR INTERNAL USAGE
 
@@ -73,10 +75,9 @@ def __worker_skimage(args):
             img_data_shm = shared_memory.SharedMemory(name=job['img_shm_name'])
             img_data = np.ndarray(shape, dtype=job['img_pixel_dtype'], buffer=img_data_shm.buf)
             
-            lbp_results = ski.feature.local_binary_pattern(
-                img_data[:,:,job['channel']], method='uniform', 
-                P=job['npoints'], R=job['radius']
-            ).astype(np.uint32)
+            lbp_results = uniform_local_binary_pattern(
+                image=img_data[:,:,job['channel']], P=job['npoints'], R=job['radius']
+            ) #.astype(np.uint16)
             
             # log.info(f"run_skimage: worker {jobname}({pid}): image: min={img_data[:,:,job['channel']].min()} max={img_data[:,:,job['channel']].max()} avg={img_data[:,:,job['channel']].mean()}")
             # log.info(f"run_skimage: worker {jobname}({pid}): lbp codes: min={lbp_results.min()} max={lbp_results.max()}")
