@@ -35,7 +35,7 @@ def __worker_skimage(args):
         output_offset = job['output_offset']
         
         patchsize = job['patchsize']
-        h,w,nchannels = shape
+        nchannels,h,w = shape
         nprows, npcols = h//patchsize, w//patchsize
         
         job_nfeatures = job['npoints']+2
@@ -79,6 +79,8 @@ def __worker_skimage(args):
             
             img_channel = img_data[job['channel']]
             log.info(f"run_skimage: worker {jobname}({pid}): contiguity test: img_mask {img_mask.flags.c_contiguous}, img_data {img_data.flags.c_contiguous}, img_channel {img_channel.flags.c_contiguous}")
+            assert img_channel.shape == img_mask.shape, \
+                f"shape mismatch. something is horrendously wrong. img_channel({img_channel.shape})!=img_mask({img_mask.shape})"
 
             lbp_results = uniform_local_binary_pattern(
                 image=img_channel, P=job['npoints'], R=job['radius'], mask=img_mask
