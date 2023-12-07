@@ -76,9 +76,7 @@ def __worker_skimage(args):
             img_data = np.ndarray(shape, dtype=job['img_pixel_dtype'], buffer=img_data_shm.buf)
             
             img_channel = img_data[job['channel']]
-            log.info(f"run_skimage: worker {jobname}({pid}): contiguity test: img_mask {img_mask.flags.c_contiguous}, img_data {img_data.flags.c_contiguous}, img_channel {img_channel.flags.c_contiguous}")
-            assert img_channel.shape == img_mask.shape, \
-                f"shape mismatch. something is horrendously wrong. img_channel({img_channel.shape})!=img_mask({img_mask.shape})"
+            log.info(f"run_skimage: worker {jobname}({pid}): contiguity test: img_data {img_data.flags.c_contiguous}, img_channel {img_channel.flags.c_contiguous}")
             
             lbp_results = uniform_local_binary_pattern(
                 image=img_channel, P=job['npoints'], R=job['radius']
