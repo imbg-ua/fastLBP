@@ -153,6 +153,28 @@ def get_p_for_r(r):
 
 def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=None, img_name='img', 
                 outfile_name='lbp_features_skimage.npy', save_intermediate_results=True, overwrite_output=False):
+    """Compute multiradial LBP features.
+
+    Arguments:  
+        img_data: np.ndarray with 3 dimensions and dtype=uint8.
+        radii_list: List<int> of radii you want to compute lbp with.
+        npoints_list: List<int> of numbers of points for corresponding radii.
+        patchsize: int.
+        ncpus: int, preferred number of parallel processes; 
+            typically should be no more than number of available CPUs.
+        max_ram: NOT IMPLEMENTED YET (sorry).
+        img_name: str, default 'img', human-readable name of the process to print in console etc.
+        outfile_name: str, default 'lbp_features_skimage.npy', computation result is written to './data/out/{outfile_name}'.
+        save_intermediate_results: bool, default True, shall we save lbp of an image for each radius into './data/tmp/'? 
+            (lbp codes of each pixel, before histogram calculation).
+        overwrite_output: bool, default False, shall we proceed if the output file already exists?.
+
+    Returns:  
+        str, an absolute path to .npy file with results.
+
+    Raises:
+        various AssertionErrors
+    """
     
     # validate params and prepare a pipeline
     assert len(radii_list) == len(npoints_list)
@@ -261,6 +283,9 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
     jobs['img_shape_2'] = input_img_np.shape[2]
     jobs['output_shm_name'] = patch_features_shm.name
 
+    # sort by radius (descending) to compute the heaviest jobs first
+    jobs.sort_index(level=1, ascending=False, inplace=True)
+
     log.info(f'run_skimage({pipeline_hash}): creating a list of jobs took {time.perf_counter()-t:.5g}s')
     log.info(f"run_skimage({pipeline_hash}): jobs:")
     log.info(jobs)
@@ -273,7 +298,7 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
     log.info(f'run_skimage({pipeline_hash}): start computation')
     t0 = time.perf_counter()
     with Pool(ncpus) as pool:
-        jobs_results = pool.map(func=__worker_skimage, iterable=jobs.iterrows())
+        _ = pool.map(func=__worker_skimage, iterable=jobs.iterrows())
     t_elapsed = time.perf_counter() - t0
     log.info(f'run_skimage({pipeline_hash}): computation finished in {t_elapsed:.5g}s. Start saving')
 

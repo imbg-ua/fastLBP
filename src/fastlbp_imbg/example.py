@@ -3,36 +3,39 @@ from PIL import Image
 Image.MAX_IMAGE_PIXELS = None
 
 ### if installed as pip package 
-# import fastlbp_imbg as fastlbp
+import fastlbp_imbg as fastlbp
 
 ### if using fastlbp.py 
-import fastlbp
+# import fastlbp
+
+import utils
 
 def main():
     print("hewlo")
 
-    img = Image.open("data/bark.tiff")
-    img_data = np.asarray(img)
+    img_data = utils.load_sample_image(1000, 1000, 1, 'tiff')
     print(img_data.shape)
 
-    # to add 3rd dimension
-    img_data = img_data[:,:,None]
-    print(img_data.shape)
+    # to add 3rd dimension. however, load_sample_image always outputs ndim=3
+    if len(img_data.shape) == 2:
+        img_data = img_data[:,:,None]
+        print(img_data.shape)
 
-    radii_list = [1,2,3,4,5]
+    radii_list = fastlbp.get_radii(5)
     npoints_list = [ fastlbp.get_p_for_r(r) for r in radii_list ] 
+    print(radii_list)
     print(npoints_list)
 
-    patchsize = 16
+    patchsize = 100
 
     output_abs_path = fastlbp.run_skimage(
         img_data, radii_list, npoints_list, patchsize, 
         ncpus=4, 
-        outfile_name="bark_lbp.npy",  # output file name, will be in the ./data/out
-        img_name="bark",    # human-friendly name, optional
+        outfile_name="sample_lbp.npy",  # output file name, will be in the ./data/out
+        img_name="sample_lbp",    # human-friendly name, optional
         max_ram=100,        # unused yet
         save_intermediate_results=False,    # perform computations in RAM only
-        overwrite_output=False    # error if output file already exists
+        overwrite_output=True    # error if output file already exists
     )
 
     # Uncomment this for basic output viz
