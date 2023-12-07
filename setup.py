@@ -12,7 +12,7 @@ ext = '.pyx' if USE_CYTHON else '.c'
 
 extensions = [
     Extension(
-        "fastlbp_imbg.lbp", ["src/lbp"+ext],
+        "fastlbp_imbg.lbp", ["src/skimage_lbp"+ext],
         include_dirs=[numpy.get_include()]
     ),
 ]
