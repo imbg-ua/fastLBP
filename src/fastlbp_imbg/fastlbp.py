@@ -14,7 +14,7 @@ from multiprocessing import Pool, shared_memory
 
 import hashlib
 
-from lbp import uniform_local_binary_pattern
+from .lbp import uniform_local_binary_pattern
 
 #####
 # PIPELINE WORKERS FOR INTERNAL USAGE
