@@ -272,6 +272,9 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus,
     jobs['mask_shm_name'] = input_mask_shm.name
     jobs['output_shm_name'] = patch_features_shm.name
 
+    # sort descending to compute the heaviest jobs first
+    jobs.sort_index(level=1, ascending=False, inplace=True)
+
     log.info(f'run_skimage({pipeline_hash}): creating a list of jobs took {time.perf_counter()-t:.5g}s')
     log.info(f"run_skimage({pipeline_hash}): jobs:")
     log.info(jobs)
@@ -284,7 +287,7 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus,
     log.info(f'run_skimage({pipeline_hash}): start computation')
     t0 = time.perf_counter()
     with Pool(ncpus) as pool:
-        jobs_results = pool.map(func=__worker_skimage, iterable=jobs.iterrows())
+        _ = pool.map(func=__worker_skimage, iterable=jobs.iterrows())
     t_elapsed = time.perf_counter() - t0
     log.info(f'run_skimage({pipeline_hash}): computation finished in {t_elapsed:.5g}s. Start saving')
 
