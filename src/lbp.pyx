@@ -269,7 +269,7 @@ cdef inline int _bit_rotate_right(int value, int length) nogil:
     return (value >> 1) | ((value & 1) << (length - 1))
 
 
-def uniform_local_binary_pattern(cnp.uint8_t[:, ::1] image, int P, cnp.float64_t R):
+def uniform_local_binary_pattern(cnp.uint8_t[:, ::1] image, int P, cnp.float64_t R, cnp.uint8_t[:, ::1] mask):
     """Gray scale and rotation invariant LBP (Local Binary Patterns).
 
     See skimage.feature.local_binary_pattern.
@@ -319,6 +319,9 @@ def uniform_local_binary_pattern(cnp.uint8_t[:, ::1] image, int P, cnp.float64_t
     with nogil:
         for r in range(image.shape[0]):
             for c in range(image.shape[1]):
+                if mask[r, c] == 0:
+                    continue
+
                 for i in range(P):
                     bilinear_interpolation[cnp.uint8_t, cnp.float64_t, cnp.float64_t](
                             &image[0, 0], rows, cols, r + rp[i], c + cp[i],

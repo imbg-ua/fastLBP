@@ -74,15 +74,18 @@ def __worker_skimage(args):
 
             img_data_shm = shared_memory.SharedMemory(name=job['img_shm_name'])
             img_data = np.ndarray(shape, dtype=job['img_pixel_dtype'], buffer=img_data_shm.buf)
+            img_mask_shm = shared_memory.SharedMemory(name=job['mask_shm_name'])
+            img_mask = np.ndarray((h,w), dtype=np.uint8, buffer=img_mask_shm.buf)
             
             lbp_results = uniform_local_binary_pattern(
-                image=img_data[:,:,job['channel']], P=job['npoints'], R=job['radius']
+                image=img_data[:,:,job['channel']], P=job['npoints'], R=job['radius'], mask=img_mask
             ) #.astype(np.uint16)
             
             # log.info(f"run_skimage: worker {jobname}({pid}): image: min={img_data[:,:,job['channel']].min()} max={img_data[:,:,job['channel']].max()} avg={img_data[:,:,job['channel']].mean()}")
             # log.info(f"run_skimage: worker {jobname}({pid}): lbp codes: min={lbp_results.min()} max={lbp_results.max()}")
 
             img_data_shm.close()
+            img_mask_shm.close()
 
             for i in range(nprows):
                 for j in range(npcols):
@@ -147,7 +150,9 @@ def get_p_for_r(r):
 #####
 # PIPELINE METHODS
 
-def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=None, img_name='img', 
+def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, 
+                img_mask=None,
+                max_ram=None, img_name='img', 
                 outfile_name='lbp_features_skimage.npy', save_intermediate_results=True, overwrite_output=False):
     
     # validate params and prepare a pipeline
@@ -198,13 +203,21 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
     nfeatures_per_channel = nfeatures_cumsum[-1]
     channel_list = range(nchannels)
 
+    if img_mask is not None:
+        assert len(img_mask.shape) == 2, "image mask has invalid dimensions (2 required)"
+        assert img_mask.shape[0] == h and img_mask.shape[1] == w, "image mask shape is incompatible with image"
+        assert img_mask.dtype == np.uint8, "only uint8 masks are supported"
+    else:
+        img_mask = np.zeros((h,w), dtype=np.uint8)
+
+
     # create a list of jobs
     jobs = DataFrame(
         index=pd.MultiIndex.from_product(
             [channel_list, radii_list], names=['channel', 'radius']), 
             columns=['channel','radius','img_name','label','npoints','patchsize','img_shm_name',
-                     'img_pixel_dtype','img_shape_0','img_shape_1','img_shape_2', 'output_shm_name', 
-                     'output_offset', 'tmp_fpath']
+                     'img_pixel_dtype','img_shape_0','img_shape_1','img_shape_2', 
+                     'mask_shm_name', 'output_shm_name', 'output_offset', 'tmp_fpath']
         )
     jobs['img_name'] = img_name
 
@@ -235,15 +248,19 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
 
     log.info(f"run_skimage({pipeline_hash}): creating shared memory")
     input_img_shm = shared_memory.SharedMemory(create=True, size=img_data.nbytes)
+    input_mask_shm = shared_memory.SharedMemory(create=True, size=img_mask.nbytes)
     patch_features_shm = shared_memory.SharedMemory(
         create=True, size=(int(np.prod(patch_features_shape)) * np.dtype('uint32').itemsize))
     
     # copy image to shared memory 
     input_img_np = np.ndarray(img_data.shape, img_data.dtype, input_img_shm.buf)
     input_img_np[:] = img_data[:]
-    
 
-    # output
+    # copy mask to shared memory
+    input_mask_np = np.ndarray(img_mask.shape, img_mask.dtype, input_mask_shm.buf)
+    input_mask_np[:] = img_mask[:]
+    
+    # fill output with an invalid val
     patch_features = np.ndarray(patch_features_shape, np.uint32, buffer=patch_features_shm.buf)
     patch_features.fill(np.iinfo(np.uint32).max)
 
@@ -252,6 +269,7 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
     jobs['img_shape_0'] = img_data.shape[0]
     jobs['img_shape_1'] = img_data.shape[1]
     jobs['img_shape_2'] = img_data.shape[2]
+    jobs['mask_shm_name'] = input_mask_shm.name
     jobs['output_shm_name'] = patch_features_shm.name
 
     log.info(f'run_skimage({pipeline_hash}): creating a list of jobs took {time.perf_counter()-t:.5g}s')
