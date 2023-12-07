@@ -293,6 +293,7 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus,
     np.save(output_fpath, patch_features)
     log.info(f'run_skimage({pipeline_hash}): saving finished to {output_fpath}')
     
+    input_mask_shm.unlink()
     input_img_shm.unlink()
     patch_features_shm.unlink()
 
