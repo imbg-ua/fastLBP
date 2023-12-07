@@ -81,6 +81,7 @@ def __worker_skimage(args):
             log.info(f"run_skimage: worker {jobname}({pid}): contiguity test: img_mask {img_mask.flags.c_contiguous}, img_data {img_data.flags.c_contiguous}, img_channel {img_channel.flags.c_contiguous}")
             assert img_channel.shape == img_mask.shape, \
                 f"shape mismatch. something is horrendously wrong. img_channel({img_channel.shape})!=img_mask({img_mask.shape})"
+            log.info(f"run_skimage: worker {jobname}({pid}): img_channel.shape={img_channel.shape}")
 
             lbp_results = uniform_local_binary_pattern(
                 image=img_channel, P=job['npoints'], R=job['radius'], mask=img_mask
@@ -168,7 +169,7 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus,
         patchsize: int.
         ncpus: int, preferred number of parallel processes; 
             typically should be no more than number of available CPUs.
-        img_mask: np.ndarray, default None, an array with 2 dimensions and dtype=uint8. 
+        img_mask: np.ndarray, default is np.ones, an array with 2 dimensions and dtype=uint8. 
             Should have the same shape as image.
         max_ram: NOT IMPLEMENTED YET (sorry).
         img_name: str, default 'img', human-readable name of the process to print in console etc.
@@ -237,7 +238,7 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus,
         assert img_mask.shape[0] == h and img_mask.shape[1] == w, "image mask shape is incompatible with image"
         assert img_mask.dtype == np.uint8, "only uint8 masks are supported"
     else:
-        img_mask = np.zeros((h,w), dtype=np.uint8)
+        img_mask = np.ones((h,w), dtype=np.uint8)
 
 
     # create a list of jobs
