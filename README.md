@@ -9,10 +9,32 @@ Highly parallel LBP implementation
 	- `python --version` та `pip --version`
 - Встановити пакет через 
 	- `pip install fastlbp-imbg`
-- Або вручну через 
-	- `git clone git@github.com:imbg-ua/fastLBP.git`
-	- `pip install fastLBP`
+- Або вручну через  
+```
+git clone git@github.com:imbg-ua/fastLBP.git
+cd fastLBP
+# git checkout cython # if you need other branch
+pip install cython setuptools
+bash scripts/build_cython.sh
+pip install .
+```
+- Після цього можна використовувати пакет через `import fastlbp_imbg`
 
+#### Cython details
+There is a precomposed `src/lbp.c` file, but I strongly recommend rebuilding it yourself to make sure it reflects the latest changes in `src/lbp.pyx`.
+
+My build process typically looks like:
+```
+cd fastLBP
+pip install cython setuptools
+bash scripts/build_cython.sh
+pip install .
+```
+
+This commands will recreate the `src/lbp.c`, build the binary (`src/fastlbp_imbg/lbp.*.pyd` on Windows or `src/fastlbp_imbg/lbp.*.so` on Unix), 
+and install a new version of a package into your environment.
+
+#### Інше
 Наша директорія на lustre
 `/lustre/scratch126/casm/team268im/`
 

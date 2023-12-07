@@ -154,6 +154,30 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus,
                 img_mask=None,
                 max_ram=None, img_name='img', 
                 outfile_name='lbp_features_skimage.npy', save_intermediate_results=True, overwrite_output=False):
+    """Compute multiradial LBP features.
+
+    Arguments:  
+        img_data: np.ndarray with 3 dimensions and dtype=uint8.
+        radii_list: List<int> of radii you want to compute lbp with.
+        npoints_list: List<int> of numbers of points for corresponding radii.
+        patchsize: int.
+        ncpus: int, preferred number of parallel processes; 
+            typically should be no more than number of available CPUs.
+        img_mask: np.ndarray, default None, an array with 2 dimensions and dtype=uint8. 
+            Should have the same shape as image.
+        max_ram: NOT IMPLEMENTED YET (sorry).
+        img_name: str, default 'img', human-readable name of the process to print in console etc.
+        outfile_name: str, default 'lbp_features_skimage.npy', computation result is written to './data/out/{outfile_name}'.
+        save_intermediate_results: bool, default True, shall we save lbp of an image for each radius into './data/tmp/'? 
+            (lbp codes of each pixel, before histogram calculation).
+        overwrite_output: bool, default False, shall we proceed if the output file already exists?.
+
+    Returns:  
+        str, an absolute path to .npy file with results.
+
+    Raises:
+        various AssertionErrors
+    """
     
     # validate params and prepare a pipeline
     assert len(radii_list) == len(npoints_list)
