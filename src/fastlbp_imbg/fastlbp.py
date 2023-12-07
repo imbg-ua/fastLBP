@@ -74,9 +74,13 @@ def __worker_skimage(args):
 
             img_data_shm = shared_memory.SharedMemory(name=job['img_shm_name'])
             img_data = np.ndarray(shape, dtype=job['img_pixel_dtype'], buffer=img_data_shm.buf)
+            log.info(f"run_skimage: worker {jobname}({pid}): img_data flags are: {str(img_data.flags)}")
+            
+            img_channel_data = img_data[job['channel']]
+            log.info(f"run_skimage: worker {jobname}({pid}): img_channel_data flags are: {str(img_channel_data.flags)}")
             
             lbp_results = uniform_local_binary_pattern(
-                image=img_data[:,:,job['channel']], P=job['npoints'], R=job['radius']
+                image=img_channel_data, P=job['npoints'], R=job['radius']
             ) #.astype(np.uint16)
             
             # log.info(f"run_skimage: worker {jobname}({pid}): image: min={img_data[:,:,job['channel']].min()} max={img_data[:,:,job['channel']].max()} avg={img_data[:,:,job['channel']].mean()}")
@@ -231,8 +235,11 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
     patch_features_shape = (nprows, npcols, total_nfeatures)
     jobs['total_nfeatures'] = total_nfeatures
 
+    # Prepare contigous array.
+    # Channels will go first. Then h and w.
+    img_data = np.ascontiguousarray(np.moveaxis(img_data, (0,1,2), (1,2,0)))
+    
     # create shared memory for all processes
-
     log.info(f"run_skimage({pipeline_hash}): creating shared memory")
     input_img_shm = shared_memory.SharedMemory(create=True, size=img_data.nbytes)
     patch_features_shm = shared_memory.SharedMemory(
@@ -240,18 +247,17 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
     
     # copy image to shared memory 
     input_img_np = np.ndarray(img_data.shape, img_data.dtype, input_img_shm.buf)
-    input_img_np[:] = img_data[:]
-    
+    np.copyto(input_img_np, img_data, casting='no')
 
     # output
     patch_features = np.ndarray(patch_features_shape, np.uint32, buffer=patch_features_shm.buf)
     patch_features.fill(np.iinfo(np.uint32).max)
 
     jobs['img_shm_name'] = input_img_shm.name
-    jobs['img_pixel_dtype'] = img_data.dtype
-    jobs['img_shape_0'] = img_data.shape[0]
-    jobs['img_shape_1'] = img_data.shape[1]
-    jobs['img_shape_2'] = img_data.shape[2]
+    jobs['img_pixel_dtype'] = input_img_np.dtype
+    jobs['img_shape_0'] = input_img_np.shape[0]
+    jobs['img_shape_1'] = input_img_np.shape[1]
+    jobs['img_shape_2'] = input_img_np.shape[2]
     jobs['output_shm_name'] = patch_features_shm.name
 
     log.info(f'run_skimage({pipeline_hash}): creating a list of jobs took {time.perf_counter()-t:.5g}s')
