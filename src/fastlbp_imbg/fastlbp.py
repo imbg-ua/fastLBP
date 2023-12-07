@@ -77,8 +77,11 @@ def __worker_skimage(args):
             img_mask_shm = shared_memory.SharedMemory(name=job['mask_shm_name'])
             img_mask = np.ndarray((h,w), dtype=np.uint8, buffer=img_mask_shm.buf)
             
+            img_channel = img_data[job['channel']]
+            log.info(f"run_skimage: worker {jobname}({pid}): contiguity test: img_mask {img_mask.flags.c_contiguous}, img_data {img_data.flags.c_contiguous}, img_channel {img_channel.flags.c_contiguous}")
+
             lbp_results = uniform_local_binary_pattern(
-                image=img_data[:,:,job['channel']], P=job['npoints'], R=job['radius'], mask=img_mask
+                image=img_channel, P=job['npoints'], R=job['radius'], mask=img_mask
             ) #.astype(np.uint16)
             
             # log.info(f"run_skimage: worker {jobname}({pid}): image: min={img_data[:,:,job['channel']].min()} max={img_data[:,:,job['channel']].max()} avg={img_data[:,:,job['channel']].mean()}")
@@ -268,8 +271,13 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus,
     patch_features_shape = (nprows, npcols, total_nfeatures)
     jobs['total_nfeatures'] = total_nfeatures
 
-    # create shared memory for all processes
 
+    # prepare contiguous data
+    # Channels will go first. Then h and w.
+    img_data = np.ascontiguousarray(np.moveaxis(img_data, (0,1,2), (1,2,0)))
+    img_mask = np.ascontiguousarray(img_mask)
+
+    # create shared memory for all processes
     log.info(f"run_skimage({pipeline_hash}): creating shared memory")
     input_img_shm = shared_memory.SharedMemory(create=True, size=img_data.nbytes)
     input_mask_shm = shared_memory.SharedMemory(create=True, size=img_mask.nbytes)
@@ -278,21 +286,21 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus,
     
     # copy image to shared memory 
     input_img_np = np.ndarray(img_data.shape, img_data.dtype, input_img_shm.buf)
-    input_img_np[:] = img_data[:]
+    np.copyto(input_img_np, img_data, casting='no')
 
     # copy mask to shared memory
     input_mask_np = np.ndarray(img_mask.shape, img_mask.dtype, input_mask_shm.buf)
-    input_mask_np[:] = img_mask[:]
+    np.copyto(input_mask_np, img_mask, casting='no')
     
     # fill output with an invalid val
     patch_features = np.ndarray(patch_features_shape, np.uint32, buffer=patch_features_shm.buf)
     patch_features.fill(np.iinfo(np.uint32).max)
 
     jobs['img_shm_name'] = input_img_shm.name
-    jobs['img_pixel_dtype'] = img_data.dtype
-    jobs['img_shape_0'] = img_data.shape[0]
-    jobs['img_shape_1'] = img_data.shape[1]
-    jobs['img_shape_2'] = img_data.shape[2]
+    jobs['img_pixel_dtype'] = input_img_np.dtype
+    jobs['img_shape_0'] = input_img_np.shape[0]
+    jobs['img_shape_1'] = input_img_np.shape[1]
+    jobs['img_shape_2'] = input_img_np.shape[2]
     jobs['mask_shm_name'] = input_mask_shm.name
     jobs['output_shm_name'] = patch_features_shm.name
 
