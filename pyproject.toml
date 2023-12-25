@@ -1,6 +1,5 @@
 [project]
 name = "fastlbp-imbg"
-version = "0.0.2.dev1"
 authors = [
   { name="Mykhailo Koreshkov", email="koreshov.m@gmail.com" },
 ]
@@ -20,11 +19,15 @@ dependencies = [
   "Pillow>=10.0.1",
   "pandas>=2.1.1",
 ]
+dynamic = ["version"]
 
 [project.urls]
 "Homepage" = "https://github.com/imbg-ua/fastLBP"
 "Bug Tracker" = "https://github.com/imbg-ua/fastLBP/issues"
 
 [build-system]
-requires = ["setuptools>=61.0", "numpy"]
+requires = ["setuptools>=61.0", "numpy", "cython"]
 build-backend = "setuptools.build_meta"
+
+[tool.setuptools.dynamic]
+version = {attr = "fastlbp_imbg.__version__"}

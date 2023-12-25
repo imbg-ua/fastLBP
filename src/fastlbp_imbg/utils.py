@@ -8,7 +8,7 @@
 #   - mode is Pillow image mode: 'L' for nchannels=1 and 'RGB' for nchannels=3,
 #   - type is in ['png', 'jpg', 'tiff']
 # - Other nchannels values are not supported.
-def create_sample_image(height, width, nchannels, type='png', dir='tmp'):
+def create_sample_image(height, width, nchannels, type='tiff', dir='tmp'):
     from PIL import Image
     import numpy as np
     import os

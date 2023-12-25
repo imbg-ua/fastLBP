@@ -14,3 +14,11 @@ dist/
 *.zar
 **/__pycache__
 **/*.egg-info/
+*.pyd
+*.so
+*.dat
+*.bin
+*.bin.[0-9]*
+*.so
+*.html
+*.txt

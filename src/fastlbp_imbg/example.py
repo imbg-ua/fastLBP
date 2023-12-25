@@ -3,21 +3,21 @@ from PIL import Image
 Image.MAX_IMAGE_PIXELS = None
 
 ### if installed as pip package 
-# import fastlbp_imbg as fastlbp
+import fastlbp_imbg as fastlbp
 
 ### if using fastlbp.py 
-import fastlbp
+# import fastlbp
 
 def main():
-    print("hewlo")
+    print(f"hewlo. running fastlbp ver. {fastlbp.__version__}")
 
-    img = Image.open("data/bark.tiff")
-    img_data = np.asarray(img)
+    # will a create random input image in ./tmp if not exists yet
+    img_data = fastlbp.load_sample_image(5000,5000,3,'tiff',create=True)
     print(img_data.shape)
 
-    # to add 3rd dimension
-    img_data = img_data[:,:,None]
-    print(img_data.shape)
+    if len(img_data.shape) == 2: 
+        img_data = img_data[:,:,None]
+        print(img_data.shape)
 
     radii_list = [1,2,3,4,5]
     npoints_list = [ fastlbp.get_p_for_r(r) for r in radii_list ] 
@@ -28,11 +28,10 @@ def main():
     output_abs_path = fastlbp.run_skimage(
         img_data, radii_list, npoints_list, patchsize, 
         ncpus=4, 
-        outfile_name="bark_lbp.npy",  # output file name, will be in the ./data/out
-        img_name="bark",    # human-friendly name, optional
-        max_ram=100,        # unused yet
-        save_intermediate_results=False,    # perform computations in RAM only
-        overwrite_output=False    # error if output file already exists
+        outfile_name="lbp_features.npy",  # output file name, will be in the ./data/out
+        img_name="whitenoise",    # human-friendly name, optional
+        save_intermediate_results=False,  # do not use cache
+        overwrite_output=True     # no error if output file already exists
     )
 
     # Uncomment this for basic output viz
