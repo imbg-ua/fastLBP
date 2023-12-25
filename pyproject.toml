@@ -1,6 +1,5 @@
 [project]
 name = "fastlbp-imbg"
-version = "0.0.1"
 authors = [
   { name="Mykhailo Koreshkov", email="koreshov.m@gmail.com" },
 ]
@@ -20,7 +19,11 @@ dependencies = [
   "Pillow>=10.0.1",
   "pandas>=2.1.1",
 ]
+dynamic = ["version"]
 
 [project.urls]
 "Homepage" = "https://github.com/imbg-ua/fastLBP"
 "Bug Tracker" = "https://github.com/imbg-ua/fastLBP/issues"
+
+[tool.setuptools.dynamic]
+version = {attr = "fastlbp_imbg.__version__"}
