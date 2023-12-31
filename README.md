@@ -24,6 +24,15 @@ Our lustre directory is
 `/lustre/scratch126/casm/team268im/`
 
 
+## Cython2 branch details
+TODO:
+- [x] Data Contiguity (`e3293cd`)
+- [x] Job sorting (from slow to quick) in fastlbp.py (`TBD`)
+- [ ] Change data types in lbp.pyx from float64 to something smaller
+- [ ] Add mask feature to lbp.pyx
+- [ ] Add mask feature to fastlbp.py
+- [ ] Fill all commit numbers
+
 
 ## Implemented modules
 ### run_skimage

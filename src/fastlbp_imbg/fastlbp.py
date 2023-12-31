@@ -259,6 +259,10 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
     jobs['img_shape_2'] = input_img_np.shape[2]
     jobs['output_shm_name'] = patch_features_shm.name
 
+    # Sort jobs starting from the longest ones, i.e. from larger radii to smaller ones.
+    # `level=1` values are radii
+    jobs.sort_index(level=1, ascending=False, inplace=True)
+
     log.info(f'run_skimage({pipeline_hash}): creating a list of jobs took {time.perf_counter()-t:.5g}s')
     log.info(f"run_skimage({pipeline_hash}): jobs:")
     log.info(jobs)
