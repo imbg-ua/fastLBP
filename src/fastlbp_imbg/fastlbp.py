@@ -175,7 +175,7 @@ def run_fastlbp(img_data, radii_list, npoints_list, patchsize, ncpus,
 
     log.info('run_fastlbp: params:')
     log.info("img_shape, radii_list, npoints_list, patchsize, ncpus, max_ram, img_name")
-    log.info(img_data.shape, radii_list, npoints_list, patchsize, ncpus, max_ram, img_name)
+    log.info(f"{img_data.shape}, {radii_list}, {npoints_list}, {patchsize}, {ncpus}, {max_ram}, {img_name}")
     log.info(f"outfile_name={outfile_name}, save_intermediate_results={save_intermediate_results}, overwrite_output={overwrite_output}")
     log.info(f"pipeline hash is {pipeline_hash}")
 
