@@ -453,3 +453,12 @@ def _local_binary_pattern(cnp.float64_t[:, ::1] image,
                 output[r, c] = lbp
 
     return np.asarray(output)
+
+
+def _uniform_lbp_uint8(cnp.uint8_t[:, ::1] image,
+                          int P, cnp.float64_t R):
+    """ Stub ""
+
+    output_shape = (image.shape[0], image.shape[1])
+    cdef cnp.uint16_t[:, ::1] output = np.zeros(output_shape, dtype=np.uint16)
+    return np.asarray(output)
