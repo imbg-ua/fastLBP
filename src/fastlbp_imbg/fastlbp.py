@@ -13,9 +13,9 @@ from multiprocessing import Pool, shared_memory
 
 import hashlib
 
-from .lbp import local_binary_pattern
+from .lbp import uniform_lbp_uint8
 
-_features_dtype = np.uint32
+_features_dtype = np.uint16
 
 #####
 # PIPELINE WORKERS FOR INTERNAL USAGE
@@ -66,20 +66,17 @@ def __worker_fastlbp(args):
             job_patch_histograms = cached_result_mm
 
         else: 
-            # Compute LBP
+             # Compute LBP
 
             img_data_shm = shared_memory.SharedMemory(name=job['img_shm_name'])
             img_data = np.ndarray(shape, dtype=job['img_pixel_dtype'], buffer=img_data_shm.buf)
             
-            img_channel = np.ascontiguousarray(img_data[job['channel']], dtype=np.float64)
-            log.info(f"run_fastlbp: worker {jobname}({pid}): contiguity test: img_data {img_data.flags.c_contiguous}, img_channel {img_channel.flags.c_contiguous}")
+            img_channel = img_data[job['channel']]
+            assert img_channel.flags.c_contiguous
+            assert img_channel.dtype == np.uint8
             
-            lbp_results = local_binary_pattern(
-                image=img_channel, P=job['npoints'], R=job['radius'], method=ord('U')
-            ).astype(np.uint16)
-            
-            # log.info(f"run_skimage: worker {jobname}({pid}): image: min={img_data[:,:,job['channel']].min()} max={img_data[:,:,job['channel']].max()} avg={img_data[:,:,job['channel']].mean()}")
-            # log.info(f"run_skimage: worker {jobname}({pid}): lbp codes: min={lbp_results.min()} max={lbp_results.max()}")
+            lbp_results = uniform_lbp_uint8(image=img_channel, P=job['npoints'], R=job['radius'])
+            assert lbp_results.dtype == _features_dtype
 
             img_data_shm.close()
 

@@ -28,7 +28,7 @@ Our lustre directory is
 TODO:
 - [x] Data Contiguity (`e3293cd`)
 - [x] Job sorting (from slow to quick) in fastlbp.py (`8a21a04`)
-- [ ] Change data types in lbp.pyx from float64 to something smaller (`IN PROGRESS`)
+- [x] Change data types in lbp.pyx from float64 to something smaller (`TBD`)
 - [ ] Add mask feature to lbp.pyx
 - [ ] Add mask feature to fastlbp.py
 - [ ] Fill all commit numbers
