@@ -255,8 +255,9 @@ def run_fastlbp(img_data, radii_list, npoints_list, patchsize, ncpus,
     # copy mask to shared memory if provided
     img_mask_shm = None
     if img_mask is not None:
+        log.info(f"run_fastlbp({pipeline_hash}): using image mask.")
         img_mask_shm = shared_memory.SharedMemory(create=True, size=img_mask.nbytes)
-        img_mask_np = np.ndarray(img_mask.shape, img_mask.dtype, input_img_shm.buf)
+        img_mask_np = np.ndarray(img_mask.shape, dtype=img_mask.dtype, buffer=img_mask_shm.buf)
         np.copyto(img_mask_np, img_mask, casting='no')
 
     # create and initialize shared memory for output

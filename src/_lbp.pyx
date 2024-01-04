@@ -532,7 +532,7 @@ def _uniform_lbp_uint8_masked(cnp.uint8_t[:, ::1] image, cnp.uint8_t[:, ::1] mas
     with nogil:
         for r in range(image.shape[0]):
             for c in range(image.shape[1]):
-                if not mask[r,c]:
+                if mask[r,c] == 0:
                     continue
 
                 for i in range(P):
