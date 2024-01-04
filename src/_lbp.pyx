@@ -480,8 +480,8 @@ def _uniform_lbp_uint8(cnp.uint8_t[:, ::1] image, int P, cnp.float64_t R):
         for r in range(image.shape[0]):
             for c in range(image.shape[1]):
                 for i in range(P):
-                    # types are [ image, cval, out ]
-                    bilinear_interpolation[cnp.uint8_t, cnp.uint8_t, cnp.float64_t](
+                    # types are [ image/cval, r/c, out ]
+                    bilinear_interpolation[cnp.uint8_t, cnp.float64_t, cnp.float64_t](
                             &image[0, 0], rows, cols, r + rp[i], c + cp[i],
                             b'C', 0, &texture[i])
                 # signed / thresholded texture
@@ -536,8 +536,8 @@ def _uniform_lbp_uint8_masked(cnp.uint8_t[:, ::1] image, cnp.uint8_t[:, ::1] mas
                     continue
 
                 for i in range(P):
-                    # types are [ image, cval, out ]
-                    bilinear_interpolation[cnp.uint8_t, cnp.uint8_t, cnp.float64_t](
+                    # types are [ image/cval, r/c, out ]
+                    bilinear_interpolation[cnp.uint8_t, cnp.float64_t, cnp.float64_t](
                             &image[0, 0], rows, cols, r + rp[i], c + cp[i],
                             b'C', 0, &texture[i])
                 # signed / thresholded texture
