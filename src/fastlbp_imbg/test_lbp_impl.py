@@ -1,6 +1,6 @@
 import numpy as np
 import skimage as ski
-from .lbp import uniform_local_binary_pattern
+from .lbp import uniform_lbp_uint8
 from .fastlbp import get_p_for_r
 import unittest
 
@@ -16,7 +16,7 @@ class TestCythonLBP(unittest.TestCase):
 
             for r,p in zip(Rs, Rs):
                 skimage_result = ski.feature.local_binary_pattern(data, P=p, R=r, method='uniform').astype(np.uint16)
-                cython_result = uniform_local_binary_pattern(data, P=p, R=r)
+                cython_result = uniform_lbp_uint8(data, P=p, R=r)
                 with self.subTest(i=i, radius=r, npoints=p, height=H, weight=W):
                     self.assertEqual(cython_result.dtype, skimage_result.dtype, "Dtype mismatch")
                     self.assertTrue((cython_result == skimage_result).all)
@@ -31,7 +31,7 @@ class TestCythonLBP(unittest.TestCase):
 
             for r,p in zip(Rs, Rs):
                 skimage_result = ski.feature.local_binary_pattern(data, P=p, R=r, method='uniform').astype(np.uint16)
-                cython_result = uniform_local_binary_pattern(data, P=p, R=r)
+                cython_result = uniform_lbp_uint8(data, P=p, R=r)
                 with self.subTest(i=i, radius=r, npoints=p, height=H, weight=W):
                     self.assertEqual(cython_result.dtype, skimage_result.dtype, "Dtype mismatch")
                     self.assertTrue((cython_result == skimage_result).all)

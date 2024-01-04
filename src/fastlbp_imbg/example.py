@@ -25,7 +25,7 @@ def main():
 
     patchsize = 16
 
-    output_abs_path = fastlbp.run_skimage(
+    output_abs_path = fastlbp.run_fastlbp(
         img_data, radii_list, npoints_list, patchsize, 
         ncpus=4, 
         outfile_name="lbp_features.npy",  # output file name, will be in the ./data/out
