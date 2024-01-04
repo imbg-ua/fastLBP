@@ -14,7 +14,7 @@ from multiprocessing import Pool, shared_memory
 
 import hashlib
 
-from .lbp import _local_binary_pattern
+from .lbp import local_binary_pattern
 
 #####
 # PIPELINE WORKERS FOR INTERNAL USAGE
@@ -78,7 +78,7 @@ def __worker_skimage(args):
             img_channel = np.ascontiguousarray(img_data[job['channel']], dtype=np.float64)
             log.info(f"run_skimage: worker {jobname}({pid}): contiguity test: img_data {img_data.flags.c_contiguous}, img_channel {img_channel.flags.c_contiguous}")
             
-            lbp_results = _local_binary_pattern(
+            lbp_results = local_binary_pattern(
                 image=img_channel, P=job['npoints'], R=job['radius'], method=ord('U')
             ).astype(np.uint16)
             
@@ -156,6 +156,7 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
     # validate params and prepare a pipeline
     assert len(radii_list) == len(npoints_list)
     assert len(img_data.shape) == 3
+    assert img_data.dtype == np.uint8
     
     t = time.perf_counter()
     
@@ -250,13 +251,13 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
 
     # output
     patch_features = np.ndarray(patch_features_shape, np.uint32, buffer=patch_features_shm.buf)
-    patch_features.fill(np.iinfo(np.uint32).max)
+    patch_features.fill(0)
 
     jobs['img_shm_name'] = input_img_shm.name
-    jobs['img_pixel_dtype'] = input_img_np.dtype
-    jobs['img_shape_0'] = input_img_np.shape[0]
-    jobs['img_shape_1'] = input_img_np.shape[1]
-    jobs['img_shape_2'] = input_img_np.shape[2]
+    jobs['img_pixel_dtype'] = input_img_np.dtype # note: always uint8
+    jobs['img_shape_0'] = input_img_np.shape[0] # nchannels
+    jobs['img_shape_1'] = input_img_np.shape[1] # h
+    jobs['img_shape_2'] = input_img_np.shape[2] # w
     jobs['output_shm_name'] = patch_features_shm.name
 
     # Sort jobs starting from the longest ones, i.e. from larger radii to smaller ones.

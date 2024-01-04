@@ -4,22 +4,22 @@
 {
     "distutils": {
         "depends": [
-            "C:\\Users\\mkrooted\\AppData\\Local\\Temp\\pip-build-env-751xrp5h\\overlay\\Lib\\site-packages\\numpy\\core\\include\\numpy\\arrayobject.h",
-            "C:\\Users\\mkrooted\\AppData\\Local\\Temp\\pip-build-env-751xrp5h\\overlay\\Lib\\site-packages\\numpy\\core\\include\\numpy\\arrayscalars.h",
-            "C:\\Users\\mkrooted\\AppData\\Local\\Temp\\pip-build-env-751xrp5h\\overlay\\Lib\\site-packages\\numpy\\core\\include\\numpy\\ndarrayobject.h",
-            "C:\\Users\\mkrooted\\AppData\\Local\\Temp\\pip-build-env-751xrp5h\\overlay\\Lib\\site-packages\\numpy\\core\\include\\numpy\\ndarraytypes.h",
-            "C:\\Users\\mkrooted\\AppData\\Local\\Temp\\pip-build-env-751xrp5h\\overlay\\Lib\\site-packages\\numpy\\core\\include\\numpy\\npy_math.h",
-            "C:\\Users\\mkrooted\\AppData\\Local\\Temp\\pip-build-env-751xrp5h\\overlay\\Lib\\site-packages\\numpy\\core\\include\\numpy\\ufuncobject.h"
+            "C:\\Users\\mkrooted\\AppData\\Local\\Temp\\pip-build-env-3zlqvb_q\\overlay\\Lib\\site-packages\\numpy\\core\\include\\numpy\\arrayobject.h",
+            "C:\\Users\\mkrooted\\AppData\\Local\\Temp\\pip-build-env-3zlqvb_q\\overlay\\Lib\\site-packages\\numpy\\core\\include\\numpy\\arrayscalars.h",
+            "C:\\Users\\mkrooted\\AppData\\Local\\Temp\\pip-build-env-3zlqvb_q\\overlay\\Lib\\site-packages\\numpy\\core\\include\\numpy\\ndarrayobject.h",
+            "C:\\Users\\mkrooted\\AppData\\Local\\Temp\\pip-build-env-3zlqvb_q\\overlay\\Lib\\site-packages\\numpy\\core\\include\\numpy\\ndarraytypes.h",
+            "C:\\Users\\mkrooted\\AppData\\Local\\Temp\\pip-build-env-3zlqvb_q\\overlay\\Lib\\site-packages\\numpy\\core\\include\\numpy\\npy_math.h",
+            "C:\\Users\\mkrooted\\AppData\\Local\\Temp\\pip-build-env-3zlqvb_q\\overlay\\Lib\\site-packages\\numpy\\core\\include\\numpy\\ufuncobject.h"
         ],
         "include_dirs": [
-            "C:\\Users\\mkrooted\\AppData\\Local\\Temp\\pip-build-env-751xrp5h\\overlay\\Lib\\site-packages\\numpy\\core\\include"
+            "C:\\Users\\mkrooted\\AppData\\Local\\Temp\\pip-build-env-3zlqvb_q\\overlay\\Lib\\site-packages\\numpy\\core\\include"
         ],
-        "name": "fastlbp_imbg.lbp",
+        "name": "fastlbp_imbg._lbp",
         "sources": [
-            "src/lbp.pyx"
+            "src/_lbp.pyx"
         ]
     },
-    "module_name": "fastlbp_imbg.lbp"
+    "module_name": "fastlbp_imbg._lbp"
 }
 END: Cython Metadata */
 
@@ -1204,8 +1204,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__fastlbp_imbg__lbp
-#define __PYX_HAVE_API__fastlbp_imbg__lbp
+#define __PYX_HAVE__fastlbp_imbg___lbp
+#define __PYX_HAVE_API__fastlbp_imbg___lbp
 /* Early includes */
 #include <string.h>
 #include <stdio.h>
@@ -1508,7 +1508,7 @@ static const char *__pyx_filename;
 /* #### Code section: filename_table ### */
 
 static const char *__pyx_f[] = {
-  "src\\\\lbp.pyx",
+  "src\\\\_lbp.pyx",
   "<stringsource>",
   "__init__.cython-30.pxd",
   "type.pxd",
@@ -1657,7 +1657,7 @@ typedef struct {
 
 /* #### Code section: numeric_typedefs ### */
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":730
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":730
  * # in Cython to enable them only on the right systems.
  * 
  * ctypedef npy_int8       int8_t             # <<<<<<<<<<<<<<
@@ -1666,7 +1666,7 @@ typedef struct {
  */
 typedef npy_int8 __pyx_t_5numpy_int8_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":731
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":731
  * 
  * ctypedef npy_int8       int8_t
  * ctypedef npy_int16      int16_t             # <<<<<<<<<<<<<<
@@ -1675,7 +1675,7 @@ typedef npy_int8 __pyx_t_5numpy_int8_t;
  */
 typedef npy_int16 __pyx_t_5numpy_int16_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":732
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":732
  * ctypedef npy_int8       int8_t
  * ctypedef npy_int16      int16_t
  * ctypedef npy_int32      int32_t             # <<<<<<<<<<<<<<
@@ -1684,7 +1684,7 @@ typedef npy_int16 __pyx_t_5numpy_int16_t;
  */
 typedef npy_int32 __pyx_t_5numpy_int32_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":733
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":733
  * ctypedef npy_int16      int16_t
  * ctypedef npy_int32      int32_t
  * ctypedef npy_int64      int64_t             # <<<<<<<<<<<<<<
@@ -1693,7 +1693,7 @@ typedef npy_int32 __pyx_t_5numpy_int32_t;
  */
 typedef npy_int64 __pyx_t_5numpy_int64_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":737
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":737
  * #ctypedef npy_int128     int128_t
  * 
  * ctypedef npy_uint8      uint8_t             # <<<<<<<<<<<<<<
@@ -1702,7 +1702,7 @@ typedef npy_int64 __pyx_t_5numpy_int64_t;
  */
 typedef npy_uint8 __pyx_t_5numpy_uint8_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":738
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":738
  * 
  * ctypedef npy_uint8      uint8_t
  * ctypedef npy_uint16     uint16_t             # <<<<<<<<<<<<<<
@@ -1711,7 +1711,7 @@ typedef npy_uint8 __pyx_t_5numpy_uint8_t;
  */
 typedef npy_uint16 __pyx_t_5numpy_uint16_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":739
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":739
  * ctypedef npy_uint8      uint8_t
  * ctypedef npy_uint16     uint16_t
  * ctypedef npy_uint32     uint32_t             # <<<<<<<<<<<<<<
@@ -1720,7 +1720,7 @@ typedef npy_uint16 __pyx_t_5numpy_uint16_t;
  */
 typedef npy_uint32 __pyx_t_5numpy_uint32_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":740
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":740
  * ctypedef npy_uint16     uint16_t
  * ctypedef npy_uint32     uint32_t
  * ctypedef npy_uint64     uint64_t             # <<<<<<<<<<<<<<
@@ -1729,7 +1729,7 @@ typedef npy_uint32 __pyx_t_5numpy_uint32_t;
  */
 typedef npy_uint64 __pyx_t_5numpy_uint64_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":744
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":744
  * #ctypedef npy_uint128    uint128_t
  * 
  * ctypedef npy_float32    float32_t             # <<<<<<<<<<<<<<
@@ -1738,7 +1738,7 @@ typedef npy_uint64 __pyx_t_5numpy_uint64_t;
  */
 typedef npy_float32 __pyx_t_5numpy_float32_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":745
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":745
  * 
  * ctypedef npy_float32    float32_t
  * ctypedef npy_float64    float64_t             # <<<<<<<<<<<<<<
@@ -1747,7 +1747,7 @@ typedef npy_float32 __pyx_t_5numpy_float32_t;
  */
 typedef npy_float64 __pyx_t_5numpy_float64_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":754
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":754
  * # The int types are mapped a bit surprising --
  * # numpy.int corresponds to 'l' and numpy.long to 'q'
  * ctypedef npy_long       int_t             # <<<<<<<<<<<<<<
@@ -1756,7 +1756,7 @@ typedef npy_float64 __pyx_t_5numpy_float64_t;
  */
 typedef npy_long __pyx_t_5numpy_int_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":755
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":755
  * # numpy.int corresponds to 'l' and numpy.long to 'q'
  * ctypedef npy_long       int_t
  * ctypedef npy_longlong   longlong_t             # <<<<<<<<<<<<<<
@@ -1765,7 +1765,7 @@ typedef npy_long __pyx_t_5numpy_int_t;
  */
 typedef npy_longlong __pyx_t_5numpy_longlong_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":757
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":757
  * ctypedef npy_longlong   longlong_t
  * 
  * ctypedef npy_ulong      uint_t             # <<<<<<<<<<<<<<
@@ -1774,7 +1774,7 @@ typedef npy_longlong __pyx_t_5numpy_longlong_t;
  */
 typedef npy_ulong __pyx_t_5numpy_uint_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":758
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":758
  * 
  * ctypedef npy_ulong      uint_t
  * ctypedef npy_ulonglong  ulonglong_t             # <<<<<<<<<<<<<<
@@ -1783,7 +1783,7 @@ typedef npy_ulong __pyx_t_5numpy_uint_t;
  */
 typedef npy_ulonglong __pyx_t_5numpy_ulonglong_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":760
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":760
  * ctypedef npy_ulonglong  ulonglong_t
  * 
  * ctypedef npy_intp       intp_t             # <<<<<<<<<<<<<<
@@ -1792,7 +1792,7 @@ typedef npy_ulonglong __pyx_t_5numpy_ulonglong_t;
  */
 typedef npy_intp __pyx_t_5numpy_intp_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":761
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":761
  * 
  * ctypedef npy_intp       intp_t
  * ctypedef npy_uintp      uintp_t             # <<<<<<<<<<<<<<
@@ -1801,7 +1801,7 @@ typedef npy_intp __pyx_t_5numpy_intp_t;
  */
 typedef npy_uintp __pyx_t_5numpy_uintp_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":763
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":763
  * ctypedef npy_uintp      uintp_t
  * 
  * ctypedef npy_double     float_t             # <<<<<<<<<<<<<<
@@ -1810,7 +1810,7 @@ typedef npy_uintp __pyx_t_5numpy_uintp_t;
  */
 typedef npy_double __pyx_t_5numpy_float_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":764
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":764
  * 
  * ctypedef npy_double     float_t
  * ctypedef npy_double     double_t             # <<<<<<<<<<<<<<
@@ -1819,7 +1819,7 @@ typedef npy_double __pyx_t_5numpy_float_t;
  */
 typedef npy_double __pyx_t_5numpy_double_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":765
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":765
  * ctypedef npy_double     float_t
  * ctypedef npy_double     double_t
  * ctypedef npy_longdouble longdouble_t             # <<<<<<<<<<<<<<
@@ -1860,7 +1860,7 @@ struct __pyx_MemviewEnum_obj;
 struct __pyx_memoryview_obj;
 struct __pyx_memoryviewslice_obj;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":767
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":767
  * ctypedef npy_longdouble longdouble_t
  * 
  * ctypedef npy_cfloat      cfloat_t             # <<<<<<<<<<<<<<
@@ -1869,7 +1869,7 @@ struct __pyx_memoryviewslice_obj;
  */
 typedef npy_cfloat __pyx_t_5numpy_cfloat_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":768
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":768
  * 
  * ctypedef npy_cfloat      cfloat_t
  * ctypedef npy_cdouble     cdouble_t             # <<<<<<<<<<<<<<
@@ -1878,7 +1878,7 @@ typedef npy_cfloat __pyx_t_5numpy_cfloat_t;
  */
 typedef npy_cdouble __pyx_t_5numpy_cdouble_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":769
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":769
  * ctypedef npy_cfloat      cfloat_t
  * ctypedef npy_cdouble     cdouble_t
  * ctypedef npy_clongdouble clongdouble_t             # <<<<<<<<<<<<<<
@@ -1887,7 +1887,7 @@ typedef npy_cdouble __pyx_t_5numpy_cdouble_t;
  */
 typedef npy_clongdouble __pyx_t_5numpy_clongdouble_t;
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":771
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":771
  * ctypedef npy_clongdouble clongdouble_t
  * 
  * ctypedef npy_cdouble     complex_t             # <<<<<<<<<<<<<<
@@ -3147,7 +3147,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void); /*proto*/
 
 /* Module declarations from "libc.math" */
 
-/* Module declarations from "fastlbp_imbg.lbp" */
+/* Module declarations from "fastlbp_imbg._lbp" */
 static PyObject *__pyx_collections_abc_Sequence = 0;
 static PyObject *generic = 0;
 static PyObject *strided = 0;
@@ -3156,19 +3156,19 @@ static PyObject *contiguous = 0;
 static PyObject *indirect_contiguous = 0;
 static int __pyx_memoryview_thread_locks_used;
 static PyThread_type_lock __pyx_memoryview_thread_locks[8];
-static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t, long, char); /*proto*/
-static CYTHON_INLINE int __pyx_f_12fastlbp_imbg_3lbp__bit_rotate_right(int, int); /*proto*/
-static CYTHON_INLINE __pyx_t_5numpy_uint8_t __pyx_fuse_0__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_uint8_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_uint8_t); /*proto*/
-static CYTHON_INLINE __pyx_t_5numpy_uint16_t __pyx_fuse_1__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_uint16_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_uint16_t); /*proto*/
-static CYTHON_INLINE __pyx_t_5numpy_uint32_t __pyx_fuse_2__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_uint32_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_uint32_t); /*proto*/
-static CYTHON_INLINE __pyx_t_5numpy_uint64_t __pyx_fuse_3__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_uint64_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_uint64_t); /*proto*/
-static CYTHON_INLINE __pyx_t_5numpy_int8_t __pyx_fuse_4__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_int8_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_int8_t); /*proto*/
-static CYTHON_INLINE __pyx_t_5numpy_int16_t __pyx_fuse_5__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_int16_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_int16_t); /*proto*/
-static CYTHON_INLINE __pyx_t_5numpy_int32_t __pyx_fuse_6__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_int32_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_int32_t); /*proto*/
-static CYTHON_INLINE __pyx_t_5numpy_int64_t __pyx_fuse_7__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_int64_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_int64_t); /*proto*/
-static CYTHON_INLINE __pyx_t_5numpy_float32_t __pyx_fuse_8__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_float32_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_float32_t); /*proto*/
-static CYTHON_INLINE __pyx_t_5numpy_float64_t __pyx_fuse_9__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_float64_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_float64_t); /*proto*/
-static CYTHON_INLINE void __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_3lbp_bilinear_interpolation(__pyx_t_5numpy_float64_t *, Py_ssize_t, Py_ssize_t, __pyx_t_5numpy_float64_t, __pyx_t_5numpy_float64_t, char, __pyx_t_5numpy_float64_t, __pyx_t_5numpy_float64_t *); /*proto*/
+static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_4_lbp_coord_map(Py_ssize_t, long, char); /*proto*/
+static CYTHON_INLINE int __pyx_f_12fastlbp_imbg_4_lbp__bit_rotate_right(int, int); /*proto*/
+static CYTHON_INLINE __pyx_t_5numpy_uint8_t __pyx_fuse_0__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_uint8_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_uint8_t); /*proto*/
+static CYTHON_INLINE __pyx_t_5numpy_uint16_t __pyx_fuse_1__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_uint16_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_uint16_t); /*proto*/
+static CYTHON_INLINE __pyx_t_5numpy_uint32_t __pyx_fuse_2__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_uint32_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_uint32_t); /*proto*/
+static CYTHON_INLINE __pyx_t_5numpy_uint64_t __pyx_fuse_3__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_uint64_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_uint64_t); /*proto*/
+static CYTHON_INLINE __pyx_t_5numpy_int8_t __pyx_fuse_4__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_int8_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_int8_t); /*proto*/
+static CYTHON_INLINE __pyx_t_5numpy_int16_t __pyx_fuse_5__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_int16_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_int16_t); /*proto*/
+static CYTHON_INLINE __pyx_t_5numpy_int32_t __pyx_fuse_6__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_int32_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_int32_t); /*proto*/
+static CYTHON_INLINE __pyx_t_5numpy_int64_t __pyx_fuse_7__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_int64_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_int64_t); /*proto*/
+static CYTHON_INLINE __pyx_t_5numpy_float32_t __pyx_fuse_8__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_float32_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_float32_t); /*proto*/
+static CYTHON_INLINE __pyx_t_5numpy_float64_t __pyx_fuse_9__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_float64_t *, Py_ssize_t, Py_ssize_t, long, long, char, __pyx_t_5numpy_float64_t); /*proto*/
+static CYTHON_INLINE void __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_4_lbp_bilinear_interpolation(__pyx_t_5numpy_float64_t *, Py_ssize_t, Py_ssize_t, __pyx_t_5numpy_float64_t, __pyx_t_5numpy_float64_t, char, __pyx_t_5numpy_float64_t, __pyx_t_5numpy_float64_t *); /*proto*/
 static int __pyx_array_allocate_buffer(struct __pyx_array_obj *); /*proto*/
 static struct __pyx_array_obj *__pyx_array_new(PyObject *, Py_ssize_t, char *, char *, char *); /*proto*/
 static PyObject *__pyx_memoryview_new(PyObject *, int, int, __Pyx_TypeInfo *); /*proto*/
@@ -3208,11 +3208,11 @@ static __Pyx_TypeInfo __Pyx_TypeInfo_nn___pyx_t_5numpy_float64_t = { "float64_t"
 static __Pyx_TypeInfo __Pyx_TypeInfo_int = { "int", NULL, sizeof(int), { 0 }, 0, __PYX_IS_UNSIGNED(int) ? 'U' : 'I', __PYX_IS_UNSIGNED(int), 0 };
 static __Pyx_TypeInfo __Pyx_TypeInfo_signed_char = { "signed char", NULL, sizeof(signed char), { 0 }, 0, __PYX_IS_UNSIGNED(signed char) ? 'U' : 'I', __PYX_IS_UNSIGNED(signed char), 0 };
 /* #### Code section: before_global_var ### */
-#define __Pyx_MODULE_NAME "fastlbp_imbg.lbp"
-extern int __pyx_module_is_main_fastlbp_imbg__lbp;
-int __pyx_module_is_main_fastlbp_imbg__lbp = 0;
+#define __Pyx_MODULE_NAME "fastlbp_imbg._lbp"
+extern int __pyx_module_is_main_fastlbp_imbg___lbp;
+int __pyx_module_is_main_fastlbp_imbg___lbp = 0;
 
-/* Implementation of "fastlbp_imbg.lbp" */
+/* Implementation of "fastlbp_imbg._lbp" */
 /* #### Code section: global_var ### */
 static PyObject *__pyx_builtin_range;
 static PyObject *__pyx_builtin___import__;
@@ -3245,7 +3245,7 @@ static const char __pyx_k_np[] = "np";
 static const char __pyx_k_pi[] = "pi";
 static const char __pyx_k_rp[] = "rp";
 static const char __pyx_k_rr[] = "rr";
-static const char __pyx_k__24[] = "?";
+static const char __pyx_k__25[] = "?";
 static const char __pyx_k_abc[] = "abc";
 static const char __pyx_k_and[] = " and ";
 static const char __pyx_k_cos[] = "cos";
@@ -3333,11 +3333,11 @@ static const char __pyx_k_ImportError[] = "ImportError";
 static const char __pyx_k_MemoryError[] = "MemoryError";
 static const char __pyx_k_PickleError[] = "PickleError";
 static const char __pyx_k_collections[] = "collections";
-static const char __pyx_k_src_lbp_pyx[] = "src\\lbp.pyx";
 static const char __pyx_k_initializing[] = "_initializing";
 static const char __pyx_k_is_coroutine[] = "_is_coroutine";
 static const char __pyx_k_output_shape[] = "output_shape";
 static const char __pyx_k_pyx_checksum[] = "__pyx_checksum";
+static const char __pyx_k_src__lbp_pyx[] = "src\\_lbp.pyx";
 static const char __pyx_k_stringsource[] = "<stringsource>";
 static const char __pyx_k_version_info[] = "version_info";
 static const char __pyx_k_class_getitem[] = "__class_getitem__";
@@ -3351,8 +3351,9 @@ static const char __pyx_k_collections_abc[] = "collections.abc";
 static const char __pyx_k_dtype_is_object[] = "dtype_is_object";
 static const char __pyx_k_pyx_PickleError[] = "__pyx_PickleError";
 static const char __pyx_k_setstate_cython[] = "__setstate_cython__";
-static const char __pyx_k_fastlbp_imbg_lbp[] = "fastlbp_imbg.lbp";
+static const char __pyx_k_fastlbp_imbg__lbp[] = "fastlbp_imbg._lbp";
 static const char __pyx_k_pyx_unpickle_Enum[] = "__pyx_unpickle_Enum";
+static const char __pyx_k_uniform_lbp_uint8[] = "_uniform_lbp_uint8";
 static const char __pyx_k_asyncio_coroutines[] = "asyncio.coroutines";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
 static const char __pyx_k_strided_and_direct[] = "<strided and direct>";
@@ -3429,7 +3430,8 @@ static void __pyx_memoryviewslice___pyx_pf_15View_dot_MemoryView_16_memoryviewsl
 static PyObject *__pyx_pf___pyx_memoryviewslice___reduce_cython__(CYTHON_UNUSED struct __pyx_memoryviewslice_obj *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf___pyx_memoryviewslice_2__setstate_cython__(CYTHON_UNUSED struct __pyx_memoryviewslice_obj *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_15View_dot_MemoryView___pyx_unpickle_Enum(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_image, int __pyx_v_P, __pyx_t_5numpy_float64_t __pyx_v_R, char __pyx_v_method); /* proto */
+static PyObject *__pyx_pf_12fastlbp_imbg_4_lbp__local_binary_pattern(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_image, int __pyx_v_P, __pyx_t_5numpy_float64_t __pyx_v_R, char __pyx_v_method); /* proto */
+static PyObject *__pyx_pf_12fastlbp_imbg_4_lbp_2_uniform_lbp_uint8(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_image, int __pyx_v_P, __pyx_t_5numpy_float64_t __pyx_v_R, char __pyx_v_method); /* proto */
 static PyObject *__pyx_tp_new_array(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_Enum(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_memoryview(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
@@ -3542,7 +3544,7 @@ typedef struct {
   PyObject *__pyx_n_s_ValueError;
   PyObject *__pyx_n_s_View_MemoryView;
   PyObject *__pyx_kp_u__2;
-  PyObject *__pyx_n_s__24;
+  PyObject *__pyx_n_s__25;
   PyObject *__pyx_n_s__3;
   PyObject *__pyx_kp_u__6;
   PyObject *__pyx_kp_u__7;
@@ -3576,7 +3578,7 @@ typedef struct {
   PyObject *__pyx_n_s_encode;
   PyObject *__pyx_n_s_enumerate;
   PyObject *__pyx_n_s_error;
-  PyObject *__pyx_n_s_fastlbp_imbg_lbp;
+  PyObject *__pyx_n_s_fastlbp_imbg__lbp;
   PyObject *__pyx_n_s_first_one;
   PyObject *__pyx_n_s_first_zero;
   PyObject *__pyx_n_s_flags;
@@ -3648,7 +3650,7 @@ typedef struct {
   PyObject *__pyx_n_s_sin;
   PyObject *__pyx_n_s_size;
   PyObject *__pyx_n_s_spec;
-  PyObject *__pyx_kp_s_src_lbp_pyx;
+  PyObject *__pyx_kp_s_src__lbp_pyx;
   PyObject *__pyx_n_s_start;
   PyObject *__pyx_n_s_step;
   PyObject *__pyx_n_s_stop;
@@ -3664,6 +3666,7 @@ typedef struct {
   PyObject *__pyx_n_s_texture_i;
   PyObject *__pyx_kp_s_unable_to_allocate_array_data;
   PyObject *__pyx_kp_s_unable_to_allocate_shape_and_str;
+  PyObject *__pyx_n_s_uniform_lbp_uint8;
   PyObject *__pyx_n_s_unpack;
   PyObject *__pyx_n_s_update;
   PyObject *__pyx_n_s_var;
@@ -3697,6 +3700,7 @@ typedef struct {
   PyObject *__pyx_tuple__22;
   PyObject *__pyx_codeobj__21;
   PyObject *__pyx_codeobj__23;
+  PyObject *__pyx_codeobj__24;
 } __pyx_mstate;
 
 #if CYTHON_USE_MODULE_STATE
@@ -3798,7 +3802,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_ValueError);
   Py_CLEAR(clear_module_state->__pyx_n_s_View_MemoryView);
   Py_CLEAR(clear_module_state->__pyx_kp_u__2);
-  Py_CLEAR(clear_module_state->__pyx_n_s__24);
+  Py_CLEAR(clear_module_state->__pyx_n_s__25);
   Py_CLEAR(clear_module_state->__pyx_n_s__3);
   Py_CLEAR(clear_module_state->__pyx_kp_u__6);
   Py_CLEAR(clear_module_state->__pyx_kp_u__7);
@@ -3832,7 +3836,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_encode);
   Py_CLEAR(clear_module_state->__pyx_n_s_enumerate);
   Py_CLEAR(clear_module_state->__pyx_n_s_error);
-  Py_CLEAR(clear_module_state->__pyx_n_s_fastlbp_imbg_lbp);
+  Py_CLEAR(clear_module_state->__pyx_n_s_fastlbp_imbg__lbp);
   Py_CLEAR(clear_module_state->__pyx_n_s_first_one);
   Py_CLEAR(clear_module_state->__pyx_n_s_first_zero);
   Py_CLEAR(clear_module_state->__pyx_n_s_flags);
@@ -3904,7 +3908,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_sin);
   Py_CLEAR(clear_module_state->__pyx_n_s_size);
   Py_CLEAR(clear_module_state->__pyx_n_s_spec);
-  Py_CLEAR(clear_module_state->__pyx_kp_s_src_lbp_pyx);
+  Py_CLEAR(clear_module_state->__pyx_kp_s_src__lbp_pyx);
   Py_CLEAR(clear_module_state->__pyx_n_s_start);
   Py_CLEAR(clear_module_state->__pyx_n_s_step);
   Py_CLEAR(clear_module_state->__pyx_n_s_stop);
@@ -3920,6 +3924,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_texture_i);
   Py_CLEAR(clear_module_state->__pyx_kp_s_unable_to_allocate_array_data);
   Py_CLEAR(clear_module_state->__pyx_kp_s_unable_to_allocate_shape_and_str);
+  Py_CLEAR(clear_module_state->__pyx_n_s_uniform_lbp_uint8);
   Py_CLEAR(clear_module_state->__pyx_n_s_unpack);
   Py_CLEAR(clear_module_state->__pyx_n_s_update);
   Py_CLEAR(clear_module_state->__pyx_n_s_var);
@@ -3953,6 +3958,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_tuple__22);
   Py_CLEAR(clear_module_state->__pyx_codeobj__21);
   Py_CLEAR(clear_module_state->__pyx_codeobj__23);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__24);
   return 0;
 }
 #endif
@@ -4032,7 +4038,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_ValueError);
   Py_VISIT(traverse_module_state->__pyx_n_s_View_MemoryView);
   Py_VISIT(traverse_module_state->__pyx_kp_u__2);
-  Py_VISIT(traverse_module_state->__pyx_n_s__24);
+  Py_VISIT(traverse_module_state->__pyx_n_s__25);
   Py_VISIT(traverse_module_state->__pyx_n_s__3);
   Py_VISIT(traverse_module_state->__pyx_kp_u__6);
   Py_VISIT(traverse_module_state->__pyx_kp_u__7);
@@ -4066,7 +4072,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_encode);
   Py_VISIT(traverse_module_state->__pyx_n_s_enumerate);
   Py_VISIT(traverse_module_state->__pyx_n_s_error);
-  Py_VISIT(traverse_module_state->__pyx_n_s_fastlbp_imbg_lbp);
+  Py_VISIT(traverse_module_state->__pyx_n_s_fastlbp_imbg__lbp);
   Py_VISIT(traverse_module_state->__pyx_n_s_first_one);
   Py_VISIT(traverse_module_state->__pyx_n_s_first_zero);
   Py_VISIT(traverse_module_state->__pyx_n_s_flags);
@@ -4138,7 +4144,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_sin);
   Py_VISIT(traverse_module_state->__pyx_n_s_size);
   Py_VISIT(traverse_module_state->__pyx_n_s_spec);
-  Py_VISIT(traverse_module_state->__pyx_kp_s_src_lbp_pyx);
+  Py_VISIT(traverse_module_state->__pyx_kp_s_src__lbp_pyx);
   Py_VISIT(traverse_module_state->__pyx_n_s_start);
   Py_VISIT(traverse_module_state->__pyx_n_s_step);
   Py_VISIT(traverse_module_state->__pyx_n_s_stop);
@@ -4154,6 +4160,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_texture_i);
   Py_VISIT(traverse_module_state->__pyx_kp_s_unable_to_allocate_array_data);
   Py_VISIT(traverse_module_state->__pyx_kp_s_unable_to_allocate_shape_and_str);
+  Py_VISIT(traverse_module_state->__pyx_n_s_uniform_lbp_uint8);
   Py_VISIT(traverse_module_state->__pyx_n_s_unpack);
   Py_VISIT(traverse_module_state->__pyx_n_s_update);
   Py_VISIT(traverse_module_state->__pyx_n_s_var);
@@ -4187,6 +4194,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_tuple__22);
   Py_VISIT(traverse_module_state->__pyx_codeobj__21);
   Py_VISIT(traverse_module_state->__pyx_codeobj__23);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__24);
   return 0;
 }
 #endif
@@ -4296,7 +4304,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_ValueError __pyx_mstate_global->__pyx_n_s_ValueError
 #define __pyx_n_s_View_MemoryView __pyx_mstate_global->__pyx_n_s_View_MemoryView
 #define __pyx_kp_u__2 __pyx_mstate_global->__pyx_kp_u__2
-#define __pyx_n_s__24 __pyx_mstate_global->__pyx_n_s__24
+#define __pyx_n_s__25 __pyx_mstate_global->__pyx_n_s__25
 #define __pyx_n_s__3 __pyx_mstate_global->__pyx_n_s__3
 #define __pyx_kp_u__6 __pyx_mstate_global->__pyx_kp_u__6
 #define __pyx_kp_u__7 __pyx_mstate_global->__pyx_kp_u__7
@@ -4330,7 +4338,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_encode __pyx_mstate_global->__pyx_n_s_encode
 #define __pyx_n_s_enumerate __pyx_mstate_global->__pyx_n_s_enumerate
 #define __pyx_n_s_error __pyx_mstate_global->__pyx_n_s_error
-#define __pyx_n_s_fastlbp_imbg_lbp __pyx_mstate_global->__pyx_n_s_fastlbp_imbg_lbp
+#define __pyx_n_s_fastlbp_imbg__lbp __pyx_mstate_global->__pyx_n_s_fastlbp_imbg__lbp
 #define __pyx_n_s_first_one __pyx_mstate_global->__pyx_n_s_first_one
 #define __pyx_n_s_first_zero __pyx_mstate_global->__pyx_n_s_first_zero
 #define __pyx_n_s_flags __pyx_mstate_global->__pyx_n_s_flags
@@ -4402,7 +4410,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_sin __pyx_mstate_global->__pyx_n_s_sin
 #define __pyx_n_s_size __pyx_mstate_global->__pyx_n_s_size
 #define __pyx_n_s_spec __pyx_mstate_global->__pyx_n_s_spec
-#define __pyx_kp_s_src_lbp_pyx __pyx_mstate_global->__pyx_kp_s_src_lbp_pyx
+#define __pyx_kp_s_src__lbp_pyx __pyx_mstate_global->__pyx_kp_s_src__lbp_pyx
 #define __pyx_n_s_start __pyx_mstate_global->__pyx_n_s_start
 #define __pyx_n_s_step __pyx_mstate_global->__pyx_n_s_step
 #define __pyx_n_s_stop __pyx_mstate_global->__pyx_n_s_stop
@@ -4418,6 +4426,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_texture_i __pyx_mstate_global->__pyx_n_s_texture_i
 #define __pyx_kp_s_unable_to_allocate_array_data __pyx_mstate_global->__pyx_kp_s_unable_to_allocate_array_data
 #define __pyx_kp_s_unable_to_allocate_shape_and_str __pyx_mstate_global->__pyx_kp_s_unable_to_allocate_shape_and_str
+#define __pyx_n_s_uniform_lbp_uint8 __pyx_mstate_global->__pyx_n_s_uniform_lbp_uint8
 #define __pyx_n_s_unpack __pyx_mstate_global->__pyx_n_s_unpack
 #define __pyx_n_s_update __pyx_mstate_global->__pyx_n_s_update
 #define __pyx_n_s_var __pyx_mstate_global->__pyx_n_s_var
@@ -4451,6 +4460,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_tuple__22 __pyx_mstate_global->__pyx_tuple__22
 #define __pyx_codeobj__21 __pyx_mstate_global->__pyx_codeobj__21
 #define __pyx_codeobj__23 __pyx_mstate_global->__pyx_codeobj__23
+#define __pyx_codeobj__24 __pyx_mstate_global->__pyx_codeobj__24
 /* #### Code section: module_code ### */
 
 /* "View.MemoryView":131
@@ -18079,7 +18089,7 @@ static PyObject *__pyx_unpickle_Enum__set_state(struct __pyx_MemviewEnum_obj *__
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":245
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":245
  * 
  *         @property
  *         cdef inline PyObject* base(self) nogil:             # <<<<<<<<<<<<<<
@@ -18090,7 +18100,7 @@ static PyObject *__pyx_unpickle_Enum__set_state(struct __pyx_MemviewEnum_obj *__
 static CYTHON_INLINE PyObject *__pyx_f_5numpy_7ndarray_4base_base(PyArrayObject *__pyx_v_self) {
   PyObject *__pyx_r;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":248
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":248
  *             """Returns a borrowed reference to the object owning the data/memory.
  *             """
  *             return PyArray_BASE(self)             # <<<<<<<<<<<<<<
@@ -18100,7 +18110,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_7ndarray_4base_base(PyArrayObject 
   __pyx_r = PyArray_BASE(__pyx_v_self);
   goto __pyx_L0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":245
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":245
  * 
  *         @property
  *         cdef inline PyObject* base(self) nogil:             # <<<<<<<<<<<<<<
@@ -18113,7 +18123,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_7ndarray_4base_base(PyArrayObject 
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":251
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":251
  * 
  *         @property
  *         cdef inline dtype descr(self):             # <<<<<<<<<<<<<<
@@ -18127,7 +18137,7 @@ static CYTHON_INLINE PyArray_Descr *__pyx_f_5numpy_7ndarray_5descr_descr(PyArray
   PyArray_Descr *__pyx_t_1;
   __Pyx_RefNannySetupContext("descr", 1);
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":254
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":254
  *             """Returns an owned reference to the dtype of the array.
  *             """
  *             return <dtype>PyArray_DESCR(self)             # <<<<<<<<<<<<<<
@@ -18140,7 +18150,7 @@ static CYTHON_INLINE PyArray_Descr *__pyx_f_5numpy_7ndarray_5descr_descr(PyArray
   __pyx_r = ((PyArray_Descr *)__pyx_t_1);
   goto __pyx_L0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":251
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":251
  * 
  *         @property
  *         cdef inline dtype descr(self):             # <<<<<<<<<<<<<<
@@ -18155,7 +18165,7 @@ static CYTHON_INLINE PyArray_Descr *__pyx_f_5numpy_7ndarray_5descr_descr(PyArray
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":257
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":257
  * 
  *         @property
  *         cdef inline int ndim(self) nogil:             # <<<<<<<<<<<<<<
@@ -18166,7 +18176,7 @@ static CYTHON_INLINE PyArray_Descr *__pyx_f_5numpy_7ndarray_5descr_descr(PyArray
 static CYTHON_INLINE int __pyx_f_5numpy_7ndarray_4ndim_ndim(PyArrayObject *__pyx_v_self) {
   int __pyx_r;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":260
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":260
  *             """Returns the number of dimensions in the array.
  *             """
  *             return PyArray_NDIM(self)             # <<<<<<<<<<<<<<
@@ -18176,7 +18186,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_7ndarray_4ndim_ndim(PyArrayObject *__pyx
   __pyx_r = PyArray_NDIM(__pyx_v_self);
   goto __pyx_L0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":257
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":257
  * 
  *         @property
  *         cdef inline int ndim(self) nogil:             # <<<<<<<<<<<<<<
@@ -18189,7 +18199,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_7ndarray_4ndim_ndim(PyArrayObject *__pyx
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":263
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":263
  * 
  *         @property
  *         cdef inline npy_intp *shape(self) nogil:             # <<<<<<<<<<<<<<
@@ -18200,7 +18210,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_7ndarray_4ndim_ndim(PyArrayObject *__pyx
 static CYTHON_INLINE npy_intp *__pyx_f_5numpy_7ndarray_5shape_shape(PyArrayObject *__pyx_v_self) {
   npy_intp *__pyx_r;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":268
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":268
  *             Can return NULL for 0-dimensional arrays.
  *             """
  *             return PyArray_DIMS(self)             # <<<<<<<<<<<<<<
@@ -18210,7 +18220,7 @@ static CYTHON_INLINE npy_intp *__pyx_f_5numpy_7ndarray_5shape_shape(PyArrayObjec
   __pyx_r = PyArray_DIMS(__pyx_v_self);
   goto __pyx_L0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":263
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":263
  * 
  *         @property
  *         cdef inline npy_intp *shape(self) nogil:             # <<<<<<<<<<<<<<
@@ -18223,7 +18233,7 @@ static CYTHON_INLINE npy_intp *__pyx_f_5numpy_7ndarray_5shape_shape(PyArrayObjec
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":271
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":271
  * 
  *         @property
  *         cdef inline npy_intp *strides(self) nogil:             # <<<<<<<<<<<<<<
@@ -18234,7 +18244,7 @@ static CYTHON_INLINE npy_intp *__pyx_f_5numpy_7ndarray_5shape_shape(PyArrayObjec
 static CYTHON_INLINE npy_intp *__pyx_f_5numpy_7ndarray_7strides_strides(PyArrayObject *__pyx_v_self) {
   npy_intp *__pyx_r;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":275
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":275
  *             The number of elements matches the number of dimensions of the array (ndim).
  *             """
  *             return PyArray_STRIDES(self)             # <<<<<<<<<<<<<<
@@ -18244,7 +18254,7 @@ static CYTHON_INLINE npy_intp *__pyx_f_5numpy_7ndarray_7strides_strides(PyArrayO
   __pyx_r = PyArray_STRIDES(__pyx_v_self);
   goto __pyx_L0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":271
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":271
  * 
  *         @property
  *         cdef inline npy_intp *strides(self) nogil:             # <<<<<<<<<<<<<<
@@ -18257,7 +18267,7 @@ static CYTHON_INLINE npy_intp *__pyx_f_5numpy_7ndarray_7strides_strides(PyArrayO
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":278
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":278
  * 
  *         @property
  *         cdef inline npy_intp size(self) nogil:             # <<<<<<<<<<<<<<
@@ -18268,7 +18278,7 @@ static CYTHON_INLINE npy_intp *__pyx_f_5numpy_7ndarray_7strides_strides(PyArrayO
 static CYTHON_INLINE npy_intp __pyx_f_5numpy_7ndarray_4size_size(PyArrayObject *__pyx_v_self) {
   npy_intp __pyx_r;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":281
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":281
  *             """Returns the total size (in number of elements) of the array.
  *             """
  *             return PyArray_SIZE(self)             # <<<<<<<<<<<<<<
@@ -18278,7 +18288,7 @@ static CYTHON_INLINE npy_intp __pyx_f_5numpy_7ndarray_4size_size(PyArrayObject *
   __pyx_r = PyArray_SIZE(__pyx_v_self);
   goto __pyx_L0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":278
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":278
  * 
  *         @property
  *         cdef inline npy_intp size(self) nogil:             # <<<<<<<<<<<<<<
@@ -18291,7 +18301,7 @@ static CYTHON_INLINE npy_intp __pyx_f_5numpy_7ndarray_4size_size(PyArrayObject *
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":284
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":284
  * 
  *         @property
  *         cdef inline char* data(self) nogil:             # <<<<<<<<<<<<<<
@@ -18302,7 +18312,7 @@ static CYTHON_INLINE npy_intp __pyx_f_5numpy_7ndarray_4size_size(PyArrayObject *
 static CYTHON_INLINE char *__pyx_f_5numpy_7ndarray_4data_data(PyArrayObject *__pyx_v_self) {
   char *__pyx_r;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":290
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":290
  *             of `PyArray_DATA()` instead, which returns a 'void*'.
  *             """
  *             return PyArray_BYTES(self)             # <<<<<<<<<<<<<<
@@ -18312,7 +18322,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy_7ndarray_4data_data(PyArrayObject *__p
   __pyx_r = PyArray_BYTES(__pyx_v_self);
   goto __pyx_L0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":284
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":284
  * 
  *         @property
  *         cdef inline char* data(self) nogil:             # <<<<<<<<<<<<<<
@@ -18325,7 +18335,7 @@ static CYTHON_INLINE char *__pyx_f_5numpy_7ndarray_4data_data(PyArrayObject *__p
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":773
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":773
  * ctypedef npy_cdouble     complex_t
  * 
  * cdef inline object PyArray_MultiIterNew1(a):             # <<<<<<<<<<<<<<
@@ -18342,7 +18352,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew1(PyObject *__
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew1", 1);
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":774
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":774
  * 
  * cdef inline object PyArray_MultiIterNew1(a):
  *     return PyArray_MultiIterNew(1, <void*>a)             # <<<<<<<<<<<<<<
@@ -18356,7 +18366,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew1(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":773
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":773
  * ctypedef npy_cdouble     complex_t
  * 
  * cdef inline object PyArray_MultiIterNew1(a):             # <<<<<<<<<<<<<<
@@ -18375,7 +18385,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew1(PyObject *__
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":776
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":776
  *     return PyArray_MultiIterNew(1, <void*>a)
  * 
  * cdef inline object PyArray_MultiIterNew2(a, b):             # <<<<<<<<<<<<<<
@@ -18392,7 +18402,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew2(PyObject *__
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew2", 1);
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":777
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":777
  * 
  * cdef inline object PyArray_MultiIterNew2(a, b):
  *     return PyArray_MultiIterNew(2, <void*>a, <void*>b)             # <<<<<<<<<<<<<<
@@ -18406,7 +18416,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew2(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":776
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":776
  *     return PyArray_MultiIterNew(1, <void*>a)
  * 
  * cdef inline object PyArray_MultiIterNew2(a, b):             # <<<<<<<<<<<<<<
@@ -18425,7 +18435,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew2(PyObject *__
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":779
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":779
  *     return PyArray_MultiIterNew(2, <void*>a, <void*>b)
  * 
  * cdef inline object PyArray_MultiIterNew3(a, b, c):             # <<<<<<<<<<<<<<
@@ -18442,7 +18452,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew3(PyObject *__
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew3", 1);
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":780
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":780
  * 
  * cdef inline object PyArray_MultiIterNew3(a, b, c):
  *     return PyArray_MultiIterNew(3, <void*>a, <void*>b, <void*> c)             # <<<<<<<<<<<<<<
@@ -18456,7 +18466,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew3(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":779
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":779
  *     return PyArray_MultiIterNew(2, <void*>a, <void*>b)
  * 
  * cdef inline object PyArray_MultiIterNew3(a, b, c):             # <<<<<<<<<<<<<<
@@ -18475,7 +18485,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew3(PyObject *__
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":782
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":782
  *     return PyArray_MultiIterNew(3, <void*>a, <void*>b, <void*> c)
  * 
  * cdef inline object PyArray_MultiIterNew4(a, b, c, d):             # <<<<<<<<<<<<<<
@@ -18492,7 +18502,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew4(PyObject *__
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew4", 1);
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":783
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":783
  * 
  * cdef inline object PyArray_MultiIterNew4(a, b, c, d):
  *     return PyArray_MultiIterNew(4, <void*>a, <void*>b, <void*>c, <void*> d)             # <<<<<<<<<<<<<<
@@ -18506,7 +18516,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew4(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":782
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":782
  *     return PyArray_MultiIterNew(3, <void*>a, <void*>b, <void*> c)
  * 
  * cdef inline object PyArray_MultiIterNew4(a, b, c, d):             # <<<<<<<<<<<<<<
@@ -18525,7 +18535,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew4(PyObject *__
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":785
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":785
  *     return PyArray_MultiIterNew(4, <void*>a, <void*>b, <void*>c, <void*> d)
  * 
  * cdef inline object PyArray_MultiIterNew5(a, b, c, d, e):             # <<<<<<<<<<<<<<
@@ -18542,7 +18552,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew5(PyObject *__
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("PyArray_MultiIterNew5", 1);
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":786
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":786
  * 
  * cdef inline object PyArray_MultiIterNew5(a, b, c, d, e):
  *     return PyArray_MultiIterNew(5, <void*>a, <void*>b, <void*>c, <void*> d, <void*> e)             # <<<<<<<<<<<<<<
@@ -18556,7 +18566,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew5(PyObject *__
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":785
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":785
  *     return PyArray_MultiIterNew(4, <void*>a, <void*>b, <void*>c, <void*> d)
  * 
  * cdef inline object PyArray_MultiIterNew5(a, b, c, d, e):             # <<<<<<<<<<<<<<
@@ -18575,7 +18585,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyArray_MultiIterNew5(PyObject *__
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":788
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":788
  *     return PyArray_MultiIterNew(5, <void*>a, <void*>b, <void*>c, <void*> d, <void*> e)
  * 
  * cdef inline tuple PyDataType_SHAPE(dtype d):             # <<<<<<<<<<<<<<
@@ -18589,7 +18599,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("PyDataType_SHAPE", 1);
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":789
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":789
  * 
  * cdef inline tuple PyDataType_SHAPE(dtype d):
  *     if PyDataType_HASSUBARRAY(d):             # <<<<<<<<<<<<<<
@@ -18599,7 +18609,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
   __pyx_t_1 = PyDataType_HASSUBARRAY(__pyx_v_d);
   if (__pyx_t_1) {
 
-    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":790
+    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":790
  * cdef inline tuple PyDataType_SHAPE(dtype d):
  *     if PyDataType_HASSUBARRAY(d):
  *         return <tuple>d.subarray.shape             # <<<<<<<<<<<<<<
@@ -18611,7 +18621,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
     __pyx_r = ((PyObject*)__pyx_v_d->subarray->shape);
     goto __pyx_L0;
 
-    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":789
+    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":789
  * 
  * cdef inline tuple PyDataType_SHAPE(dtype d):
  *     if PyDataType_HASSUBARRAY(d):             # <<<<<<<<<<<<<<
@@ -18620,7 +18630,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
  */
   }
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":792
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":792
  *         return <tuple>d.subarray.shape
  *     else:
  *         return ()             # <<<<<<<<<<<<<<
@@ -18634,7 +18644,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
     goto __pyx_L0;
   }
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":788
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":788
  *     return PyArray_MultiIterNew(5, <void*>a, <void*>b, <void*>c, <void*> d, <void*> e)
  * 
  * cdef inline tuple PyDataType_SHAPE(dtype d):             # <<<<<<<<<<<<<<
@@ -18649,7 +18659,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_PyDataType_SHAPE(PyArray_Descr *__
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":968
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":968
  *     int _import_umath() except -1
  * 
  * cdef inline void set_array_base(ndarray arr, object base):             # <<<<<<<<<<<<<<
@@ -18663,7 +18673,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":969
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":969
  * 
  * cdef inline void set_array_base(ndarray arr, object base):
  *     Py_INCREF(base) # important to do this before stealing the reference below!             # <<<<<<<<<<<<<<
@@ -18672,7 +18682,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
  */
   Py_INCREF(__pyx_v_base);
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":970
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":970
  * cdef inline void set_array_base(ndarray arr, object base):
  *     Py_INCREF(base) # important to do this before stealing the reference below!
  *     PyArray_SetBaseObject(arr, base)             # <<<<<<<<<<<<<<
@@ -18681,7 +18691,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
  */
   __pyx_t_1 = PyArray_SetBaseObject(__pyx_v_arr, __pyx_v_base); if (unlikely(__pyx_t_1 == ((int)-1))) __PYX_ERR(2, 970, __pyx_L1_error)
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":968
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":968
  *     int _import_umath() except -1
  * 
  * cdef inline void set_array_base(ndarray arr, object base):             # <<<<<<<<<<<<<<
@@ -18696,7 +18706,7 @@ static CYTHON_INLINE void __pyx_f_5numpy_set_array_base(PyArrayObject *__pyx_v_a
   __pyx_L0:;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":972
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":972
  *     PyArray_SetBaseObject(arr, base)
  * 
  * cdef inline object get_array_base(ndarray arr):             # <<<<<<<<<<<<<<
@@ -18711,7 +18721,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   int __pyx_t_1;
   __Pyx_RefNannySetupContext("get_array_base", 1);
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":973
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":973
  * 
  * cdef inline object get_array_base(ndarray arr):
  *     base = PyArray_BASE(arr)             # <<<<<<<<<<<<<<
@@ -18720,7 +18730,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
  */
   __pyx_v_base = PyArray_BASE(__pyx_v_arr);
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":974
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":974
  * cdef inline object get_array_base(ndarray arr):
  *     base = PyArray_BASE(arr)
  *     if base is NULL:             # <<<<<<<<<<<<<<
@@ -18730,7 +18740,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   __pyx_t_1 = (__pyx_v_base == NULL);
   if (__pyx_t_1) {
 
-    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":975
+    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":975
  *     base = PyArray_BASE(arr)
  *     if base is NULL:
  *         return None             # <<<<<<<<<<<<<<
@@ -18741,7 +18751,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
     __pyx_r = Py_None; __Pyx_INCREF(Py_None);
     goto __pyx_L0;
 
-    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":974
+    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":974
  * cdef inline object get_array_base(ndarray arr):
  *     base = PyArray_BASE(arr)
  *     if base is NULL:             # <<<<<<<<<<<<<<
@@ -18750,7 +18760,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
  */
   }
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":976
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":976
  *     if base is NULL:
  *         return None
  *     return <object>base             # <<<<<<<<<<<<<<
@@ -18762,7 +18772,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   __pyx_r = ((PyObject *)__pyx_v_base);
   goto __pyx_L0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":972
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":972
  *     PyArray_SetBaseObject(arr, base)
  * 
  * cdef inline object get_array_base(ndarray arr):             # <<<<<<<<<<<<<<
@@ -18777,7 +18787,7 @@ static CYTHON_INLINE PyObject *__pyx_f_5numpy_get_array_base(PyArrayObject *__py
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":980
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":980
  * # Versions of the import_* functions which are more suitable for
  * # Cython code.
  * cdef inline int import_array() except -1:             # <<<<<<<<<<<<<<
@@ -18801,7 +18811,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("import_array", 1);
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":981
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":981
  * # Cython code.
  * cdef inline int import_array() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -18817,7 +18827,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":982
+      /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":982
  * cdef inline int import_array() except -1:
  *     try:
  *         __pyx_import_array()             # <<<<<<<<<<<<<<
@@ -18826,7 +18836,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
  */
       __pyx_t_4 = _import_array(); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(2, 982, __pyx_L3_error)
 
-      /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":981
+      /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":981
  * # Cython code.
  * cdef inline int import_array() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -18840,7 +18850,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     goto __pyx_L8_try_end;
     __pyx_L3_error:;
 
-    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":983
+    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":983
  *     try:
  *         __pyx_import_array()
  *     except Exception:             # <<<<<<<<<<<<<<
@@ -18855,7 +18865,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
       __Pyx_XGOTREF(__pyx_t_6);
       __Pyx_XGOTREF(__pyx_t_7);
 
-      /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":984
+      /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":984
  *         __pyx_import_array()
  *     except Exception:
  *         raise ImportError("numpy.core.multiarray failed to import")             # <<<<<<<<<<<<<<
@@ -18870,7 +18880,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     }
     goto __pyx_L5_except_error;
 
-    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":981
+    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":981
  * # Cython code.
  * cdef inline int import_array() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -18886,7 +18896,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
     __pyx_L8_try_end:;
   }
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":980
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":980
  * # Versions of the import_* functions which are more suitable for
  * # Cython code.
  * cdef inline int import_array() except -1:             # <<<<<<<<<<<<<<
@@ -18909,7 +18919,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_array(void) {
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":986
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":986
  *         raise ImportError("numpy.core.multiarray failed to import")
  * 
  * cdef inline int import_umath() except -1:             # <<<<<<<<<<<<<<
@@ -18933,7 +18943,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("import_umath", 1);
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":987
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":987
  * 
  * cdef inline int import_umath() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -18949,7 +18959,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":988
+      /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":988
  * cdef inline int import_umath() except -1:
  *     try:
  *         _import_umath()             # <<<<<<<<<<<<<<
@@ -18958,7 +18968,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
  */
       __pyx_t_4 = _import_umath(); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(2, 988, __pyx_L3_error)
 
-      /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":987
+      /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":987
  * 
  * cdef inline int import_umath() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -18972,7 +18982,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     goto __pyx_L8_try_end;
     __pyx_L3_error:;
 
-    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":989
+    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":989
  *     try:
  *         _import_umath()
  *     except Exception:             # <<<<<<<<<<<<<<
@@ -18987,7 +18997,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
       __Pyx_XGOTREF(__pyx_t_6);
       __Pyx_XGOTREF(__pyx_t_7);
 
-      /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":990
+      /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":990
  *         _import_umath()
  *     except Exception:
  *         raise ImportError("numpy.core.umath failed to import")             # <<<<<<<<<<<<<<
@@ -19002,7 +19012,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     }
     goto __pyx_L5_except_error;
 
-    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":987
+    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":987
  * 
  * cdef inline int import_umath() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -19018,7 +19028,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
     __pyx_L8_try_end:;
   }
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":986
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":986
  *         raise ImportError("numpy.core.multiarray failed to import")
  * 
  * cdef inline int import_umath() except -1:             # <<<<<<<<<<<<<<
@@ -19041,7 +19051,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_umath(void) {
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":992
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":992
  *         raise ImportError("numpy.core.umath failed to import")
  * 
  * cdef inline int import_ufunc() except -1:             # <<<<<<<<<<<<<<
@@ -19065,7 +19075,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("import_ufunc", 1);
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":993
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":993
  * 
  * cdef inline int import_ufunc() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -19081,7 +19091,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     __Pyx_XGOTREF(__pyx_t_3);
     /*try:*/ {
 
-      /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":994
+      /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":994
  * cdef inline int import_ufunc() except -1:
  *     try:
  *         _import_umath()             # <<<<<<<<<<<<<<
@@ -19090,7 +19100,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
  */
       __pyx_t_4 = _import_umath(); if (unlikely(__pyx_t_4 == ((int)-1))) __PYX_ERR(2, 994, __pyx_L3_error)
 
-      /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":993
+      /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":993
  * 
  * cdef inline int import_ufunc() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -19104,7 +19114,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     goto __pyx_L8_try_end;
     __pyx_L3_error:;
 
-    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":995
+    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":995
  *     try:
  *         _import_umath()
  *     except Exception:             # <<<<<<<<<<<<<<
@@ -19119,7 +19129,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
       __Pyx_XGOTREF(__pyx_t_6);
       __Pyx_XGOTREF(__pyx_t_7);
 
-      /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":996
+      /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":996
  *         _import_umath()
  *     except Exception:
  *         raise ImportError("numpy.core.umath failed to import")             # <<<<<<<<<<<<<<
@@ -19134,7 +19144,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     }
     goto __pyx_L5_except_error;
 
-    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":993
+    /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":993
  * 
  * cdef inline int import_ufunc() except -1:
  *     try:             # <<<<<<<<<<<<<<
@@ -19150,7 +19160,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
     __pyx_L8_try_end:;
   }
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":992
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":992
  *         raise ImportError("numpy.core.umath failed to import")
  * 
  * cdef inline int import_ufunc() except -1:             # <<<<<<<<<<<<<<
@@ -19173,7 +19183,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":999
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":999
  * 
  * 
  * cdef inline bint is_timedelta64_object(object obj):             # <<<<<<<<<<<<<<
@@ -19184,7 +19194,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_import_ufunc(void) {
 static CYTHON_INLINE int __pyx_f_5numpy_is_timedelta64_object(PyObject *__pyx_v_obj) {
   int __pyx_r;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1011
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1011
  *     bool
  *     """
  *     return PyObject_TypeCheck(obj, &PyTimedeltaArrType_Type)             # <<<<<<<<<<<<<<
@@ -19194,7 +19204,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_is_timedelta64_object(PyObject *__pyx_v_
   __pyx_r = PyObject_TypeCheck(__pyx_v_obj, (&PyTimedeltaArrType_Type));
   goto __pyx_L0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":999
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":999
  * 
  * 
  * cdef inline bint is_timedelta64_object(object obj):             # <<<<<<<<<<<<<<
@@ -19207,7 +19217,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_is_timedelta64_object(PyObject *__pyx_v_
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1014
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1014
  * 
  * 
  * cdef inline bint is_datetime64_object(object obj):             # <<<<<<<<<<<<<<
@@ -19218,7 +19228,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_is_timedelta64_object(PyObject *__pyx_v_
 static CYTHON_INLINE int __pyx_f_5numpy_is_datetime64_object(PyObject *__pyx_v_obj) {
   int __pyx_r;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1026
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1026
  *     bool
  *     """
  *     return PyObject_TypeCheck(obj, &PyDatetimeArrType_Type)             # <<<<<<<<<<<<<<
@@ -19228,7 +19238,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_is_datetime64_object(PyObject *__pyx_v_o
   __pyx_r = PyObject_TypeCheck(__pyx_v_obj, (&PyDatetimeArrType_Type));
   goto __pyx_L0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1014
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1014
  * 
  * 
  * cdef inline bint is_datetime64_object(object obj):             # <<<<<<<<<<<<<<
@@ -19241,7 +19251,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_is_datetime64_object(PyObject *__pyx_v_o
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1029
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1029
  * 
  * 
  * cdef inline npy_datetime get_datetime64_value(object obj) nogil:             # <<<<<<<<<<<<<<
@@ -19252,7 +19262,7 @@ static CYTHON_INLINE int __pyx_f_5numpy_is_datetime64_object(PyObject *__pyx_v_o
 static CYTHON_INLINE npy_datetime __pyx_f_5numpy_get_datetime64_value(PyObject *__pyx_v_obj) {
   npy_datetime __pyx_r;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1036
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1036
  *     also needed.  That can be found using `get_datetime64_unit`.
  *     """
  *     return (<PyDatetimeScalarObject*>obj).obval             # <<<<<<<<<<<<<<
@@ -19262,7 +19272,7 @@ static CYTHON_INLINE npy_datetime __pyx_f_5numpy_get_datetime64_value(PyObject *
   __pyx_r = ((PyDatetimeScalarObject *)__pyx_v_obj)->obval;
   goto __pyx_L0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1029
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1029
  * 
  * 
  * cdef inline npy_datetime get_datetime64_value(object obj) nogil:             # <<<<<<<<<<<<<<
@@ -19275,7 +19285,7 @@ static CYTHON_INLINE npy_datetime __pyx_f_5numpy_get_datetime64_value(PyObject *
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1039
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1039
  * 
  * 
  * cdef inline npy_timedelta get_timedelta64_value(object obj) nogil:             # <<<<<<<<<<<<<<
@@ -19286,7 +19296,7 @@ static CYTHON_INLINE npy_datetime __pyx_f_5numpy_get_datetime64_value(PyObject *
 static CYTHON_INLINE npy_timedelta __pyx_f_5numpy_get_timedelta64_value(PyObject *__pyx_v_obj) {
   npy_timedelta __pyx_r;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1043
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1043
  *     returns the int64 value underlying scalar numpy timedelta64 object
  *     """
  *     return (<PyTimedeltaScalarObject*>obj).obval             # <<<<<<<<<<<<<<
@@ -19296,7 +19306,7 @@ static CYTHON_INLINE npy_timedelta __pyx_f_5numpy_get_timedelta64_value(PyObject
   __pyx_r = ((PyTimedeltaScalarObject *)__pyx_v_obj)->obval;
   goto __pyx_L0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1039
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1039
  * 
  * 
  * cdef inline npy_timedelta get_timedelta64_value(object obj) nogil:             # <<<<<<<<<<<<<<
@@ -19309,7 +19319,7 @@ static CYTHON_INLINE npy_timedelta __pyx_f_5numpy_get_timedelta64_value(PyObject
   return __pyx_r;
 }
 
-/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1046
+/* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1046
  * 
  * 
  * cdef inline NPY_DATETIMEUNIT get_datetime64_unit(object obj) nogil:             # <<<<<<<<<<<<<<
@@ -19320,7 +19330,7 @@ static CYTHON_INLINE npy_timedelta __pyx_f_5numpy_get_timedelta64_value(PyObject
 static CYTHON_INLINE NPY_DATETIMEUNIT __pyx_f_5numpy_get_datetime64_unit(PyObject *__pyx_v_obj) {
   NPY_DATETIMEUNIT __pyx_r;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1050
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1050
  *     returns the unit part of the dtype for a numpy datetime64 object.
  *     """
  *     return <NPY_DATETIMEUNIT>(<PyDatetimeScalarObject*>obj).obmeta.base             # <<<<<<<<<<<<<<
@@ -19328,7 +19338,7 @@ static CYTHON_INLINE NPY_DATETIMEUNIT __pyx_f_5numpy_get_datetime64_unit(PyObjec
   __pyx_r = ((NPY_DATETIMEUNIT)((PyDatetimeScalarObject *)__pyx_v_obj)->obmeta.base);
   goto __pyx_L0;
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1046
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":1046
  * 
  * 
  * cdef inline NPY_DATETIMEUNIT get_datetime64_unit(object obj) nogil:             # <<<<<<<<<<<<<<
@@ -19341,7 +19351,7 @@ static CYTHON_INLINE NPY_DATETIMEUNIT __pyx_f_5numpy_get_datetime64_unit(PyObjec
   return __pyx_r;
 }
 
-/* "src/lbp.pyx":68
+/* "src/_lbp.pyx":68
  *     np_real_numeric
  * 
  * cdef inline Py_ssize_t coord_map(Py_ssize_t dim, long coord, char mode) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -19349,12 +19359,12 @@ static CYTHON_INLINE NPY_DATETIMEUNIT __pyx_f_5numpy_get_datetime64_unit(PyObjec
  * 
  */
 
-static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t __pyx_v_dim, long __pyx_v_coord, char __pyx_v_mode) {
+static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_4_lbp_coord_map(Py_ssize_t __pyx_v_dim, long __pyx_v_coord, char __pyx_v_mode) {
   Py_ssize_t __pyx_v_cmax;
   Py_ssize_t __pyx_r;
   int __pyx_t_1;
 
-  /* "src/lbp.pyx":81
+  /* "src/_lbp.pyx":81
  *         coordinate if `coord` falls outside [0, dim).
  *     """
  *     cdef Py_ssize_t cmax = dim - 1             # <<<<<<<<<<<<<<
@@ -19363,7 +19373,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
  */
   __pyx_v_cmax = (__pyx_v_dim - 1);
 
-  /* "src/lbp.pyx":82
+  /* "src/_lbp.pyx":82
  *     """
  *     cdef Py_ssize_t cmax = dim - 1
  *     if mode == b'S': # symmetric             # <<<<<<<<<<<<<<
@@ -19373,7 +19383,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
   switch (__pyx_v_mode) {
     case 'S':
 
-    /* "src/lbp.pyx":83
+    /* "src/_lbp.pyx":83
  *     cdef Py_ssize_t cmax = dim - 1
  *     if mode == b'S': # symmetric
  *         if coord < 0:             # <<<<<<<<<<<<<<
@@ -19383,7 +19393,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
     __pyx_t_1 = (__pyx_v_coord < 0);
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":84
+      /* "src/_lbp.pyx":84
  *     if mode == b'S': # symmetric
  *         if coord < 0:
  *             coord = -coord - 1             # <<<<<<<<<<<<<<
@@ -19392,7 +19402,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
  */
       __pyx_v_coord = ((-__pyx_v_coord) - 1);
 
-      /* "src/lbp.pyx":83
+      /* "src/_lbp.pyx":83
  *     cdef Py_ssize_t cmax = dim - 1
  *     if mode == b'S': # symmetric
  *         if coord < 0:             # <<<<<<<<<<<<<<
@@ -19401,7 +19411,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
  */
     }
 
-    /* "src/lbp.pyx":85
+    /* "src/_lbp.pyx":85
  *         if coord < 0:
  *             coord = -coord - 1
  *         if coord > cmax:             # <<<<<<<<<<<<<<
@@ -19411,7 +19421,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
     __pyx_t_1 = (__pyx_v_coord > __pyx_v_cmax);
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":86
+      /* "src/_lbp.pyx":86
  *             coord = -coord - 1
  *         if coord > cmax:
  *             if <Py_ssize_t>(coord / dim) % 2 != 0:             # <<<<<<<<<<<<<<
@@ -19421,7 +19431,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
       __pyx_t_1 = ((((Py_ssize_t)(((Py_ssize_t)__pyx_v_coord) / __pyx_v_dim)) % 2) != 0);
       if (__pyx_t_1) {
 
-        /* "src/lbp.pyx":87
+        /* "src/_lbp.pyx":87
  *         if coord > cmax:
  *             if <Py_ssize_t>(coord / dim) % 2 != 0:
  *                 return <Py_ssize_t>(cmax - (coord % dim))             # <<<<<<<<<<<<<<
@@ -19431,7 +19441,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
         __pyx_r = ((Py_ssize_t)(__pyx_v_cmax - (__pyx_v_coord % __pyx_v_dim)));
         goto __pyx_L0;
 
-        /* "src/lbp.pyx":86
+        /* "src/_lbp.pyx":86
  *             coord = -coord - 1
  *         if coord > cmax:
  *             if <Py_ssize_t>(coord / dim) % 2 != 0:             # <<<<<<<<<<<<<<
@@ -19440,7 +19450,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
  */
       }
 
-      /* "src/lbp.pyx":89
+      /* "src/_lbp.pyx":89
  *                 return <Py_ssize_t>(cmax - (coord % dim))
  *             else:
  *                 return <Py_ssize_t>(coord % dim)             # <<<<<<<<<<<<<<
@@ -19452,7 +19462,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
         goto __pyx_L0;
       }
 
-      /* "src/lbp.pyx":85
+      /* "src/_lbp.pyx":85
  *         if coord < 0:
  *             coord = -coord - 1
  *         if coord > cmax:             # <<<<<<<<<<<<<<
@@ -19461,7 +19471,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
  */
     }
 
-    /* "src/lbp.pyx":82
+    /* "src/_lbp.pyx":82
  *     """
  *     cdef Py_ssize_t cmax = dim - 1
  *     if mode == b'S': # symmetric             # <<<<<<<<<<<<<<
@@ -19471,7 +19481,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
     break;
     case 'W':
 
-    /* "src/lbp.pyx":91
+    /* "src/_lbp.pyx":91
  *                 return <Py_ssize_t>(coord % dim)
  *     elif mode == b'W': # wrap
  *         if coord < 0:             # <<<<<<<<<<<<<<
@@ -19481,7 +19491,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
     __pyx_t_1 = (__pyx_v_coord < 0);
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":92
+      /* "src/_lbp.pyx":92
  *     elif mode == b'W': # wrap
  *         if coord < 0:
  *             return <Py_ssize_t>(cmax - ((-coord - 1) % dim))             # <<<<<<<<<<<<<<
@@ -19491,7 +19501,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
       __pyx_r = ((Py_ssize_t)(__pyx_v_cmax - (((-__pyx_v_coord) - 1) % __pyx_v_dim)));
       goto __pyx_L0;
 
-      /* "src/lbp.pyx":91
+      /* "src/_lbp.pyx":91
  *                 return <Py_ssize_t>(coord % dim)
  *     elif mode == b'W': # wrap
  *         if coord < 0:             # <<<<<<<<<<<<<<
@@ -19500,7 +19510,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
  */
     }
 
-    /* "src/lbp.pyx":93
+    /* "src/_lbp.pyx":93
  *         if coord < 0:
  *             return <Py_ssize_t>(cmax - ((-coord - 1) % dim))
  *         elif coord > cmax:             # <<<<<<<<<<<<<<
@@ -19510,7 +19520,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
     __pyx_t_1 = (__pyx_v_coord > __pyx_v_cmax);
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":94
+      /* "src/_lbp.pyx":94
  *             return <Py_ssize_t>(cmax - ((-coord - 1) % dim))
  *         elif coord > cmax:
  *             return <Py_ssize_t>(coord % dim)             # <<<<<<<<<<<<<<
@@ -19520,7 +19530,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
       __pyx_r = ((Py_ssize_t)(__pyx_v_coord % __pyx_v_dim));
       goto __pyx_L0;
 
-      /* "src/lbp.pyx":93
+      /* "src/_lbp.pyx":93
  *         if coord < 0:
  *             return <Py_ssize_t>(cmax - ((-coord - 1) % dim))
  *         elif coord > cmax:             # <<<<<<<<<<<<<<
@@ -19529,7 +19539,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
  */
     }
 
-    /* "src/lbp.pyx":90
+    /* "src/_lbp.pyx":90
  *             else:
  *                 return <Py_ssize_t>(coord % dim)
  *     elif mode == b'W': # wrap             # <<<<<<<<<<<<<<
@@ -19539,7 +19549,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
     break;
     case 'E':
 
-    /* "src/lbp.pyx":96
+    /* "src/_lbp.pyx":96
  *             return <Py_ssize_t>(coord % dim)
  *     elif mode == b'E': # edge
  *         if coord < 0:             # <<<<<<<<<<<<<<
@@ -19549,7 +19559,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
     __pyx_t_1 = (__pyx_v_coord < 0);
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":97
+      /* "src/_lbp.pyx":97
  *     elif mode == b'E': # edge
  *         if coord < 0:
  *             return 0             # <<<<<<<<<<<<<<
@@ -19559,7 +19569,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
       __pyx_r = 0;
       goto __pyx_L0;
 
-      /* "src/lbp.pyx":96
+      /* "src/_lbp.pyx":96
  *             return <Py_ssize_t>(coord % dim)
  *     elif mode == b'E': # edge
  *         if coord < 0:             # <<<<<<<<<<<<<<
@@ -19568,7 +19578,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
  */
     }
 
-    /* "src/lbp.pyx":98
+    /* "src/_lbp.pyx":98
  *         if coord < 0:
  *             return 0
  *         elif coord > cmax:             # <<<<<<<<<<<<<<
@@ -19578,7 +19588,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
     __pyx_t_1 = (__pyx_v_coord > __pyx_v_cmax);
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":99
+      /* "src/_lbp.pyx":99
  *             return 0
  *         elif coord > cmax:
  *             return cmax             # <<<<<<<<<<<<<<
@@ -19588,7 +19598,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
       __pyx_r = __pyx_v_cmax;
       goto __pyx_L0;
 
-      /* "src/lbp.pyx":98
+      /* "src/_lbp.pyx":98
  *         if coord < 0:
  *             return 0
  *         elif coord > cmax:             # <<<<<<<<<<<<<<
@@ -19597,7 +19607,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
  */
     }
 
-    /* "src/lbp.pyx":95
+    /* "src/_lbp.pyx":95
  *         elif coord > cmax:
  *             return <Py_ssize_t>(coord % dim)
  *     elif mode == b'E': # edge             # <<<<<<<<<<<<<<
@@ -19607,7 +19617,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
     break;
     case 'R':
 
-    /* "src/lbp.pyx":101
+    /* "src/_lbp.pyx":101
  *             return cmax
  *     elif mode == b'R': # reflect (mirror)
  *         if dim == 1:             # <<<<<<<<<<<<<<
@@ -19617,7 +19627,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
     __pyx_t_1 = (__pyx_v_dim == 1);
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":102
+      /* "src/_lbp.pyx":102
  *     elif mode == b'R': # reflect (mirror)
  *         if dim == 1:
  *             return 0             # <<<<<<<<<<<<<<
@@ -19627,7 +19637,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
       __pyx_r = 0;
       goto __pyx_L0;
 
-      /* "src/lbp.pyx":101
+      /* "src/_lbp.pyx":101
  *             return cmax
  *     elif mode == b'R': # reflect (mirror)
  *         if dim == 1:             # <<<<<<<<<<<<<<
@@ -19636,7 +19646,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
  */
     }
 
-    /* "src/lbp.pyx":103
+    /* "src/_lbp.pyx":103
  *         if dim == 1:
  *             return 0
  *         elif coord < 0:             # <<<<<<<<<<<<<<
@@ -19646,7 +19656,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
     __pyx_t_1 = (__pyx_v_coord < 0);
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":105
+      /* "src/_lbp.pyx":105
  *         elif coord < 0:
  *             # How many times times does the coordinate wrap?
  *             if <Py_ssize_t>(-coord / cmax) % 2 != 0:             # <<<<<<<<<<<<<<
@@ -19656,7 +19666,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
       __pyx_t_1 = ((((Py_ssize_t)(((Py_ssize_t)(-__pyx_v_coord)) / __pyx_v_cmax)) % 2) != 0);
       if (__pyx_t_1) {
 
-        /* "src/lbp.pyx":106
+        /* "src/_lbp.pyx":106
  *             # How many times times does the coordinate wrap?
  *             if <Py_ssize_t>(-coord / cmax) % 2 != 0:
  *                 return cmax - <Py_ssize_t>(-coord % cmax)             # <<<<<<<<<<<<<<
@@ -19666,7 +19676,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
         __pyx_r = (__pyx_v_cmax - ((Py_ssize_t)((-__pyx_v_coord) % __pyx_v_cmax)));
         goto __pyx_L0;
 
-        /* "src/lbp.pyx":105
+        /* "src/_lbp.pyx":105
  *         elif coord < 0:
  *             # How many times times does the coordinate wrap?
  *             if <Py_ssize_t>(-coord / cmax) % 2 != 0:             # <<<<<<<<<<<<<<
@@ -19675,7 +19685,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
  */
       }
 
-      /* "src/lbp.pyx":108
+      /* "src/_lbp.pyx":108
  *                 return cmax - <Py_ssize_t>(-coord % cmax)
  *             else:
  *                 return <Py_ssize_t>(-coord % cmax)             # <<<<<<<<<<<<<<
@@ -19687,7 +19697,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
         goto __pyx_L0;
       }
 
-      /* "src/lbp.pyx":103
+      /* "src/_lbp.pyx":103
  *         if dim == 1:
  *             return 0
  *         elif coord < 0:             # <<<<<<<<<<<<<<
@@ -19696,7 +19706,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
  */
     }
 
-    /* "src/lbp.pyx":109
+    /* "src/_lbp.pyx":109
  *             else:
  *                 return <Py_ssize_t>(-coord % cmax)
  *         elif coord > cmax:             # <<<<<<<<<<<<<<
@@ -19706,7 +19716,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
     __pyx_t_1 = (__pyx_v_coord > __pyx_v_cmax);
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":110
+      /* "src/_lbp.pyx":110
  *                 return <Py_ssize_t>(-coord % cmax)
  *         elif coord > cmax:
  *             if <Py_ssize_t>(coord / cmax) % 2 != 0:             # <<<<<<<<<<<<<<
@@ -19716,7 +19726,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
       __pyx_t_1 = ((((Py_ssize_t)(((Py_ssize_t)__pyx_v_coord) / __pyx_v_cmax)) % 2) != 0);
       if (__pyx_t_1) {
 
-        /* "src/lbp.pyx":111
+        /* "src/_lbp.pyx":111
  *         elif coord > cmax:
  *             if <Py_ssize_t>(coord / cmax) % 2 != 0:
  *                 return <Py_ssize_t>(cmax - (coord % cmax))             # <<<<<<<<<<<<<<
@@ -19726,7 +19736,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
         __pyx_r = ((Py_ssize_t)(__pyx_v_cmax - (__pyx_v_coord % __pyx_v_cmax)));
         goto __pyx_L0;
 
-        /* "src/lbp.pyx":110
+        /* "src/_lbp.pyx":110
  *                 return <Py_ssize_t>(-coord % cmax)
  *         elif coord > cmax:
  *             if <Py_ssize_t>(coord / cmax) % 2 != 0:             # <<<<<<<<<<<<<<
@@ -19735,7 +19745,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
  */
       }
 
-      /* "src/lbp.pyx":113
+      /* "src/_lbp.pyx":113
  *                 return <Py_ssize_t>(cmax - (coord % cmax))
  *             else:
  *                 return <Py_ssize_t>(coord % cmax)             # <<<<<<<<<<<<<<
@@ -19747,7 +19757,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
         goto __pyx_L0;
       }
 
-      /* "src/lbp.pyx":109
+      /* "src/_lbp.pyx":109
  *             else:
  *                 return <Py_ssize_t>(-coord % cmax)
  *         elif coord > cmax:             # <<<<<<<<<<<<<<
@@ -19756,7 +19766,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
  */
     }
 
-    /* "src/lbp.pyx":100
+    /* "src/_lbp.pyx":100
  *         elif coord > cmax:
  *             return cmax
  *     elif mode == b'R': # reflect (mirror)             # <<<<<<<<<<<<<<
@@ -19767,7 +19777,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
     default: break;
   }
 
-  /* "src/lbp.pyx":114
+  /* "src/_lbp.pyx":114
  *             else:
  *                 return <Py_ssize_t>(coord % cmax)
  *     return coord             # <<<<<<<<<<<<<<
@@ -19777,7 +19787,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
   __pyx_r = __pyx_v_coord;
   goto __pyx_L0;
 
-  /* "src/lbp.pyx":68
+  /* "src/_lbp.pyx":68
  *     np_real_numeric
  * 
  * cdef inline Py_ssize_t coord_map(Py_ssize_t dim, long coord, char mode) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -19790,7 +19800,7 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
   return __pyx_r;
 }
 
-/* "src/lbp.pyx":117
+/* "src/_lbp.pyx":117
  * 
  * 
  * cdef inline np_real_numeric get_pixel2d(np_real_numeric* image,             # <<<<<<<<<<<<<<
@@ -19798,12 +19808,12 @@ static CYTHON_INLINE Py_ssize_t __pyx_f_12fastlbp_imbg_3lbp_coord_map(Py_ssize_t
  *                                         long r, long c, char mode,
  */
 
-static CYTHON_INLINE __pyx_t_5numpy_uint8_t __pyx_fuse_0__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_uint8_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_uint8_t __pyx_v_cval) {
+static CYTHON_INLINE __pyx_t_5numpy_uint8_t __pyx_fuse_0__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_uint8_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_uint8_t __pyx_v_cval) {
   __pyx_t_5numpy_uint8_t __pyx_r;
   int __pyx_t_1;
   int __pyx_t_2;
 
-  /* "src/lbp.pyx":142
+  /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -19813,7 +19823,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint8_t __pyx_fuse_0__pyx_f_12fastlbp_imbg_3
   __pyx_t_1 = (__pyx_v_mode == 'C');
   if (__pyx_t_1) {
 
-    /* "src/lbp.pyx":143
+    /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -19843,7 +19853,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint8_t __pyx_fuse_0__pyx_f_12fastlbp_imbg_3
     __pyx_L5_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":144
+      /* "src/_lbp.pyx":144
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):
  *             return cval             # <<<<<<<<<<<<<<
@@ -19853,7 +19863,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint8_t __pyx_fuse_0__pyx_f_12fastlbp_imbg_3
       __pyx_r = __pyx_v_cval;
       goto __pyx_L0;
 
-      /* "src/lbp.pyx":143
+      /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -19862,7 +19872,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint8_t __pyx_fuse_0__pyx_f_12fastlbp_imbg_3
  */
     }
 
-    /* "src/lbp.pyx":146
+    /* "src/_lbp.pyx":146
  *             return cval
  *         else:
  *             return image[r * cols + c]             # <<<<<<<<<<<<<<
@@ -19874,7 +19884,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint8_t __pyx_fuse_0__pyx_f_12fastlbp_imbg_3
       goto __pyx_L0;
     }
 
-    /* "src/lbp.pyx":142
+    /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -19883,7 +19893,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint8_t __pyx_fuse_0__pyx_f_12fastlbp_imbg_3
  */
   }
 
-  /* "src/lbp.pyx":148
+  /* "src/_lbp.pyx":148
  *             return image[r * cols + c]
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +             # <<<<<<<<<<<<<<
@@ -19892,18 +19902,18 @@ static CYTHON_INLINE __pyx_t_5numpy_uint8_t __pyx_fuse_0__pyx_f_12fastlbp_imbg_3
  */
   /*else*/ {
 
-    /* "src/lbp.pyx":149
+    /* "src/_lbp.pyx":149
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +
  *                                        coord_map(cols, c, mode)])             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_r = ((__pyx_t_5numpy_uint8_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
+    __pyx_r = ((__pyx_t_5numpy_uint8_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
     goto __pyx_L0;
   }
 
-  /* "src/lbp.pyx":117
+  /* "src/_lbp.pyx":117
  * 
  * 
  * cdef inline np_real_numeric get_pixel2d(np_real_numeric* image,             # <<<<<<<<<<<<<<
@@ -19916,12 +19926,12 @@ static CYTHON_INLINE __pyx_t_5numpy_uint8_t __pyx_fuse_0__pyx_f_12fastlbp_imbg_3
   return __pyx_r;
 }
 
-static CYTHON_INLINE __pyx_t_5numpy_uint16_t __pyx_fuse_1__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_uint16_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_uint16_t __pyx_v_cval) {
+static CYTHON_INLINE __pyx_t_5numpy_uint16_t __pyx_fuse_1__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_uint16_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_uint16_t __pyx_v_cval) {
   __pyx_t_5numpy_uint16_t __pyx_r;
   int __pyx_t_1;
   int __pyx_t_2;
 
-  /* "src/lbp.pyx":142
+  /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -19931,7 +19941,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint16_t __pyx_fuse_1__pyx_f_12fastlbp_imbg_
   __pyx_t_1 = (__pyx_v_mode == 'C');
   if (__pyx_t_1) {
 
-    /* "src/lbp.pyx":143
+    /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -19961,7 +19971,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint16_t __pyx_fuse_1__pyx_f_12fastlbp_imbg_
     __pyx_L5_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":144
+      /* "src/_lbp.pyx":144
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):
  *             return cval             # <<<<<<<<<<<<<<
@@ -19971,7 +19981,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint16_t __pyx_fuse_1__pyx_f_12fastlbp_imbg_
       __pyx_r = __pyx_v_cval;
       goto __pyx_L0;
 
-      /* "src/lbp.pyx":143
+      /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -19980,7 +19990,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint16_t __pyx_fuse_1__pyx_f_12fastlbp_imbg_
  */
     }
 
-    /* "src/lbp.pyx":146
+    /* "src/_lbp.pyx":146
  *             return cval
  *         else:
  *             return image[r * cols + c]             # <<<<<<<<<<<<<<
@@ -19992,7 +20002,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint16_t __pyx_fuse_1__pyx_f_12fastlbp_imbg_
       goto __pyx_L0;
     }
 
-    /* "src/lbp.pyx":142
+    /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -20001,7 +20011,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint16_t __pyx_fuse_1__pyx_f_12fastlbp_imbg_
  */
   }
 
-  /* "src/lbp.pyx":148
+  /* "src/_lbp.pyx":148
  *             return image[r * cols + c]
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +             # <<<<<<<<<<<<<<
@@ -20010,18 +20020,18 @@ static CYTHON_INLINE __pyx_t_5numpy_uint16_t __pyx_fuse_1__pyx_f_12fastlbp_imbg_
  */
   /*else*/ {
 
-    /* "src/lbp.pyx":149
+    /* "src/_lbp.pyx":149
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +
  *                                        coord_map(cols, c, mode)])             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_r = ((__pyx_t_5numpy_uint16_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
+    __pyx_r = ((__pyx_t_5numpy_uint16_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
     goto __pyx_L0;
   }
 
-  /* "src/lbp.pyx":117
+  /* "src/_lbp.pyx":117
  * 
  * 
  * cdef inline np_real_numeric get_pixel2d(np_real_numeric* image,             # <<<<<<<<<<<<<<
@@ -20034,12 +20044,12 @@ static CYTHON_INLINE __pyx_t_5numpy_uint16_t __pyx_fuse_1__pyx_f_12fastlbp_imbg_
   return __pyx_r;
 }
 
-static CYTHON_INLINE __pyx_t_5numpy_uint32_t __pyx_fuse_2__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_uint32_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_uint32_t __pyx_v_cval) {
+static CYTHON_INLINE __pyx_t_5numpy_uint32_t __pyx_fuse_2__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_uint32_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_uint32_t __pyx_v_cval) {
   __pyx_t_5numpy_uint32_t __pyx_r;
   int __pyx_t_1;
   int __pyx_t_2;
 
-  /* "src/lbp.pyx":142
+  /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -20049,7 +20059,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint32_t __pyx_fuse_2__pyx_f_12fastlbp_imbg_
   __pyx_t_1 = (__pyx_v_mode == 'C');
   if (__pyx_t_1) {
 
-    /* "src/lbp.pyx":143
+    /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -20079,7 +20089,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint32_t __pyx_fuse_2__pyx_f_12fastlbp_imbg_
     __pyx_L5_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":144
+      /* "src/_lbp.pyx":144
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):
  *             return cval             # <<<<<<<<<<<<<<
@@ -20089,7 +20099,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint32_t __pyx_fuse_2__pyx_f_12fastlbp_imbg_
       __pyx_r = __pyx_v_cval;
       goto __pyx_L0;
 
-      /* "src/lbp.pyx":143
+      /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -20098,7 +20108,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint32_t __pyx_fuse_2__pyx_f_12fastlbp_imbg_
  */
     }
 
-    /* "src/lbp.pyx":146
+    /* "src/_lbp.pyx":146
  *             return cval
  *         else:
  *             return image[r * cols + c]             # <<<<<<<<<<<<<<
@@ -20110,7 +20120,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint32_t __pyx_fuse_2__pyx_f_12fastlbp_imbg_
       goto __pyx_L0;
     }
 
-    /* "src/lbp.pyx":142
+    /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -20119,7 +20129,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint32_t __pyx_fuse_2__pyx_f_12fastlbp_imbg_
  */
   }
 
-  /* "src/lbp.pyx":148
+  /* "src/_lbp.pyx":148
  *             return image[r * cols + c]
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +             # <<<<<<<<<<<<<<
@@ -20128,18 +20138,18 @@ static CYTHON_INLINE __pyx_t_5numpy_uint32_t __pyx_fuse_2__pyx_f_12fastlbp_imbg_
  */
   /*else*/ {
 
-    /* "src/lbp.pyx":149
+    /* "src/_lbp.pyx":149
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +
  *                                        coord_map(cols, c, mode)])             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_r = ((__pyx_t_5numpy_uint32_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
+    __pyx_r = ((__pyx_t_5numpy_uint32_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
     goto __pyx_L0;
   }
 
-  /* "src/lbp.pyx":117
+  /* "src/_lbp.pyx":117
  * 
  * 
  * cdef inline np_real_numeric get_pixel2d(np_real_numeric* image,             # <<<<<<<<<<<<<<
@@ -20152,12 +20162,12 @@ static CYTHON_INLINE __pyx_t_5numpy_uint32_t __pyx_fuse_2__pyx_f_12fastlbp_imbg_
   return __pyx_r;
 }
 
-static CYTHON_INLINE __pyx_t_5numpy_uint64_t __pyx_fuse_3__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_uint64_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_uint64_t __pyx_v_cval) {
+static CYTHON_INLINE __pyx_t_5numpy_uint64_t __pyx_fuse_3__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_uint64_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_uint64_t __pyx_v_cval) {
   __pyx_t_5numpy_uint64_t __pyx_r;
   int __pyx_t_1;
   int __pyx_t_2;
 
-  /* "src/lbp.pyx":142
+  /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -20167,7 +20177,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint64_t __pyx_fuse_3__pyx_f_12fastlbp_imbg_
   __pyx_t_1 = (__pyx_v_mode == 'C');
   if (__pyx_t_1) {
 
-    /* "src/lbp.pyx":143
+    /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -20197,7 +20207,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint64_t __pyx_fuse_3__pyx_f_12fastlbp_imbg_
     __pyx_L5_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":144
+      /* "src/_lbp.pyx":144
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):
  *             return cval             # <<<<<<<<<<<<<<
@@ -20207,7 +20217,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint64_t __pyx_fuse_3__pyx_f_12fastlbp_imbg_
       __pyx_r = __pyx_v_cval;
       goto __pyx_L0;
 
-      /* "src/lbp.pyx":143
+      /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -20216,7 +20226,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint64_t __pyx_fuse_3__pyx_f_12fastlbp_imbg_
  */
     }
 
-    /* "src/lbp.pyx":146
+    /* "src/_lbp.pyx":146
  *             return cval
  *         else:
  *             return image[r * cols + c]             # <<<<<<<<<<<<<<
@@ -20228,7 +20238,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint64_t __pyx_fuse_3__pyx_f_12fastlbp_imbg_
       goto __pyx_L0;
     }
 
-    /* "src/lbp.pyx":142
+    /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -20237,7 +20247,7 @@ static CYTHON_INLINE __pyx_t_5numpy_uint64_t __pyx_fuse_3__pyx_f_12fastlbp_imbg_
  */
   }
 
-  /* "src/lbp.pyx":148
+  /* "src/_lbp.pyx":148
  *             return image[r * cols + c]
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +             # <<<<<<<<<<<<<<
@@ -20246,18 +20256,18 @@ static CYTHON_INLINE __pyx_t_5numpy_uint64_t __pyx_fuse_3__pyx_f_12fastlbp_imbg_
  */
   /*else*/ {
 
-    /* "src/lbp.pyx":149
+    /* "src/_lbp.pyx":149
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +
  *                                        coord_map(cols, c, mode)])             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_r = ((__pyx_t_5numpy_uint64_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
+    __pyx_r = ((__pyx_t_5numpy_uint64_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
     goto __pyx_L0;
   }
 
-  /* "src/lbp.pyx":117
+  /* "src/_lbp.pyx":117
  * 
  * 
  * cdef inline np_real_numeric get_pixel2d(np_real_numeric* image,             # <<<<<<<<<<<<<<
@@ -20270,12 +20280,12 @@ static CYTHON_INLINE __pyx_t_5numpy_uint64_t __pyx_fuse_3__pyx_f_12fastlbp_imbg_
   return __pyx_r;
 }
 
-static CYTHON_INLINE __pyx_t_5numpy_int8_t __pyx_fuse_4__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_int8_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_int8_t __pyx_v_cval) {
+static CYTHON_INLINE __pyx_t_5numpy_int8_t __pyx_fuse_4__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_int8_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_int8_t __pyx_v_cval) {
   __pyx_t_5numpy_int8_t __pyx_r;
   int __pyx_t_1;
   int __pyx_t_2;
 
-  /* "src/lbp.pyx":142
+  /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -20285,7 +20295,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int8_t __pyx_fuse_4__pyx_f_12fastlbp_imbg_3l
   __pyx_t_1 = (__pyx_v_mode == 'C');
   if (__pyx_t_1) {
 
-    /* "src/lbp.pyx":143
+    /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -20315,7 +20325,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int8_t __pyx_fuse_4__pyx_f_12fastlbp_imbg_3l
     __pyx_L5_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":144
+      /* "src/_lbp.pyx":144
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):
  *             return cval             # <<<<<<<<<<<<<<
@@ -20325,7 +20335,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int8_t __pyx_fuse_4__pyx_f_12fastlbp_imbg_3l
       __pyx_r = __pyx_v_cval;
       goto __pyx_L0;
 
-      /* "src/lbp.pyx":143
+      /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -20334,7 +20344,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int8_t __pyx_fuse_4__pyx_f_12fastlbp_imbg_3l
  */
     }
 
-    /* "src/lbp.pyx":146
+    /* "src/_lbp.pyx":146
  *             return cval
  *         else:
  *             return image[r * cols + c]             # <<<<<<<<<<<<<<
@@ -20346,7 +20356,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int8_t __pyx_fuse_4__pyx_f_12fastlbp_imbg_3l
       goto __pyx_L0;
     }
 
-    /* "src/lbp.pyx":142
+    /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -20355,7 +20365,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int8_t __pyx_fuse_4__pyx_f_12fastlbp_imbg_3l
  */
   }
 
-  /* "src/lbp.pyx":148
+  /* "src/_lbp.pyx":148
  *             return image[r * cols + c]
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +             # <<<<<<<<<<<<<<
@@ -20364,18 +20374,18 @@ static CYTHON_INLINE __pyx_t_5numpy_int8_t __pyx_fuse_4__pyx_f_12fastlbp_imbg_3l
  */
   /*else*/ {
 
-    /* "src/lbp.pyx":149
+    /* "src/_lbp.pyx":149
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +
  *                                        coord_map(cols, c, mode)])             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_r = ((__pyx_t_5numpy_int8_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
+    __pyx_r = ((__pyx_t_5numpy_int8_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
     goto __pyx_L0;
   }
 
-  /* "src/lbp.pyx":117
+  /* "src/_lbp.pyx":117
  * 
  * 
  * cdef inline np_real_numeric get_pixel2d(np_real_numeric* image,             # <<<<<<<<<<<<<<
@@ -20388,12 +20398,12 @@ static CYTHON_INLINE __pyx_t_5numpy_int8_t __pyx_fuse_4__pyx_f_12fastlbp_imbg_3l
   return __pyx_r;
 }
 
-static CYTHON_INLINE __pyx_t_5numpy_int16_t __pyx_fuse_5__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_int16_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_int16_t __pyx_v_cval) {
+static CYTHON_INLINE __pyx_t_5numpy_int16_t __pyx_fuse_5__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_int16_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_int16_t __pyx_v_cval) {
   __pyx_t_5numpy_int16_t __pyx_r;
   int __pyx_t_1;
   int __pyx_t_2;
 
-  /* "src/lbp.pyx":142
+  /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -20403,7 +20413,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int16_t __pyx_fuse_5__pyx_f_12fastlbp_imbg_3
   __pyx_t_1 = (__pyx_v_mode == 'C');
   if (__pyx_t_1) {
 
-    /* "src/lbp.pyx":143
+    /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -20433,7 +20443,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int16_t __pyx_fuse_5__pyx_f_12fastlbp_imbg_3
     __pyx_L5_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":144
+      /* "src/_lbp.pyx":144
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):
  *             return cval             # <<<<<<<<<<<<<<
@@ -20443,7 +20453,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int16_t __pyx_fuse_5__pyx_f_12fastlbp_imbg_3
       __pyx_r = __pyx_v_cval;
       goto __pyx_L0;
 
-      /* "src/lbp.pyx":143
+      /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -20452,7 +20462,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int16_t __pyx_fuse_5__pyx_f_12fastlbp_imbg_3
  */
     }
 
-    /* "src/lbp.pyx":146
+    /* "src/_lbp.pyx":146
  *             return cval
  *         else:
  *             return image[r * cols + c]             # <<<<<<<<<<<<<<
@@ -20464,7 +20474,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int16_t __pyx_fuse_5__pyx_f_12fastlbp_imbg_3
       goto __pyx_L0;
     }
 
-    /* "src/lbp.pyx":142
+    /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -20473,7 +20483,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int16_t __pyx_fuse_5__pyx_f_12fastlbp_imbg_3
  */
   }
 
-  /* "src/lbp.pyx":148
+  /* "src/_lbp.pyx":148
  *             return image[r * cols + c]
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +             # <<<<<<<<<<<<<<
@@ -20482,18 +20492,18 @@ static CYTHON_INLINE __pyx_t_5numpy_int16_t __pyx_fuse_5__pyx_f_12fastlbp_imbg_3
  */
   /*else*/ {
 
-    /* "src/lbp.pyx":149
+    /* "src/_lbp.pyx":149
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +
  *                                        coord_map(cols, c, mode)])             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_r = ((__pyx_t_5numpy_int16_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
+    __pyx_r = ((__pyx_t_5numpy_int16_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
     goto __pyx_L0;
   }
 
-  /* "src/lbp.pyx":117
+  /* "src/_lbp.pyx":117
  * 
  * 
  * cdef inline np_real_numeric get_pixel2d(np_real_numeric* image,             # <<<<<<<<<<<<<<
@@ -20506,12 +20516,12 @@ static CYTHON_INLINE __pyx_t_5numpy_int16_t __pyx_fuse_5__pyx_f_12fastlbp_imbg_3
   return __pyx_r;
 }
 
-static CYTHON_INLINE __pyx_t_5numpy_int32_t __pyx_fuse_6__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_int32_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_int32_t __pyx_v_cval) {
+static CYTHON_INLINE __pyx_t_5numpy_int32_t __pyx_fuse_6__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_int32_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_int32_t __pyx_v_cval) {
   __pyx_t_5numpy_int32_t __pyx_r;
   int __pyx_t_1;
   int __pyx_t_2;
 
-  /* "src/lbp.pyx":142
+  /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -20521,7 +20531,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int32_t __pyx_fuse_6__pyx_f_12fastlbp_imbg_3
   __pyx_t_1 = (__pyx_v_mode == 'C');
   if (__pyx_t_1) {
 
-    /* "src/lbp.pyx":143
+    /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -20551,7 +20561,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int32_t __pyx_fuse_6__pyx_f_12fastlbp_imbg_3
     __pyx_L5_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":144
+      /* "src/_lbp.pyx":144
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):
  *             return cval             # <<<<<<<<<<<<<<
@@ -20561,7 +20571,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int32_t __pyx_fuse_6__pyx_f_12fastlbp_imbg_3
       __pyx_r = __pyx_v_cval;
       goto __pyx_L0;
 
-      /* "src/lbp.pyx":143
+      /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -20570,7 +20580,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int32_t __pyx_fuse_6__pyx_f_12fastlbp_imbg_3
  */
     }
 
-    /* "src/lbp.pyx":146
+    /* "src/_lbp.pyx":146
  *             return cval
  *         else:
  *             return image[r * cols + c]             # <<<<<<<<<<<<<<
@@ -20582,7 +20592,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int32_t __pyx_fuse_6__pyx_f_12fastlbp_imbg_3
       goto __pyx_L0;
     }
 
-    /* "src/lbp.pyx":142
+    /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -20591,7 +20601,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int32_t __pyx_fuse_6__pyx_f_12fastlbp_imbg_3
  */
   }
 
-  /* "src/lbp.pyx":148
+  /* "src/_lbp.pyx":148
  *             return image[r * cols + c]
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +             # <<<<<<<<<<<<<<
@@ -20600,18 +20610,18 @@ static CYTHON_INLINE __pyx_t_5numpy_int32_t __pyx_fuse_6__pyx_f_12fastlbp_imbg_3
  */
   /*else*/ {
 
-    /* "src/lbp.pyx":149
+    /* "src/_lbp.pyx":149
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +
  *                                        coord_map(cols, c, mode)])             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_r = ((__pyx_t_5numpy_int32_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
+    __pyx_r = ((__pyx_t_5numpy_int32_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
     goto __pyx_L0;
   }
 
-  /* "src/lbp.pyx":117
+  /* "src/_lbp.pyx":117
  * 
  * 
  * cdef inline np_real_numeric get_pixel2d(np_real_numeric* image,             # <<<<<<<<<<<<<<
@@ -20624,12 +20634,12 @@ static CYTHON_INLINE __pyx_t_5numpy_int32_t __pyx_fuse_6__pyx_f_12fastlbp_imbg_3
   return __pyx_r;
 }
 
-static CYTHON_INLINE __pyx_t_5numpy_int64_t __pyx_fuse_7__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_int64_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_int64_t __pyx_v_cval) {
+static CYTHON_INLINE __pyx_t_5numpy_int64_t __pyx_fuse_7__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_int64_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_int64_t __pyx_v_cval) {
   __pyx_t_5numpy_int64_t __pyx_r;
   int __pyx_t_1;
   int __pyx_t_2;
 
-  /* "src/lbp.pyx":142
+  /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -20639,7 +20649,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int64_t __pyx_fuse_7__pyx_f_12fastlbp_imbg_3
   __pyx_t_1 = (__pyx_v_mode == 'C');
   if (__pyx_t_1) {
 
-    /* "src/lbp.pyx":143
+    /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -20669,7 +20679,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int64_t __pyx_fuse_7__pyx_f_12fastlbp_imbg_3
     __pyx_L5_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":144
+      /* "src/_lbp.pyx":144
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):
  *             return cval             # <<<<<<<<<<<<<<
@@ -20679,7 +20689,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int64_t __pyx_fuse_7__pyx_f_12fastlbp_imbg_3
       __pyx_r = __pyx_v_cval;
       goto __pyx_L0;
 
-      /* "src/lbp.pyx":143
+      /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -20688,7 +20698,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int64_t __pyx_fuse_7__pyx_f_12fastlbp_imbg_3
  */
     }
 
-    /* "src/lbp.pyx":146
+    /* "src/_lbp.pyx":146
  *             return cval
  *         else:
  *             return image[r * cols + c]             # <<<<<<<<<<<<<<
@@ -20700,7 +20710,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int64_t __pyx_fuse_7__pyx_f_12fastlbp_imbg_3
       goto __pyx_L0;
     }
 
-    /* "src/lbp.pyx":142
+    /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -20709,7 +20719,7 @@ static CYTHON_INLINE __pyx_t_5numpy_int64_t __pyx_fuse_7__pyx_f_12fastlbp_imbg_3
  */
   }
 
-  /* "src/lbp.pyx":148
+  /* "src/_lbp.pyx":148
  *             return image[r * cols + c]
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +             # <<<<<<<<<<<<<<
@@ -20718,18 +20728,18 @@ static CYTHON_INLINE __pyx_t_5numpy_int64_t __pyx_fuse_7__pyx_f_12fastlbp_imbg_3
  */
   /*else*/ {
 
-    /* "src/lbp.pyx":149
+    /* "src/_lbp.pyx":149
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +
  *                                        coord_map(cols, c, mode)])             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_r = ((__pyx_t_5numpy_int64_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
+    __pyx_r = ((__pyx_t_5numpy_int64_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
     goto __pyx_L0;
   }
 
-  /* "src/lbp.pyx":117
+  /* "src/_lbp.pyx":117
  * 
  * 
  * cdef inline np_real_numeric get_pixel2d(np_real_numeric* image,             # <<<<<<<<<<<<<<
@@ -20742,12 +20752,12 @@ static CYTHON_INLINE __pyx_t_5numpy_int64_t __pyx_fuse_7__pyx_f_12fastlbp_imbg_3
   return __pyx_r;
 }
 
-static CYTHON_INLINE __pyx_t_5numpy_float32_t __pyx_fuse_8__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_float32_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_float32_t __pyx_v_cval) {
+static CYTHON_INLINE __pyx_t_5numpy_float32_t __pyx_fuse_8__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_float32_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_float32_t __pyx_v_cval) {
   __pyx_t_5numpy_float32_t __pyx_r;
   int __pyx_t_1;
   int __pyx_t_2;
 
-  /* "src/lbp.pyx":142
+  /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -20757,7 +20767,7 @@ static CYTHON_INLINE __pyx_t_5numpy_float32_t __pyx_fuse_8__pyx_f_12fastlbp_imbg
   __pyx_t_1 = (__pyx_v_mode == 'C');
   if (__pyx_t_1) {
 
-    /* "src/lbp.pyx":143
+    /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -20787,7 +20797,7 @@ static CYTHON_INLINE __pyx_t_5numpy_float32_t __pyx_fuse_8__pyx_f_12fastlbp_imbg
     __pyx_L5_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":144
+      /* "src/_lbp.pyx":144
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):
  *             return cval             # <<<<<<<<<<<<<<
@@ -20797,7 +20807,7 @@ static CYTHON_INLINE __pyx_t_5numpy_float32_t __pyx_fuse_8__pyx_f_12fastlbp_imbg
       __pyx_r = __pyx_v_cval;
       goto __pyx_L0;
 
-      /* "src/lbp.pyx":143
+      /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -20806,7 +20816,7 @@ static CYTHON_INLINE __pyx_t_5numpy_float32_t __pyx_fuse_8__pyx_f_12fastlbp_imbg
  */
     }
 
-    /* "src/lbp.pyx":146
+    /* "src/_lbp.pyx":146
  *             return cval
  *         else:
  *             return image[r * cols + c]             # <<<<<<<<<<<<<<
@@ -20818,7 +20828,7 @@ static CYTHON_INLINE __pyx_t_5numpy_float32_t __pyx_fuse_8__pyx_f_12fastlbp_imbg
       goto __pyx_L0;
     }
 
-    /* "src/lbp.pyx":142
+    /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -20827,7 +20837,7 @@ static CYTHON_INLINE __pyx_t_5numpy_float32_t __pyx_fuse_8__pyx_f_12fastlbp_imbg
  */
   }
 
-  /* "src/lbp.pyx":148
+  /* "src/_lbp.pyx":148
  *             return image[r * cols + c]
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +             # <<<<<<<<<<<<<<
@@ -20836,18 +20846,18 @@ static CYTHON_INLINE __pyx_t_5numpy_float32_t __pyx_fuse_8__pyx_f_12fastlbp_imbg
  */
   /*else*/ {
 
-    /* "src/lbp.pyx":149
+    /* "src/_lbp.pyx":149
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +
  *                                        coord_map(cols, c, mode)])             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_r = ((__pyx_t_5numpy_float32_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
+    __pyx_r = ((__pyx_t_5numpy_float32_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
     goto __pyx_L0;
   }
 
-  /* "src/lbp.pyx":117
+  /* "src/_lbp.pyx":117
  * 
  * 
  * cdef inline np_real_numeric get_pixel2d(np_real_numeric* image,             # <<<<<<<<<<<<<<
@@ -20860,12 +20870,12 @@ static CYTHON_INLINE __pyx_t_5numpy_float32_t __pyx_fuse_8__pyx_f_12fastlbp_imbg
   return __pyx_r;
 }
 
-static CYTHON_INLINE __pyx_t_5numpy_float64_t __pyx_fuse_9__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_t_5numpy_float64_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_float64_t __pyx_v_cval) {
+static CYTHON_INLINE __pyx_t_5numpy_float64_t __pyx_fuse_9__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_t_5numpy_float64_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, long __pyx_v_r, long __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_float64_t __pyx_v_cval) {
   __pyx_t_5numpy_float64_t __pyx_r;
   int __pyx_t_1;
   int __pyx_t_2;
 
-  /* "src/lbp.pyx":142
+  /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -20875,7 +20885,7 @@ static CYTHON_INLINE __pyx_t_5numpy_float64_t __pyx_fuse_9__pyx_f_12fastlbp_imbg
   __pyx_t_1 = (__pyx_v_mode == 'C');
   if (__pyx_t_1) {
 
-    /* "src/lbp.pyx":143
+    /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -20905,7 +20915,7 @@ static CYTHON_INLINE __pyx_t_5numpy_float64_t __pyx_fuse_9__pyx_f_12fastlbp_imbg
     __pyx_L5_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "src/lbp.pyx":144
+      /* "src/_lbp.pyx":144
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):
  *             return cval             # <<<<<<<<<<<<<<
@@ -20915,7 +20925,7 @@ static CYTHON_INLINE __pyx_t_5numpy_float64_t __pyx_fuse_9__pyx_f_12fastlbp_imbg
       __pyx_r = __pyx_v_cval;
       goto __pyx_L0;
 
-      /* "src/lbp.pyx":143
+      /* "src/_lbp.pyx":143
  *     """
  *     if mode == b'C':
  *         if (r < 0) or (r >= rows) or (c < 0) or (c >= cols):             # <<<<<<<<<<<<<<
@@ -20924,7 +20934,7 @@ static CYTHON_INLINE __pyx_t_5numpy_float64_t __pyx_fuse_9__pyx_f_12fastlbp_imbg
  */
     }
 
-    /* "src/lbp.pyx":146
+    /* "src/_lbp.pyx":146
  *             return cval
  *         else:
  *             return image[r * cols + c]             # <<<<<<<<<<<<<<
@@ -20936,7 +20946,7 @@ static CYTHON_INLINE __pyx_t_5numpy_float64_t __pyx_fuse_9__pyx_f_12fastlbp_imbg
       goto __pyx_L0;
     }
 
-    /* "src/lbp.pyx":142
+    /* "src/_lbp.pyx":142
  * 
  *     """
  *     if mode == b'C':             # <<<<<<<<<<<<<<
@@ -20945,7 +20955,7 @@ static CYTHON_INLINE __pyx_t_5numpy_float64_t __pyx_fuse_9__pyx_f_12fastlbp_imbg
  */
   }
 
-  /* "src/lbp.pyx":148
+  /* "src/_lbp.pyx":148
  *             return image[r * cols + c]
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +             # <<<<<<<<<<<<<<
@@ -20954,18 +20964,18 @@ static CYTHON_INLINE __pyx_t_5numpy_float64_t __pyx_fuse_9__pyx_f_12fastlbp_imbg
  */
   /*else*/ {
 
-    /* "src/lbp.pyx":149
+    /* "src/_lbp.pyx":149
  *     else:
  *         return <np_real_numeric>(image[coord_map(rows, r, mode) * cols +
  *                                        coord_map(cols, c, mode)])             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_r = ((__pyx_t_5numpy_float64_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_3lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
+    __pyx_r = ((__pyx_t_5numpy_float64_t)(__pyx_v_image[((__pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_rows, __pyx_v_r, __pyx_v_mode) * __pyx_v_cols) + __pyx_f_12fastlbp_imbg_4_lbp_coord_map(__pyx_v_cols, __pyx_v_c, __pyx_v_mode))]));
     goto __pyx_L0;
   }
 
-  /* "src/lbp.pyx":117
+  /* "src/_lbp.pyx":117
  * 
  * 
  * cdef inline np_real_numeric get_pixel2d(np_real_numeric* image,             # <<<<<<<<<<<<<<
@@ -20978,7 +20988,7 @@ static CYTHON_INLINE __pyx_t_5numpy_float64_t __pyx_fuse_9__pyx_f_12fastlbp_imbg
   return __pyx_r;
 }
 
-/* "src/lbp.pyx":204
+/* "src/_lbp.pyx":204
  *     )
  * 
  * cdef inline void bilinear_interpolation(             # <<<<<<<<<<<<<<
@@ -20986,7 +20996,7 @@ static CYTHON_INLINE __pyx_t_5numpy_float64_t __pyx_fuse_9__pyx_f_12fastlbp_imbg
  *         np_floats r, np_floats c, char mode, np_real_numeric cval,
  */
 
-static CYTHON_INLINE void __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_3lbp_bilinear_interpolation(__pyx_t_5numpy_float64_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, __pyx_t_5numpy_float64_t __pyx_v_r, __pyx_t_5numpy_float64_t __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_float64_t __pyx_v_cval, __pyx_t_5numpy_float64_t *__pyx_v_out) {
+static CYTHON_INLINE void __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_4_lbp_bilinear_interpolation(__pyx_t_5numpy_float64_t *__pyx_v_image, Py_ssize_t __pyx_v_rows, Py_ssize_t __pyx_v_cols, __pyx_t_5numpy_float64_t __pyx_v_r, __pyx_t_5numpy_float64_t __pyx_v_c, char __pyx_v_mode, __pyx_t_5numpy_float64_t __pyx_v_cval, __pyx_t_5numpy_float64_t *__pyx_v_out) {
   __pyx_t_5numpy_float64_t __pyx_v_dr;
   __pyx_t_5numpy_float64_t __pyx_v_dc;
   long __pyx_v_minr;
@@ -21000,7 +21010,7 @@ static CYTHON_INLINE void __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_3lbp_bilinear_i
   __pyx_t_5numpy_float64_t __pyx_v_bottom_left;
   __pyx_t_5numpy_float64_t __pyx_v_bottom_right;
 
-  /* "src/lbp.pyx":232
+  /* "src/_lbp.pyx":232
  *     cdef long minr, minc, maxr, maxc
  * 
  *     minr = <long>floor(r)             # <<<<<<<<<<<<<<
@@ -21009,7 +21019,7 @@ static CYTHON_INLINE void __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_3lbp_bilinear_i
  */
   __pyx_v_minr = ((long)floor(__pyx_v_r));
 
-  /* "src/lbp.pyx":233
+  /* "src/_lbp.pyx":233
  * 
  *     minr = <long>floor(r)
  *     minc = <long>floor(c)             # <<<<<<<<<<<<<<
@@ -21018,7 +21028,7 @@ static CYTHON_INLINE void __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_3lbp_bilinear_i
  */
   __pyx_v_minc = ((long)floor(__pyx_v_c));
 
-  /* "src/lbp.pyx":234
+  /* "src/_lbp.pyx":234
  *     minr = <long>floor(r)
  *     minc = <long>floor(c)
  *     maxr = <long>ceil(r)             # <<<<<<<<<<<<<<
@@ -21027,7 +21037,7 @@ static CYTHON_INLINE void __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_3lbp_bilinear_i
  */
   __pyx_v_maxr = ((long)ceil(__pyx_v_r));
 
-  /* "src/lbp.pyx":235
+  /* "src/_lbp.pyx":235
  *     minc = <long>floor(c)
  *     maxr = <long>ceil(r)
  *     maxc = <long>ceil(c)             # <<<<<<<<<<<<<<
@@ -21036,7 +21046,7 @@ static CYTHON_INLINE void __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_3lbp_bilinear_i
  */
   __pyx_v_maxc = ((long)ceil(__pyx_v_c));
 
-  /* "src/lbp.pyx":236
+  /* "src/_lbp.pyx":236
  *     maxr = <long>ceil(r)
  *     maxc = <long>ceil(c)
  *     dr = r - minr             # <<<<<<<<<<<<<<
@@ -21045,7 +21055,7 @@ static CYTHON_INLINE void __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_3lbp_bilinear_i
  */
   __pyx_v_dr = (__pyx_v_r - __pyx_v_minr);
 
-  /* "src/lbp.pyx":237
+  /* "src/_lbp.pyx":237
  *     maxc = <long>ceil(c)
  *     dr = r - minr
  *     dc = c - minc             # <<<<<<<<<<<<<<
@@ -21054,43 +21064,43 @@ static CYTHON_INLINE void __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_3lbp_bilinear_i
  */
   __pyx_v_dc = (__pyx_v_c - __pyx_v_minc);
 
-  /* "src/lbp.pyx":242
+  /* "src/_lbp.pyx":242
  *     cdef cnp.float64_t bottom
  * 
  *     cdef np_real_numeric top_left = get_pixel2d(image, rows, cols, minr, minc, mode, cval)             # <<<<<<<<<<<<<<
  *     cdef np_real_numeric top_right = get_pixel2d(image, rows, cols, minr, maxc, mode, cval)
  *     cdef np_real_numeric bottom_left = get_pixel2d(image, rows, cols, maxr, minc, mode, cval)
  */
-  __pyx_v_top_left = __pyx_fuse_9__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_v_image, __pyx_v_rows, __pyx_v_cols, __pyx_v_minr, __pyx_v_minc, __pyx_v_mode, __pyx_v_cval);
+  __pyx_v_top_left = __pyx_fuse_9__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_v_image, __pyx_v_rows, __pyx_v_cols, __pyx_v_minr, __pyx_v_minc, __pyx_v_mode, __pyx_v_cval);
 
-  /* "src/lbp.pyx":243
+  /* "src/_lbp.pyx":243
  * 
  *     cdef np_real_numeric top_left = get_pixel2d(image, rows, cols, minr, minc, mode, cval)
  *     cdef np_real_numeric top_right = get_pixel2d(image, rows, cols, minr, maxc, mode, cval)             # <<<<<<<<<<<<<<
  *     cdef np_real_numeric bottom_left = get_pixel2d(image, rows, cols, maxr, minc, mode, cval)
  *     cdef np_real_numeric bottom_right = get_pixel2d(image, rows, cols, maxr, maxc, mode, cval)
  */
-  __pyx_v_top_right = __pyx_fuse_9__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_v_image, __pyx_v_rows, __pyx_v_cols, __pyx_v_minr, __pyx_v_maxc, __pyx_v_mode, __pyx_v_cval);
+  __pyx_v_top_right = __pyx_fuse_9__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_v_image, __pyx_v_rows, __pyx_v_cols, __pyx_v_minr, __pyx_v_maxc, __pyx_v_mode, __pyx_v_cval);
 
-  /* "src/lbp.pyx":244
+  /* "src/_lbp.pyx":244
  *     cdef np_real_numeric top_left = get_pixel2d(image, rows, cols, minr, minc, mode, cval)
  *     cdef np_real_numeric top_right = get_pixel2d(image, rows, cols, minr, maxc, mode, cval)
  *     cdef np_real_numeric bottom_left = get_pixel2d(image, rows, cols, maxr, minc, mode, cval)             # <<<<<<<<<<<<<<
  *     cdef np_real_numeric bottom_right = get_pixel2d(image, rows, cols, maxr, maxc, mode, cval)
  * 
  */
-  __pyx_v_bottom_left = __pyx_fuse_9__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_v_image, __pyx_v_rows, __pyx_v_cols, __pyx_v_maxr, __pyx_v_minc, __pyx_v_mode, __pyx_v_cval);
+  __pyx_v_bottom_left = __pyx_fuse_9__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_v_image, __pyx_v_rows, __pyx_v_cols, __pyx_v_maxr, __pyx_v_minc, __pyx_v_mode, __pyx_v_cval);
 
-  /* "src/lbp.pyx":245
+  /* "src/_lbp.pyx":245
  *     cdef np_real_numeric top_right = get_pixel2d(image, rows, cols, minr, maxc, mode, cval)
  *     cdef np_real_numeric bottom_left = get_pixel2d(image, rows, cols, maxr, minc, mode, cval)
  *     cdef np_real_numeric bottom_right = get_pixel2d(image, rows, cols, maxr, maxc, mode, cval)             # <<<<<<<<<<<<<<
  * 
  *     top = (1 - dc) * top_left + dc * top_right
  */
-  __pyx_v_bottom_right = __pyx_fuse_9__pyx_f_12fastlbp_imbg_3lbp_get_pixel2d(__pyx_v_image, __pyx_v_rows, __pyx_v_cols, __pyx_v_maxr, __pyx_v_maxc, __pyx_v_mode, __pyx_v_cval);
+  __pyx_v_bottom_right = __pyx_fuse_9__pyx_f_12fastlbp_imbg_4_lbp_get_pixel2d(__pyx_v_image, __pyx_v_rows, __pyx_v_cols, __pyx_v_maxr, __pyx_v_maxc, __pyx_v_mode, __pyx_v_cval);
 
-  /* "src/lbp.pyx":247
+  /* "src/_lbp.pyx":247
  *     cdef np_real_numeric bottom_right = get_pixel2d(image, rows, cols, maxr, maxc, mode, cval)
  * 
  *     top = (1 - dc) * top_left + dc * top_right             # <<<<<<<<<<<<<<
@@ -21099,7 +21109,7 @@ static CYTHON_INLINE void __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_3lbp_bilinear_i
  */
   __pyx_v_top = (((1.0 - __pyx_v_dc) * __pyx_v_top_left) + (__pyx_v_dc * __pyx_v_top_right));
 
-  /* "src/lbp.pyx":248
+  /* "src/_lbp.pyx":248
  * 
  *     top = (1 - dc) * top_left + dc * top_right
  *     bottom = (1 - dc) * bottom_left + dc * bottom_right             # <<<<<<<<<<<<<<
@@ -21108,7 +21118,7 @@ static CYTHON_INLINE void __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_3lbp_bilinear_i
  */
   __pyx_v_bottom = (((1.0 - __pyx_v_dc) * __pyx_v_bottom_left) + (__pyx_v_dc * __pyx_v_bottom_right));
 
-  /* "src/lbp.pyx":249
+  /* "src/_lbp.pyx":249
  *     top = (1 - dc) * top_left + dc * top_right
  *     bottom = (1 - dc) * bottom_left + dc * bottom_right
  *     out[0] = <np_real_numeric_out> ((1 - dr) * top + dr * bottom)             # <<<<<<<<<<<<<<
@@ -21117,7 +21127,7 @@ static CYTHON_INLINE void __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_3lbp_bilinear_i
  */
   (__pyx_v_out[0]) = ((__pyx_t_5numpy_float64_t)(((1.0 - __pyx_v_dr) * __pyx_v_top) + (__pyx_v_dr * __pyx_v_bottom)));
 
-  /* "src/lbp.pyx":204
+  /* "src/_lbp.pyx":204
  *     )
  * 
  * cdef inline void bilinear_interpolation(             # <<<<<<<<<<<<<<
@@ -21128,7 +21138,7 @@ static CYTHON_INLINE void __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_3lbp_bilinear_i
   /* function exit code */
 }
 
-/* "src/lbp.pyx":258
+/* "src/_lbp.pyx":258
  * #
  * 
  * cdef inline int _bit_rotate_right(int value, int length) nogil:             # <<<<<<<<<<<<<<
@@ -21136,10 +21146,10 @@ static CYTHON_INLINE void __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_3lbp_bilinear_i
  * 
  */
 
-static CYTHON_INLINE int __pyx_f_12fastlbp_imbg_3lbp__bit_rotate_right(int __pyx_v_value, int __pyx_v_length) {
+static CYTHON_INLINE int __pyx_f_12fastlbp_imbg_4_lbp__bit_rotate_right(int __pyx_v_value, int __pyx_v_length) {
   int __pyx_r;
 
-  /* "src/lbp.pyx":269
+  /* "src/_lbp.pyx":269
  * 
  *     """
  *     return (value >> 1) | ((value & 1) << (length - 1))             # <<<<<<<<<<<<<<
@@ -21149,7 +21159,7 @@ static CYTHON_INLINE int __pyx_f_12fastlbp_imbg_3lbp__bit_rotate_right(int __pyx
   __pyx_r = ((__pyx_v_value >> 1) | ((__pyx_v_value & 1) << (__pyx_v_length - 1)));
   goto __pyx_L0;
 
-  /* "src/lbp.pyx":258
+  /* "src/_lbp.pyx":258
  * #
  * 
  * cdef inline int _bit_rotate_right(int value, int length) nogil:             # <<<<<<<<<<<<<<
@@ -21162,7 +21172,7 @@ static CYTHON_INLINE int __pyx_f_12fastlbp_imbg_3lbp__bit_rotate_right(int __pyx
   return __pyx_r;
 }
 
-/* "src/lbp.pyx":272
+/* "src/_lbp.pyx":272
  * 
  * 
  * def _local_binary_pattern(cnp.float64_t[:, ::1] image,             # <<<<<<<<<<<<<<
@@ -21171,16 +21181,16 @@ static CYTHON_INLINE int __pyx_f_12fastlbp_imbg_3lbp__bit_rotate_right(int __pyx
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_12fastlbp_imbg_3lbp_1_local_binary_pattern(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_12fastlbp_imbg_4_lbp_1_local_binary_pattern(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_12fastlbp_imbg_3lbp__local_binary_pattern, "Gray scale and rotation invariant LBP (Local Binary Patterns).\n\n    LBP is an invariant descriptor that can be used for texture classification.\n\n    Parameters\n    ----------\n    image : (N, M) cnp.float64_t array\n        Graylevel image.\n    P : int\n        Number of circularly symmetric neighbor set points (quantization of\n        the angular space).\n    R : float\n        Radius of circle (spatial resolution of the operator).\n    method : {'D', 'R', 'U', 'N', 'V'}\n        Method to determine the pattern.\n\n        * 'D': 'default'\n        * 'R': 'ror'\n        * 'U': 'uniform'\n        * 'N': 'nri_uniform'\n        * 'V': 'var'\n\n    Returns\n    -------\n    output : (N, M) array\n        LBP image.\n    ");
-static PyMethodDef __pyx_mdef_12fastlbp_imbg_3lbp_1_local_binary_pattern = {"_local_binary_pattern", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_12fastlbp_imbg_3lbp_1_local_binary_pattern, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_12fastlbp_imbg_3lbp__local_binary_pattern};
-static PyObject *__pyx_pw_12fastlbp_imbg_3lbp_1_local_binary_pattern(PyObject *__pyx_self, 
+PyDoc_STRVAR(__pyx_doc_12fastlbp_imbg_4_lbp__local_binary_pattern, "Gray scale and rotation invariant LBP (Local Binary Patterns).\n\n    LBP is an invariant descriptor that can be used for texture classification.\n\n    Parameters\n    ----------\n    image : (N, M) cnp.float64_t array\n        Graylevel image.\n    P : int\n        Number of circularly symmetric neighbor set points (quantization of\n        the angular space).\n    R : float\n        Radius of circle (spatial resolution of the operator).\n    method : {'D', 'R', 'U', 'N', 'V'}\n        Method to determine the pattern.\n\n        * 'D': 'default'\n        * 'R': 'ror'\n        * 'U': 'uniform'\n        * 'N': 'nri_uniform'\n        * 'V': 'var'\n\n    Returns\n    -------\n    output : (N, M) array\n        LBP image.\n    ");
+static PyMethodDef __pyx_mdef_12fastlbp_imbg_4_lbp_1_local_binary_pattern = {"_local_binary_pattern", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_12fastlbp_imbg_4_lbp_1_local_binary_pattern, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_12fastlbp_imbg_4_lbp__local_binary_pattern};
+static PyObject *__pyx_pw_12fastlbp_imbg_4_lbp_1_local_binary_pattern(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -21285,7 +21295,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       __pyx_v_method = __Pyx_PyInt_As_char(values[3]); if (unlikely((__pyx_v_method == (char)-1) && PyErr_Occurred())) __PYX_ERR(0, 273, __pyx_L3_error)
     } else {
 
-      /* "src/lbp.pyx":273
+      /* "src/_lbp.pyx":273
  * 
  * def _local_binary_pattern(cnp.float64_t[:, ::1] image,
  *                           int P, cnp.float64_t R, char method=b'D'):             # <<<<<<<<<<<<<<
@@ -21308,13 +21318,13 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
     }
   }
   __PYX_XCLEAR_MEMVIEW(&__pyx_v_image, 1);
-  __Pyx_AddTraceback("fastlbp_imbg.lbp._local_binary_pattern", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("fastlbp_imbg._lbp._local_binary_pattern", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(__pyx_self, __pyx_v_image, __pyx_v_P, __pyx_v_R, __pyx_v_method);
+  __pyx_r = __pyx_pf_12fastlbp_imbg_4_lbp__local_binary_pattern(__pyx_self, __pyx_v_image, __pyx_v_P, __pyx_v_R, __pyx_v_method);
 
-  /* "src/lbp.pyx":272
+  /* "src/_lbp.pyx":272
  * 
  * 
  * def _local_binary_pattern(cnp.float64_t[:, ::1] image,             # <<<<<<<<<<<<<<
@@ -21334,7 +21344,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_image, int __pyx_v_P, __pyx_t_5numpy_float64_t __pyx_v_R, char __pyx_v_method) {
+static PyObject *__pyx_pf_12fastlbp_imbg_4_lbp__local_binary_pattern(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_image, int __pyx_v_P, __pyx_t_5numpy_float64_t __pyx_v_R, char __pyx_v_method) {
   __Pyx_memviewslice __pyx_v_weights = { 0, 0, { 0 }, { 0 }, { 0 } };
   PyObject *__pyx_v_rr = NULL;
   PyObject *__pyx_v_cc = NULL;
@@ -21399,7 +21409,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("_local_binary_pattern", 1);
 
-  /* "src/lbp.pyx":303
+  /* "src/_lbp.pyx":303
  * 
  *     # texture weights
  *     cdef int[::1] weights = 2 ** np.arange(P, dtype=np.int32)             # <<<<<<<<<<<<<<
@@ -21441,7 +21451,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
-  /* "src/lbp.pyx":305
+  /* "src/_lbp.pyx":305
  *     cdef int[::1] weights = 2 ** np.arange(P, dtype=np.int32)
  *     # local position of texture elements
  *     rr = - R * np.sin(2 * np.pi * np.arange(P, dtype=np.float64) / P)             # <<<<<<<<<<<<<<
@@ -21529,7 +21539,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
   __pyx_v_rr = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "src/lbp.pyx":306
+  /* "src/_lbp.pyx":306
  *     # local position of texture elements
  *     rr = - R * np.sin(2 * np.pi * np.arange(P, dtype=np.float64) / P)
  *     cc = R * np.cos(2 * np.pi * np.arange(P, dtype=np.float64) / P)             # <<<<<<<<<<<<<<
@@ -21617,7 +21627,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
   __pyx_v_cc = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "src/lbp.pyx":307
+  /* "src/_lbp.pyx":307
  *     rr = - R * np.sin(2 * np.pi * np.arange(P, dtype=np.float64) / P)
  *     cc = R * np.cos(2 * np.pi * np.arange(P, dtype=np.float64) / P)
  *     cdef cnp.float64_t[::1] rp = np.round(rr, 5)             # <<<<<<<<<<<<<<
@@ -21657,7 +21667,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
   __pyx_t_12.memview = NULL;
   __pyx_t_12.data = NULL;
 
-  /* "src/lbp.pyx":308
+  /* "src/_lbp.pyx":308
  *     cc = R * np.cos(2 * np.pi * np.arange(P, dtype=np.float64) / P)
  *     cdef cnp.float64_t[::1] rp = np.round(rr, 5)
  *     cdef cnp.float64_t[::1] cp = np.round(cc, 5)             # <<<<<<<<<<<<<<
@@ -21697,7 +21707,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
   __pyx_t_12.memview = NULL;
   __pyx_t_12.data = NULL;
 
-  /* "src/lbp.pyx":311
+  /* "src/_lbp.pyx":311
  * 
  *     # pre-allocate arrays for computation
  *     cdef cnp.float64_t[::1] texture = np.zeros(P, dtype=np.float64)             # <<<<<<<<<<<<<<
@@ -21736,7 +21746,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
   __pyx_t_12.memview = NULL;
   __pyx_t_12.data = NULL;
 
-  /* "src/lbp.pyx":312
+  /* "src/_lbp.pyx":312
  *     # pre-allocate arrays for computation
  *     cdef cnp.float64_t[::1] texture = np.zeros(P, dtype=np.float64)
  *     cdef signed char[::1] signed_texture = np.zeros(P, dtype=np.int8)             # <<<<<<<<<<<<<<
@@ -21775,7 +21785,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
   __pyx_t_13.memview = NULL;
   __pyx_t_13.data = NULL;
 
-  /* "src/lbp.pyx":313
+  /* "src/_lbp.pyx":313
  *     cdef cnp.float64_t[::1] texture = np.zeros(P, dtype=np.float64)
  *     cdef signed char[::1] signed_texture = np.zeros(P, dtype=np.int8)
  *     cdef int[::1] rotation_chain = np.zeros(P, dtype=np.int32)             # <<<<<<<<<<<<<<
@@ -21814,7 +21824,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
   __pyx_t_6.memview = NULL;
   __pyx_t_6.data = NULL;
 
-  /* "src/lbp.pyx":315
+  /* "src/_lbp.pyx":315
  *     cdef int[::1] rotation_chain = np.zeros(P, dtype=np.int32)
  * 
  *     output_shape = (image.shape[0], image.shape[1])             # <<<<<<<<<<<<<<
@@ -21836,7 +21846,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
   __pyx_v_output_shape = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "src/lbp.pyx":316
+  /* "src/_lbp.pyx":316
  * 
  *     output_shape = (image.shape[0], image.shape[1])
  *     cdef cnp.float64_t[:, ::1] output = np.zeros(output_shape, dtype=np.float64)             # <<<<<<<<<<<<<<
@@ -21873,7 +21883,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
   __pyx_t_14.memview = NULL;
   __pyx_t_14.data = NULL;
 
-  /* "src/lbp.pyx":318
+  /* "src/_lbp.pyx":318
  *     cdef cnp.float64_t[:, ::1] output = np.zeros(output_shape, dtype=np.float64)
  * 
  *     cdef Py_ssize_t rows = image.shape[0]             # <<<<<<<<<<<<<<
@@ -21882,7 +21892,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
   __pyx_v_rows = (__pyx_v_image.shape[0]);
 
-  /* "src/lbp.pyx":319
+  /* "src/_lbp.pyx":319
  * 
  *     cdef Py_ssize_t rows = image.shape[0]
  *     cdef Py_ssize_t cols = image.shape[1]             # <<<<<<<<<<<<<<
@@ -21891,7 +21901,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
   __pyx_v_cols = (__pyx_v_image.shape[1]);
 
-  /* "src/lbp.pyx":329
+  /* "src/_lbp.pyx":329
  *     cdef cnp.float64_t sum_, var_, texture_i
  * 
  *     with nogil:             # <<<<<<<<<<<<<<
@@ -21907,7 +21917,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
       #endif
       /*try:*/ {
 
-        /* "src/lbp.pyx":330
+        /* "src/_lbp.pyx":330
  * 
  *     with nogil:
  *         for r in range(image.shape[0]):             # <<<<<<<<<<<<<<
@@ -21919,7 +21929,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
         for (__pyx_t_17 = 0; __pyx_t_17 < __pyx_t_16; __pyx_t_17+=1) {
           __pyx_v_r = __pyx_t_17;
 
-          /* "src/lbp.pyx":331
+          /* "src/_lbp.pyx":331
  *     with nogil:
  *         for r in range(image.shape[0]):
  *             for c in range(image.shape[1]):             # <<<<<<<<<<<<<<
@@ -21931,7 +21941,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
           for (__pyx_t_20 = 0; __pyx_t_20 < __pyx_t_19; __pyx_t_20+=1) {
             __pyx_v_c = __pyx_t_20;
 
-            /* "src/lbp.pyx":332
+            /* "src/_lbp.pyx":332
  *         for r in range(image.shape[0]):
  *             for c in range(image.shape[1]):
  *                 for i in range(P):             # <<<<<<<<<<<<<<
@@ -21943,7 +21953,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
             for (__pyx_t_22 = 0; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
               __pyx_v_i = __pyx_t_22;
 
-              /* "src/lbp.pyx":334
+              /* "src/_lbp.pyx":334
  *                 for i in range(P):
  *                     bilinear_interpolation[cnp.float64_t, cnp.float64_t, cnp.float64_t](
  *                             &image[0, 0], rows, cols, r + rp[i], c + cp[i],             # <<<<<<<<<<<<<<
@@ -21955,7 +21965,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
               __pyx_t_25 = __pyx_v_i;
               __pyx_t_26 = __pyx_v_i;
 
-              /* "src/lbp.pyx":335
+              /* "src/_lbp.pyx":335
  *                     bilinear_interpolation[cnp.float64_t, cnp.float64_t, cnp.float64_t](
  *                             &image[0, 0], rows, cols, r + rp[i], c + cp[i],
  *                             b'C', 0, &texture[i])             # <<<<<<<<<<<<<<
@@ -21964,17 +21974,17 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
               __pyx_t_27 = __pyx_v_i;
 
-              /* "src/lbp.pyx":333
+              /* "src/_lbp.pyx":333
  *             for c in range(image.shape[1]):
  *                 for i in range(P):
  *                     bilinear_interpolation[cnp.float64_t, cnp.float64_t, cnp.float64_t](             # <<<<<<<<<<<<<<
  *                             &image[0, 0], rows, cols, r + rp[i], c + cp[i],
  *                             b'C', 0, &texture[i])
  */
-              __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_3lbp_bilinear_interpolation((&(*((__pyx_t_5numpy_float64_t *) ( /* dim=1 */ ((char *) (((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ (__pyx_v_image.data + __pyx_t_23 * __pyx_v_image.strides[0]) )) + __pyx_t_24)) )))), __pyx_v_rows, __pyx_v_cols, (__pyx_v_r + (*((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ ((char *) (((__pyx_t_5numpy_float64_t *) __pyx_v_rp.data) + __pyx_t_25)) )))), (__pyx_v_c + (*((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ ((char *) (((__pyx_t_5numpy_float64_t *) __pyx_v_cp.data) + __pyx_t_26)) )))), 'C', 0.0, (&(*((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ ((char *) (((__pyx_t_5numpy_float64_t *) __pyx_v_texture.data) + __pyx_t_27)) )))));
+              __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_4_lbp_bilinear_interpolation((&(*((__pyx_t_5numpy_float64_t *) ( /* dim=1 */ ((char *) (((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ (__pyx_v_image.data + __pyx_t_23 * __pyx_v_image.strides[0]) )) + __pyx_t_24)) )))), __pyx_v_rows, __pyx_v_cols, (__pyx_v_r + (*((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ ((char *) (((__pyx_t_5numpy_float64_t *) __pyx_v_rp.data) + __pyx_t_25)) )))), (__pyx_v_c + (*((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ ((char *) (((__pyx_t_5numpy_float64_t *) __pyx_v_cp.data) + __pyx_t_26)) )))), 'C', 0.0, (&(*((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ ((char *) (((__pyx_t_5numpy_float64_t *) __pyx_v_texture.data) + __pyx_t_27)) )))));
             }
 
-            /* "src/lbp.pyx":337
+            /* "src/_lbp.pyx":337
  *                             b'C', 0, &texture[i])
  *                 # signed / thresholded texture
  *                 for i in range(P):             # <<<<<<<<<<<<<<
@@ -21986,7 +21996,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
             for (__pyx_t_22 = 0; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
               __pyx_v_i = __pyx_t_22;
 
-              /* "src/lbp.pyx":338
+              /* "src/_lbp.pyx":338
  *                 # signed / thresholded texture
  *                 for i in range(P):
  *                     if texture[i] - image[r, c] >= 0:             # <<<<<<<<<<<<<<
@@ -21999,7 +22009,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
               __pyx_t_28 = (((*((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ ((char *) (((__pyx_t_5numpy_float64_t *) __pyx_v_texture.data) + __pyx_t_27)) ))) - (*((__pyx_t_5numpy_float64_t *) ( /* dim=1 */ ((char *) (((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ (__pyx_v_image.data + __pyx_t_26 * __pyx_v_image.strides[0]) )) + __pyx_t_25)) )))) >= 0.0);
               if (__pyx_t_28) {
 
-                /* "src/lbp.pyx":339
+                /* "src/_lbp.pyx":339
  *                 for i in range(P):
  *                     if texture[i] - image[r, c] >= 0:
  *                         signed_texture[i] = 1             # <<<<<<<<<<<<<<
@@ -22009,7 +22019,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                 __pyx_t_25 = __pyx_v_i;
                 *((signed char *) ( /* dim=0 */ ((char *) (((signed char *) __pyx_v_signed_texture.data) + __pyx_t_25)) )) = 1;
 
-                /* "src/lbp.pyx":338
+                /* "src/_lbp.pyx":338
  *                 # signed / thresholded texture
  *                 for i in range(P):
  *                     if texture[i] - image[r, c] >= 0:             # <<<<<<<<<<<<<<
@@ -22019,7 +22029,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                 goto __pyx_L14;
               }
 
-              /* "src/lbp.pyx":341
+              /* "src/_lbp.pyx":341
  *                         signed_texture[i] = 1
  *                     else:
  *                         signed_texture[i] = 0             # <<<<<<<<<<<<<<
@@ -22033,7 +22043,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
               __pyx_L14:;
             }
 
-            /* "src/lbp.pyx":343
+            /* "src/_lbp.pyx":343
  *                         signed_texture[i] = 0
  * 
  *                 lbp = 0             # <<<<<<<<<<<<<<
@@ -22042,7 +22052,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
             __pyx_v_lbp = 0.0;
 
-            /* "src/lbp.pyx":346
+            /* "src/_lbp.pyx":346
  * 
  *                 # if method == b'var':
  *                 if method == b'V':             # <<<<<<<<<<<<<<
@@ -22052,7 +22062,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
             switch (__pyx_v_method) {
               case 'V':
 
-              /* "src/lbp.pyx":350
+              /* "src/_lbp.pyx":350
  *                     # Following the LBP paper, we're taking a biased estimate
  *                     # of the variance (ddof=0)
  *                     sum_ = 0.0             # <<<<<<<<<<<<<<
@@ -22061,7 +22071,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
               __pyx_v_sum_ = 0.0;
 
-              /* "src/lbp.pyx":351
+              /* "src/_lbp.pyx":351
  *                     # of the variance (ddof=0)
  *                     sum_ = 0.0
  *                     var_ = 0.0             # <<<<<<<<<<<<<<
@@ -22070,7 +22080,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
               __pyx_v_var_ = 0.0;
 
-              /* "src/lbp.pyx":352
+              /* "src/_lbp.pyx":352
  *                     sum_ = 0.0
  *                     var_ = 0.0
  *                     for i in range(P):             # <<<<<<<<<<<<<<
@@ -22082,7 +22092,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
               for (__pyx_t_22 = 0; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
                 __pyx_v_i = __pyx_t_22;
 
-                /* "src/lbp.pyx":353
+                /* "src/_lbp.pyx":353
  *                     var_ = 0.0
  *                     for i in range(P):
  *                         texture_i = texture[i]             # <<<<<<<<<<<<<<
@@ -22092,7 +22102,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                 __pyx_t_25 = __pyx_v_i;
                 __pyx_v_texture_i = (*((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ ((char *) (((__pyx_t_5numpy_float64_t *) __pyx_v_texture.data) + __pyx_t_25)) )));
 
-                /* "src/lbp.pyx":354
+                /* "src/_lbp.pyx":354
  *                     for i in range(P):
  *                         texture_i = texture[i]
  *                         sum_ += texture_i             # <<<<<<<<<<<<<<
@@ -22101,7 +22111,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
                 __pyx_v_sum_ = (__pyx_v_sum_ + __pyx_v_texture_i);
 
-                /* "src/lbp.pyx":355
+                /* "src/_lbp.pyx":355
  *                         texture_i = texture[i]
  *                         sum_ += texture_i
  *                         var_ += texture_i * texture_i             # <<<<<<<<<<<<<<
@@ -22111,7 +22121,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                 __pyx_v_var_ = (__pyx_v_var_ + (__pyx_v_texture_i * __pyx_v_texture_i));
               }
 
-              /* "src/lbp.pyx":356
+              /* "src/_lbp.pyx":356
  *                         sum_ += texture_i
  *                         var_ += texture_i * texture_i
  *                     var_ = (var_ - (sum_ * sum_) / P) / P             # <<<<<<<<<<<<<<
@@ -22120,7 +22130,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
               __pyx_v_var_ = ((__pyx_v_var_ - ((__pyx_v_sum_ * __pyx_v_sum_) / ((__pyx_t_5numpy_float64_t)__pyx_v_P))) / ((__pyx_t_5numpy_float64_t)__pyx_v_P));
 
-              /* "src/lbp.pyx":357
+              /* "src/_lbp.pyx":357
  *                         var_ += texture_i * texture_i
  *                     var_ = (var_ - (sum_ * sum_) / P) / P
  *                     if var_ != 0:             # <<<<<<<<<<<<<<
@@ -22130,7 +22140,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
               __pyx_t_28 = (__pyx_v_var_ != 0.0);
               if (__pyx_t_28) {
 
-                /* "src/lbp.pyx":358
+                /* "src/_lbp.pyx":358
  *                     var_ = (var_ - (sum_ * sum_) / P) / P
  *                     if var_ != 0:
  *                         lbp = var_             # <<<<<<<<<<<<<<
@@ -22139,7 +22149,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
                 __pyx_v_lbp = __pyx_v_var_;
 
-                /* "src/lbp.pyx":357
+                /* "src/_lbp.pyx":357
  *                         var_ += texture_i * texture_i
  *                     var_ = (var_ - (sum_ * sum_) / P) / P
  *                     if var_ != 0:             # <<<<<<<<<<<<<<
@@ -22149,7 +22159,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                 goto __pyx_L17;
               }
 
-              /* "src/lbp.pyx":360
+              /* "src/_lbp.pyx":360
  *                         lbp = var_
  *                     else:
  *                         lbp = NAN             # <<<<<<<<<<<<<<
@@ -22161,7 +22171,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
               }
               __pyx_L17:;
 
-              /* "src/lbp.pyx":346
+              /* "src/_lbp.pyx":346
  * 
  *                 # if method == b'var':
  *                 if method == b'V':             # <<<<<<<<<<<<<<
@@ -22171,7 +22181,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
               break;
               case 'U':
 
-              /* "src/lbp.pyx":362
+              /* "src/_lbp.pyx":362
  *                         lbp = NAN
  *                 # if method == b'uniform':
  *                 elif method == b'U' or method == b'N':             # <<<<<<<<<<<<<<
@@ -22180,7 +22190,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
               case 'N':
 
-              /* "src/lbp.pyx":364
+              /* "src/_lbp.pyx":364
  *                 elif method == b'U' or method == b'N':
  *                     # determine number of 0 - 1 changes
  *                     changes = 0             # <<<<<<<<<<<<<<
@@ -22189,7 +22199,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
               __pyx_v_changes = 0;
 
-              /* "src/lbp.pyx":365
+              /* "src/_lbp.pyx":365
  *                     # determine number of 0 - 1 changes
  *                     changes = 0
  *                     for i in range(P - 1):             # <<<<<<<<<<<<<<
@@ -22201,7 +22211,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
               for (__pyx_t_22 = 0; __pyx_t_22 < __pyx_t_30; __pyx_t_22+=1) {
                 __pyx_v_i = __pyx_t_22;
 
-                /* "src/lbp.pyx":366
+                /* "src/_lbp.pyx":366
  *                     changes = 0
  *                     for i in range(P - 1):
  *                         changes += (signed_texture[i]             # <<<<<<<<<<<<<<
@@ -22210,7 +22220,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
                 __pyx_t_25 = __pyx_v_i;
 
-                /* "src/lbp.pyx":367
+                /* "src/_lbp.pyx":367
  *                     for i in range(P - 1):
  *                         changes += (signed_texture[i]
  *                                     - signed_texture[i + 1]) != 0             # <<<<<<<<<<<<<<
@@ -22219,7 +22229,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
                 __pyx_t_26 = (__pyx_v_i + 1);
 
-                /* "src/lbp.pyx":366
+                /* "src/_lbp.pyx":366
  *                     changes = 0
  *                     for i in range(P - 1):
  *                         changes += (signed_texture[i]             # <<<<<<<<<<<<<<
@@ -22229,7 +22239,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                 __pyx_v_changes = (__pyx_v_changes + (((*((signed char *) ( /* dim=0 */ ((char *) (((signed char *) __pyx_v_signed_texture.data) + __pyx_t_25)) ))) - (*((signed char *) ( /* dim=0 */ ((char *) (((signed char *) __pyx_v_signed_texture.data) + __pyx_t_26)) )))) != 0));
               }
 
-              /* "src/lbp.pyx":368
+              /* "src/_lbp.pyx":368
  *                         changes += (signed_texture[i]
  *                                     - signed_texture[i + 1]) != 0
  *                     if method == b'N':             # <<<<<<<<<<<<<<
@@ -22239,7 +22249,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
               __pyx_t_28 = (__pyx_v_method == 'N');
               if (__pyx_t_28) {
 
-                /* "src/lbp.pyx":406
+                /* "src/_lbp.pyx":406
  *                         # 0 found in the pattern.
  * 
  *                         if changes <= 2:             # <<<<<<<<<<<<<<
@@ -22249,7 +22259,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                 __pyx_t_28 = (__pyx_v_changes <= 2);
                 if (__pyx_t_28) {
 
-                  /* "src/lbp.pyx":408
+                  /* "src/_lbp.pyx":408
  *                         if changes <= 2:
  *                             # We have a uniform pattern
  *                             n_ones = 0  # determines the number of ones             # <<<<<<<<<<<<<<
@@ -22258,7 +22268,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
                   __pyx_v_n_ones = 0;
 
-                  /* "src/lbp.pyx":409
+                  /* "src/_lbp.pyx":409
  *                             # We have a uniform pattern
  *                             n_ones = 0  # determines the number of ones
  *                             first_one = -1  # position was the first one             # <<<<<<<<<<<<<<
@@ -22267,7 +22277,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
                   __pyx_v_first_one = -1;
 
-                  /* "src/lbp.pyx":410
+                  /* "src/_lbp.pyx":410
  *                             n_ones = 0  # determines the number of ones
  *                             first_one = -1  # position was the first one
  *                             first_zero = -1  # position of the first zero             # <<<<<<<<<<<<<<
@@ -22276,7 +22286,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
                   __pyx_v_first_zero = -1;
 
-                  /* "src/lbp.pyx":411
+                  /* "src/_lbp.pyx":411
  *                             first_one = -1  # position was the first one
  *                             first_zero = -1  # position of the first zero
  *                             for i in range(P):             # <<<<<<<<<<<<<<
@@ -22288,7 +22298,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                   for (__pyx_t_22 = 0; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
                     __pyx_v_i = __pyx_t_22;
 
-                    /* "src/lbp.pyx":412
+                    /* "src/_lbp.pyx":412
  *                             first_zero = -1  # position of the first zero
  *                             for i in range(P):
  *                                 if signed_texture[i]:             # <<<<<<<<<<<<<<
@@ -22299,7 +22309,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                     __pyx_t_28 = ((*((signed char *) ( /* dim=0 */ ((char *) (((signed char *) __pyx_v_signed_texture.data) + __pyx_t_26)) ))) != 0);
                     if (__pyx_t_28) {
 
-                      /* "src/lbp.pyx":413
+                      /* "src/_lbp.pyx":413
  *                             for i in range(P):
  *                                 if signed_texture[i]:
  *                                     n_ones += 1             # <<<<<<<<<<<<<<
@@ -22308,7 +22318,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
                       __pyx_v_n_ones = (__pyx_v_n_ones + 1);
 
-                      /* "src/lbp.pyx":414
+                      /* "src/_lbp.pyx":414
  *                                 if signed_texture[i]:
  *                                     n_ones += 1
  *                                     if first_one == -1:             # <<<<<<<<<<<<<<
@@ -22318,7 +22328,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                       __pyx_t_28 = (__pyx_v_first_one == -1L);
                       if (__pyx_t_28) {
 
-                        /* "src/lbp.pyx":415
+                        /* "src/_lbp.pyx":415
  *                                     n_ones += 1
  *                                     if first_one == -1:
  *                                         first_one = i             # <<<<<<<<<<<<<<
@@ -22327,7 +22337,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
                         __pyx_v_first_one = __pyx_v_i;
 
-                        /* "src/lbp.pyx":414
+                        /* "src/_lbp.pyx":414
  *                                 if signed_texture[i]:
  *                                     n_ones += 1
  *                                     if first_one == -1:             # <<<<<<<<<<<<<<
@@ -22336,7 +22346,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
                       }
 
-                      /* "src/lbp.pyx":412
+                      /* "src/_lbp.pyx":412
  *                             first_zero = -1  # position of the first zero
  *                             for i in range(P):
  *                                 if signed_texture[i]:             # <<<<<<<<<<<<<<
@@ -22346,7 +22356,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                       goto __pyx_L24;
                     }
 
-                    /* "src/lbp.pyx":417
+                    /* "src/_lbp.pyx":417
  *                                         first_one = i
  *                                 else:
  *                                     if first_zero == -1:             # <<<<<<<<<<<<<<
@@ -22357,7 +22367,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                       __pyx_t_28 = (__pyx_v_first_zero == -1L);
                       if (__pyx_t_28) {
 
-                        /* "src/lbp.pyx":418
+                        /* "src/_lbp.pyx":418
  *                                 else:
  *                                     if first_zero == -1:
  *                                         first_zero = i             # <<<<<<<<<<<<<<
@@ -22366,7 +22376,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
                         __pyx_v_first_zero = __pyx_v_i;
 
-                        /* "src/lbp.pyx":417
+                        /* "src/_lbp.pyx":417
  *                                         first_one = i
  *                                 else:
  *                                     if first_zero == -1:             # <<<<<<<<<<<<<<
@@ -22378,7 +22388,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                     __pyx_L24:;
                   }
 
-                  /* "src/lbp.pyx":419
+                  /* "src/_lbp.pyx":419
  *                                     if first_zero == -1:
  *                                         first_zero = i
  *                             if n_ones == 0:             # <<<<<<<<<<<<<<
@@ -22388,7 +22398,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                   __pyx_t_28 = (__pyx_v_n_ones == 0);
                   if (__pyx_t_28) {
 
-                    /* "src/lbp.pyx":420
+                    /* "src/_lbp.pyx":420
  *                                         first_zero = i
  *                             if n_ones == 0:
  *                                 lbp = 0             # <<<<<<<<<<<<<<
@@ -22397,7 +22407,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
                     __pyx_v_lbp = 0.0;
 
-                    /* "src/lbp.pyx":419
+                    /* "src/_lbp.pyx":419
  *                                     if first_zero == -1:
  *                                         first_zero = i
  *                             if n_ones == 0:             # <<<<<<<<<<<<<<
@@ -22407,7 +22417,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                     goto __pyx_L27;
                   }
 
-                  /* "src/lbp.pyx":421
+                  /* "src/_lbp.pyx":421
  *                             if n_ones == 0:
  *                                 lbp = 0
  *                             elif n_ones == P:             # <<<<<<<<<<<<<<
@@ -22417,7 +22427,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                   __pyx_t_28 = (__pyx_v_n_ones == __pyx_v_P);
                   if (__pyx_t_28) {
 
-                    /* "src/lbp.pyx":422
+                    /* "src/_lbp.pyx":422
  *                                 lbp = 0
  *                             elif n_ones == P:
  *                                 lbp = P * (P - 1) + 1             # <<<<<<<<<<<<<<
@@ -22426,7 +22436,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
                     __pyx_v_lbp = ((__pyx_v_P * (__pyx_v_P - 1)) + 1);
 
-                    /* "src/lbp.pyx":421
+                    /* "src/_lbp.pyx":421
  *                             if n_ones == 0:
  *                                 lbp = 0
  *                             elif n_ones == P:             # <<<<<<<<<<<<<<
@@ -22436,7 +22446,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                     goto __pyx_L27;
                   }
 
-                  /* "src/lbp.pyx":424
+                  /* "src/_lbp.pyx":424
  *                                 lbp = P * (P - 1) + 1
  *                             else:
  *                                 if first_one == 0:             # <<<<<<<<<<<<<<
@@ -22447,7 +22457,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                     __pyx_t_28 = (__pyx_v_first_one == 0);
                     if (__pyx_t_28) {
 
-                      /* "src/lbp.pyx":425
+                      /* "src/_lbp.pyx":425
  *                             else:
  *                                 if first_one == 0:
  *                                     rot_index = n_ones - first_zero             # <<<<<<<<<<<<<<
@@ -22456,7 +22466,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  */
                       __pyx_v_rot_index = (__pyx_v_n_ones - __pyx_v_first_zero);
 
-                      /* "src/lbp.pyx":424
+                      /* "src/_lbp.pyx":424
  *                                 lbp = P * (P - 1) + 1
  *                             else:
  *                                 if first_one == 0:             # <<<<<<<<<<<<<<
@@ -22466,7 +22476,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                       goto __pyx_L28;
                     }
 
-                    /* "src/lbp.pyx":427
+                    /* "src/_lbp.pyx":427
  *                                     rot_index = n_ones - first_zero
  *                                 else:
  *                                     rot_index = P - first_one             # <<<<<<<<<<<<<<
@@ -22478,7 +22488,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                     }
                     __pyx_L28:;
 
-                    /* "src/lbp.pyx":428
+                    /* "src/_lbp.pyx":428
  *                                 else:
  *                                     rot_index = P - first_one
  *                                 lbp = 1 + (n_ones - 1) * P + rot_index             # <<<<<<<<<<<<<<
@@ -22489,7 +22499,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                   }
                   __pyx_L27:;
 
-                  /* "src/lbp.pyx":406
+                  /* "src/_lbp.pyx":406
  *                         # 0 found in the pattern.
  * 
  *                         if changes <= 2:             # <<<<<<<<<<<<<<
@@ -22499,7 +22509,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                   goto __pyx_L21;
                 }
 
-                /* "src/lbp.pyx":430
+                /* "src/_lbp.pyx":430
  *                                 lbp = 1 + (n_ones - 1) * P + rot_index
  *                         else:  # changes > 2
  *                             lbp = P * (P - 1) + 2             # <<<<<<<<<<<<<<
@@ -22511,7 +22521,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                 }
                 __pyx_L21:;
 
-                /* "src/lbp.pyx":368
+                /* "src/_lbp.pyx":368
  *                         changes += (signed_texture[i]
  *                                     - signed_texture[i + 1]) != 0
  *                     if method == b'N':             # <<<<<<<<<<<<<<
@@ -22521,7 +22531,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                 goto __pyx_L20;
               }
 
-              /* "src/lbp.pyx":432
+              /* "src/_lbp.pyx":432
  *                             lbp = P * (P - 1) + 2
  *                     else:  # method != 'N'
  *                         if changes <= 2:             # <<<<<<<<<<<<<<
@@ -22532,7 +22542,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                 __pyx_t_28 = (__pyx_v_changes <= 2);
                 if (__pyx_t_28) {
 
-                  /* "src/lbp.pyx":433
+                  /* "src/_lbp.pyx":433
  *                     else:  # method != 'N'
  *                         if changes <= 2:
  *                             for i in range(P):             # <<<<<<<<<<<<<<
@@ -22544,7 +22554,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                   for (__pyx_t_22 = 0; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
                     __pyx_v_i = __pyx_t_22;
 
-                    /* "src/lbp.pyx":434
+                    /* "src/_lbp.pyx":434
  *                         if changes <= 2:
  *                             for i in range(P):
  *                                 lbp += signed_texture[i]             # <<<<<<<<<<<<<<
@@ -22555,7 +22565,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                     __pyx_v_lbp = (__pyx_v_lbp + (*((signed char *) ( /* dim=0 */ ((char *) (((signed char *) __pyx_v_signed_texture.data) + __pyx_t_26)) ))));
                   }
 
-                  /* "src/lbp.pyx":432
+                  /* "src/_lbp.pyx":432
  *                             lbp = P * (P - 1) + 2
  *                     else:  # method != 'N'
  *                         if changes <= 2:             # <<<<<<<<<<<<<<
@@ -22565,7 +22575,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                   goto __pyx_L29;
                 }
 
-                /* "src/lbp.pyx":436
+                /* "src/_lbp.pyx":436
  *                                 lbp += signed_texture[i]
  *                         else:
  *                             lbp = P + 1             # <<<<<<<<<<<<<<
@@ -22579,7 +22589,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
               }
               __pyx_L20:;
 
-              /* "src/lbp.pyx":362
+              /* "src/_lbp.pyx":362
  *                         lbp = NAN
  *                 # if method == b'uniform':
  *                 elif method == b'U' or method == b'N':             # <<<<<<<<<<<<<<
@@ -22589,7 +22599,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
               break;
               default:
 
-              /* "src/lbp.pyx":439
+              /* "src/_lbp.pyx":439
  *                 else:
  *                     # method == b'default'
  *                     for i in range(P):             # <<<<<<<<<<<<<<
@@ -22601,7 +22611,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
               for (__pyx_t_22 = 0; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
                 __pyx_v_i = __pyx_t_22;
 
-                /* "src/lbp.pyx":440
+                /* "src/_lbp.pyx":440
  *                     # method == b'default'
  *                     for i in range(P):
  *                         lbp += signed_texture[i] * weights[i]             # <<<<<<<<<<<<<<
@@ -22613,7 +22623,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                 __pyx_v_lbp = (__pyx_v_lbp + ((*((signed char *) ( /* dim=0 */ ((char *) (((signed char *) __pyx_v_signed_texture.data) + __pyx_t_26)) ))) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_weights.data) + __pyx_t_25)) )))));
               }
 
-              /* "src/lbp.pyx":443
+              /* "src/_lbp.pyx":443
  * 
  *                     # method == b'ror'
  *                     if method == b'R':             # <<<<<<<<<<<<<<
@@ -22623,7 +22633,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
               __pyx_t_28 = (__pyx_v_method == 'R');
               if (__pyx_t_28) {
 
-                /* "src/lbp.pyx":445
+                /* "src/_lbp.pyx":445
  *                     if method == b'R':
  *                         # shift LBP P times to the right and get minimum value
  *                         rotation_chain[0] = <int>lbp             # <<<<<<<<<<<<<<
@@ -22633,7 +22643,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                 __pyx_t_25 = 0;
                 *((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_rotation_chain.data) + __pyx_t_25)) )) = ((int)__pyx_v_lbp);
 
-                /* "src/lbp.pyx":446
+                /* "src/_lbp.pyx":446
  *                         # shift LBP P times to the right and get minimum value
  *                         rotation_chain[0] = <int>lbp
  *                         for i in range(1, P):             # <<<<<<<<<<<<<<
@@ -22645,7 +22655,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                 for (__pyx_t_22 = 1; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
                   __pyx_v_i = __pyx_t_22;
 
-                  /* "src/lbp.pyx":448
+                  /* "src/_lbp.pyx":448
  *                         for i in range(1, P):
  *                             rotation_chain[i] = \
  *                                 _bit_rotate_right(rotation_chain[i - 1], P)             # <<<<<<<<<<<<<<
@@ -22653,9 +22663,9 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
  *                         for i in range(1, P):
  */
                   __pyx_t_25 = (__pyx_v_i - 1);
-                  __pyx_t_31 = __pyx_f_12fastlbp_imbg_3lbp__bit_rotate_right((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_rotation_chain.data) + __pyx_t_25)) ))), __pyx_v_P); if (unlikely(__pyx_t_31 == ((int)-1) && __Pyx_ErrOccurredWithGIL())) __PYX_ERR(0, 448, __pyx_L4_error)
+                  __pyx_t_31 = __pyx_f_12fastlbp_imbg_4_lbp__bit_rotate_right((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_rotation_chain.data) + __pyx_t_25)) ))), __pyx_v_P); if (unlikely(__pyx_t_31 == ((int)-1) && __Pyx_ErrOccurredWithGIL())) __PYX_ERR(0, 448, __pyx_L4_error)
 
-                  /* "src/lbp.pyx":447
+                  /* "src/_lbp.pyx":447
  *                         rotation_chain[0] = <int>lbp
  *                         for i in range(1, P):
  *                             rotation_chain[i] = \             # <<<<<<<<<<<<<<
@@ -22666,7 +22676,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                   *((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_rotation_chain.data) + __pyx_t_25)) )) = __pyx_t_31;
                 }
 
-                /* "src/lbp.pyx":449
+                /* "src/_lbp.pyx":449
  *                             rotation_chain[i] = \
  *                                 _bit_rotate_right(rotation_chain[i - 1], P)
  *                         lbp = rotation_chain[0]             # <<<<<<<<<<<<<<
@@ -22676,7 +22686,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                 __pyx_t_25 = 0;
                 __pyx_v_lbp = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_rotation_chain.data) + __pyx_t_25)) )));
 
-                /* "src/lbp.pyx":450
+                /* "src/_lbp.pyx":450
  *                                 _bit_rotate_right(rotation_chain[i - 1], P)
  *                         lbp = rotation_chain[0]
  *                         for i in range(1, P):             # <<<<<<<<<<<<<<
@@ -22688,7 +22698,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                 for (__pyx_t_22 = 1; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
                   __pyx_v_i = __pyx_t_22;
 
-                  /* "src/lbp.pyx":451
+                  /* "src/_lbp.pyx":451
  *                         lbp = rotation_chain[0]
  *                         for i in range(1, P):
  *                             lbp = min(lbp, rotation_chain[i])             # <<<<<<<<<<<<<<
@@ -22707,7 +22717,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
                   __pyx_v_lbp = __pyx_t_33;
                 }
 
-                /* "src/lbp.pyx":443
+                /* "src/_lbp.pyx":443
  * 
  *                     # method == b'ror'
  *                     if method == b'R':             # <<<<<<<<<<<<<<
@@ -22718,7 +22728,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
               break;
             }
 
-            /* "src/lbp.pyx":453
+            /* "src/_lbp.pyx":453
  *                             lbp = min(lbp, rotation_chain[i])
  * 
  *                 output[r, c] = lbp             # <<<<<<<<<<<<<<
@@ -22732,7 +22742,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
         }
       }
 
-      /* "src/lbp.pyx":329
+      /* "src/_lbp.pyx":329
  *     cdef cnp.float64_t sum_, var_, texture_i
  * 
  *     with nogil:             # <<<<<<<<<<<<<<
@@ -22758,10 +22768,12 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
       }
   }
 
-  /* "src/lbp.pyx":455
+  /* "src/_lbp.pyx":455
  *                 output[r, c] = lbp
  * 
  *     return np.asarray(output)             # <<<<<<<<<<<<<<
+ * 
+ * 
  */
   __Pyx_XDECREF(__pyx_r);
   __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 455, __pyx_L1_error)
@@ -22798,7 +22810,7 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "src/lbp.pyx":272
+  /* "src/_lbp.pyx":272
  * 
  * 
  * def _local_binary_pattern(cnp.float64_t[:, ::1] image,             # <<<<<<<<<<<<<<
@@ -22821,7 +22833,1684 @@ static PyObject *__pyx_pf_12fastlbp_imbg_3lbp__local_binary_pattern(CYTHON_UNUSE
   __PYX_XCLEAR_MEMVIEW(&__pyx_t_12, 1);
   __PYX_XCLEAR_MEMVIEW(&__pyx_t_13, 1);
   __PYX_XCLEAR_MEMVIEW(&__pyx_t_14, 1);
-  __Pyx_AddTraceback("fastlbp_imbg.lbp._local_binary_pattern", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("fastlbp_imbg._lbp._local_binary_pattern", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __PYX_XCLEAR_MEMVIEW(&__pyx_v_weights, 1);
+  __Pyx_XDECREF(__pyx_v_rr);
+  __Pyx_XDECREF(__pyx_v_cc);
+  __PYX_XCLEAR_MEMVIEW(&__pyx_v_rp, 1);
+  __PYX_XCLEAR_MEMVIEW(&__pyx_v_cp, 1);
+  __PYX_XCLEAR_MEMVIEW(&__pyx_v_texture, 1);
+  __PYX_XCLEAR_MEMVIEW(&__pyx_v_signed_texture, 1);
+  __PYX_XCLEAR_MEMVIEW(&__pyx_v_rotation_chain, 1);
+  __Pyx_XDECREF(__pyx_v_output_shape);
+  __PYX_XCLEAR_MEMVIEW(&__pyx_v_output, 1);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "src/_lbp.pyx":458
+ * 
+ * 
+ * def _uniform_lbp_uint8(cnp.float64_t[:, ::1] image,             # <<<<<<<<<<<<<<
+ *                           int P, cnp.float64_t R, char method=b'D'):
+ *     """Gray scale and rotation invariant Uniform LBP.
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_12fastlbp_imbg_4_lbp_3_uniform_lbp_uint8(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+PyDoc_STRVAR(__pyx_doc_12fastlbp_imbg_4_lbp_2_uniform_lbp_uint8, "Gray scale and rotation invariant Uniform LBP.\n\n    Uniform method only. Input is uint8. Output is uint16. Max radius is ~65530\n\n    Parameters\n    ----------\n    image : (N, M) cnp.float64_t array\n        Graylevel image.\n    P : int\n        Number of circularly symmetric neighbor set points (quantization of\n        the angular space).\n    R : float\n        Radius of circle (spatial resolution of the operator).\n    method : {'D', 'R', 'U', 'N', 'V'}\n        Method to determine the pattern.\n\n        * 'D': 'default'\n        * 'R': 'ror'\n        * 'U': 'uniform'\n        * 'N': 'nri_uniform'\n        * 'V': 'var'\n\n    Returns\n    -------\n    output : (N, M) array\n        LBP image.\n    ");
+static PyMethodDef __pyx_mdef_12fastlbp_imbg_4_lbp_3_uniform_lbp_uint8 = {"_uniform_lbp_uint8", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_12fastlbp_imbg_4_lbp_3_uniform_lbp_uint8, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_12fastlbp_imbg_4_lbp_2_uniform_lbp_uint8};
+static PyObject *__pyx_pw_12fastlbp_imbg_4_lbp_3_uniform_lbp_uint8(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  __Pyx_memviewslice __pyx_v_image = { 0, 0, { 0 }, { 0 }, { 0 } };
+  int __pyx_v_P;
+  __pyx_t_5numpy_float64_t __pyx_v_R;
+  char __pyx_v_method;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
+  PyObject* values[4] = {0,0,0,0};
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("_uniform_lbp_uint8 (wrapper)", 0);
+  #if !CYTHON_METH_FASTCALL
+  #if CYTHON_ASSUME_SAFE_MACROS
+  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #else
+  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
+  #endif
+  #endif
+  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  {
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_image,&__pyx_n_s_P,&__pyx_n_s_R,&__pyx_n_s_method,0};
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  4: values[3] = __Pyx_Arg_FASTCALL(__pyx_args, 3);
+        CYTHON_FALLTHROUGH;
+        case  3: values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
+        case  2: values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_image)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 458, __pyx_L3_error)
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_P)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 458, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("_uniform_lbp_uint8", 0, 3, 4, 1); __PYX_ERR(0, 458, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (likely((values[2] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_R)) != 0)) {
+          (void)__Pyx_Arg_NewRef_FASTCALL(values[2]);
+          kw_args--;
+        }
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 458, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("_uniform_lbp_uint8", 0, 3, 4, 2); __PYX_ERR(0, 458, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  3:
+        if (kw_args > 0) {
+          PyObject* value = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_method);
+          if (value) { values[3] = __Pyx_Arg_NewRef_FASTCALL(value); kw_args--; }
+          else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 458, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "_uniform_lbp_uint8") < 0)) __PYX_ERR(0, 458, __pyx_L3_error)
+      }
+    } else {
+      switch (__pyx_nargs) {
+        case  4: values[3] = __Pyx_Arg_FASTCALL(__pyx_args, 3);
+        CYTHON_FALLTHROUGH;
+        case  3: values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
+        values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+        values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+    }
+    __pyx_v_image = __Pyx_PyObject_to_MemoryviewSlice_d_dc_nn___pyx_t_5numpy_float64_t(values[0], PyBUF_WRITABLE); if (unlikely(!__pyx_v_image.memview)) __PYX_ERR(0, 458, __pyx_L3_error)
+    __pyx_v_P = __Pyx_PyInt_As_int(values[1]); if (unlikely((__pyx_v_P == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 459, __pyx_L3_error)
+    __pyx_v_R = __pyx_PyFloat_AsDouble(values[2]); if (unlikely((__pyx_v_R == ((npy_float64)-1)) && PyErr_Occurred())) __PYX_ERR(0, 459, __pyx_L3_error)
+    if (values[3]) {
+      __pyx_v_method = __Pyx_PyInt_As_char(values[3]); if (unlikely((__pyx_v_method == (char)-1) && PyErr_Occurred())) __PYX_ERR(0, 459, __pyx_L3_error)
+    } else {
+
+      /* "src/_lbp.pyx":459
+ * 
+ * def _uniform_lbp_uint8(cnp.float64_t[:, ::1] image,
+ *                           int P, cnp.float64_t R, char method=b'D'):             # <<<<<<<<<<<<<<
+ *     """Gray scale and rotation invariant Uniform LBP.
+ * 
+ */
+      __pyx_v_method = ((char)((char)'D'));
+    }
+  }
+  goto __pyx_L6_skip;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("_uniform_lbp_uint8", 0, 3, 4, __pyx_nargs); __PYX_ERR(0, 458, __pyx_L3_error)
+  __pyx_L6_skip:;
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L3_error:;
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
+    }
+  }
+  __PYX_XCLEAR_MEMVIEW(&__pyx_v_image, 1);
+  __Pyx_AddTraceback("fastlbp_imbg._lbp._uniform_lbp_uint8", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_12fastlbp_imbg_4_lbp_2_uniform_lbp_uint8(__pyx_self, __pyx_v_image, __pyx_v_P, __pyx_v_R, __pyx_v_method);
+
+  /* "src/_lbp.pyx":458
+ * 
+ * 
+ * def _uniform_lbp_uint8(cnp.float64_t[:, ::1] image,             # <<<<<<<<<<<<<<
+ *                           int P, cnp.float64_t R, char method=b'D'):
+ *     """Gray scale and rotation invariant Uniform LBP.
+ */
+
+  /* function exit code */
+  __PYX_XCLEAR_MEMVIEW(&__pyx_v_image, 1);
+  {
+    Py_ssize_t __pyx_temp;
+    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
+      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
+    }
+  }
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_12fastlbp_imbg_4_lbp_2_uniform_lbp_uint8(CYTHON_UNUSED PyObject *__pyx_self, __Pyx_memviewslice __pyx_v_image, int __pyx_v_P, __pyx_t_5numpy_float64_t __pyx_v_R, char __pyx_v_method) {
+  __Pyx_memviewslice __pyx_v_weights = { 0, 0, { 0 }, { 0 }, { 0 } };
+  PyObject *__pyx_v_rr = NULL;
+  PyObject *__pyx_v_cc = NULL;
+  __Pyx_memviewslice __pyx_v_rp = { 0, 0, { 0 }, { 0 }, { 0 } };
+  __Pyx_memviewslice __pyx_v_cp = { 0, 0, { 0 }, { 0 }, { 0 } };
+  __Pyx_memviewslice __pyx_v_texture = { 0, 0, { 0 }, { 0 }, { 0 } };
+  __Pyx_memviewslice __pyx_v_signed_texture = { 0, 0, { 0 }, { 0 }, { 0 } };
+  __Pyx_memviewslice __pyx_v_rotation_chain = { 0, 0, { 0 }, { 0 }, { 0 } };
+  PyObject *__pyx_v_output_shape = NULL;
+  __Pyx_memviewslice __pyx_v_output = { 0, 0, { 0 }, { 0 }, { 0 } };
+  Py_ssize_t __pyx_v_rows;
+  Py_ssize_t __pyx_v_cols;
+  __pyx_t_5numpy_float64_t __pyx_v_lbp;
+  Py_ssize_t __pyx_v_r;
+  Py_ssize_t __pyx_v_c;
+  Py_ssize_t __pyx_v_changes;
+  Py_ssize_t __pyx_v_i;
+  Py_ssize_t __pyx_v_rot_index;
+  Py_ssize_t __pyx_v_n_ones;
+  __pyx_t_5numpy_int8_t __pyx_v_first_zero;
+  __pyx_t_5numpy_int8_t __pyx_v_first_one;
+  __pyx_t_5numpy_float64_t __pyx_v_sum_;
+  __pyx_t_5numpy_float64_t __pyx_v_var_;
+  __pyx_t_5numpy_float64_t __pyx_v_texture_i;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  __Pyx_memviewslice __pyx_t_6 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  PyObject *__pyx_t_7 = NULL;
+  PyObject *__pyx_t_8 = NULL;
+  PyObject *__pyx_t_9 = NULL;
+  PyObject *__pyx_t_10 = NULL;
+  int __pyx_t_11;
+  __Pyx_memviewslice __pyx_t_12 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  __Pyx_memviewslice __pyx_t_13 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  __Pyx_memviewslice __pyx_t_14 = { 0, 0, { 0 }, { 0 }, { 0 } };
+  Py_ssize_t __pyx_t_15;
+  Py_ssize_t __pyx_t_16;
+  Py_ssize_t __pyx_t_17;
+  Py_ssize_t __pyx_t_18;
+  Py_ssize_t __pyx_t_19;
+  Py_ssize_t __pyx_t_20;
+  int __pyx_t_21;
+  Py_ssize_t __pyx_t_22;
+  Py_ssize_t __pyx_t_23;
+  Py_ssize_t __pyx_t_24;
+  Py_ssize_t __pyx_t_25;
+  Py_ssize_t __pyx_t_26;
+  Py_ssize_t __pyx_t_27;
+  int __pyx_t_28;
+  long __pyx_t_29;
+  long __pyx_t_30;
+  int __pyx_t_31;
+  __pyx_t_5numpy_float64_t __pyx_t_32;
+  __pyx_t_5numpy_float64_t __pyx_t_33;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("_uniform_lbp_uint8", 1);
+
+  /* "src/_lbp.pyx":489
+ * 
+ *     # texture weights
+ *     cdef int[::1] weights = 2 ** np.arange(P, dtype=np.int32)             # <<<<<<<<<<<<<<
+ *     # local position of texture elements
+ *     rr = - R * np.sin(2 * np.pi * np.arange(P, dtype=np.float64) / P)
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 489, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_arange); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 489, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_P); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 489, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 489, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_1);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1)) __PYX_ERR(0, 489, __pyx_L1_error);
+  __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 489, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 489, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_int32); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 489, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 489, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_3, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 489, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyNumber_PowerOf2(__pyx_int_2, __pyx_t_5, Py_None); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 489, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dc_int(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 489, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_v_weights = __pyx_t_6;
+  __pyx_t_6.memview = NULL;
+  __pyx_t_6.data = NULL;
+
+  /* "src/_lbp.pyx":491
+ *     cdef int[::1] weights = 2 ** np.arange(P, dtype=np.int32)
+ *     # local position of texture elements
+ *     rr = - R * np.sin(2 * np.pi * np.arange(P, dtype=np.float64) / P)             # <<<<<<<<<<<<<<
+ *     cc = R * np.cos(2 * np.pi * np.arange(P, dtype=np.float64) / P)
+ *     cdef cnp.float64_t[::1] rp = np.round(rr, 5)
+ */
+  __pyx_t_1 = PyFloat_FromDouble((-__pyx_v_R)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_sin); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_pi); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_PyInt_MultiplyCObj(__pyx_int_2, __pyx_t_4, 2, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_arange); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_P); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_8 = PyTuple_New(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __Pyx_GIVEREF(__pyx_t_4);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_4)) __PYX_ERR(0, 491, __pyx_L1_error);
+  __pyx_t_4 = 0;
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_np); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_float64); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_10) < 0) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __pyx_t_10 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_8, __pyx_t_4); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __pyx_t_4 = PyNumber_Multiply(__pyx_t_3, __pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __pyx_t_10 = __Pyx_PyInt_From_int(__pyx_v_P); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_4, __pyx_t_10); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __pyx_t_10 = NULL;
+  __pyx_t_11 = 0;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_10 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_10)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_10);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+      __pyx_t_11 = 1;
+    }
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_10, __pyx_t_3};
+    __pyx_t_5 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_11, 1+__pyx_t_11);
+    __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 491, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  }
+  __pyx_t_2 = PyNumber_Multiply(__pyx_t_1, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 491, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_v_rr = __pyx_t_2;
+  __pyx_t_2 = 0;
+
+  /* "src/_lbp.pyx":492
+ *     # local position of texture elements
+ *     rr = - R * np.sin(2 * np.pi * np.arange(P, dtype=np.float64) / P)
+ *     cc = R * np.cos(2 * np.pi * np.arange(P, dtype=np.float64) / P)             # <<<<<<<<<<<<<<
+ *     cdef cnp.float64_t[::1] rp = np.round(rr, 5)
+ *     cdef cnp.float64_t[::1] cp = np.round(cc, 5)
+ */
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_R); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_cos); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_pi); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyInt_MultiplyCObj(__pyx_int_2, __pyx_t_10, 2, 0, 0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_np); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_arange); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __pyx_t_10 = __Pyx_PyInt_From_int(__pyx_v_P); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __pyx_t_8 = PyTuple_New(1); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __Pyx_GIVEREF(__pyx_t_10);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_10)) __PYX_ERR(0, 492, __pyx_L1_error);
+  __pyx_t_10 = 0;
+  __pyx_t_10 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_float64); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  if (PyDict_SetItem(__pyx_t_10, __pyx_n_s_dtype, __pyx_t_9) < 0) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __pyx_t_9 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_8, __pyx_t_10); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __pyx_t_10 = PyNumber_Multiply(__pyx_t_1, __pyx_t_9); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __pyx_t_9 = __Pyx_PyInt_From_int(__pyx_v_P); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_1 = __Pyx_PyNumber_Divide(__pyx_t_10, __pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __pyx_t_9 = NULL;
+  __pyx_t_11 = 0;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_3))) {
+    __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_3);
+    if (likely(__pyx_t_9)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+      __Pyx_INCREF(__pyx_t_9);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_3, function);
+      __pyx_t_11 = 1;
+    }
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_9, __pyx_t_1};
+    __pyx_t_5 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_11, 1+__pyx_t_11);
+    __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
+    __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+    if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 492, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  }
+  __pyx_t_3 = PyNumber_Multiply(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 492, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_v_cc = __pyx_t_3;
+  __pyx_t_3 = 0;
+
+  /* "src/_lbp.pyx":493
+ *     rr = - R * np.sin(2 * np.pi * np.arange(P, dtype=np.float64) / P)
+ *     cc = R * np.cos(2 * np.pi * np.arange(P, dtype=np.float64) / P)
+ *     cdef cnp.float64_t[::1] rp = np.round(rr, 5)             # <<<<<<<<<<<<<<
+ *     cdef cnp.float64_t[::1] cp = np.round(cc, 5)
+ * 
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 493, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_round); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 493, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = NULL;
+  __pyx_t_11 = 0;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_5)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_5);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+      __pyx_t_11 = 1;
+    }
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[3] = {__pyx_t_5, __pyx_v_rr, __pyx_int_5};
+    __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_11, 2+__pyx_t_11);
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 493, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  }
+  __pyx_t_12 = __Pyx_PyObject_to_MemoryviewSlice_dc_nn___pyx_t_5numpy_float64_t(__pyx_t_3, PyBUF_WRITABLE); if (unlikely(!__pyx_t_12.memview)) __PYX_ERR(0, 493, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_v_rp = __pyx_t_12;
+  __pyx_t_12.memview = NULL;
+  __pyx_t_12.data = NULL;
+
+  /* "src/_lbp.pyx":494
+ *     cc = R * np.cos(2 * np.pi * np.arange(P, dtype=np.float64) / P)
+ *     cdef cnp.float64_t[::1] rp = np.round(rr, 5)
+ *     cdef cnp.float64_t[::1] cp = np.round(cc, 5)             # <<<<<<<<<<<<<<
+ * 
+ *     # pre-allocate arrays for computation
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 494, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_round); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 494, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = NULL;
+  __pyx_t_11 = 0;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_5))) {
+    __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_5);
+    if (likely(__pyx_t_2)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
+      __Pyx_INCREF(__pyx_t_2);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_5, function);
+      __pyx_t_11 = 1;
+    }
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[3] = {__pyx_t_2, __pyx_v_cc, __pyx_int_5};
+    __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_5, __pyx_callargs+1-__pyx_t_11, 2+__pyx_t_11);
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 494, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  }
+  __pyx_t_12 = __Pyx_PyObject_to_MemoryviewSlice_dc_nn___pyx_t_5numpy_float64_t(__pyx_t_3, PyBUF_WRITABLE); if (unlikely(!__pyx_t_12.memview)) __PYX_ERR(0, 494, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_v_cp = __pyx_t_12;
+  __pyx_t_12.memview = NULL;
+  __pyx_t_12.data = NULL;
+
+  /* "src/_lbp.pyx":497
+ * 
+ *     # pre-allocate arrays for computation
+ *     cdef cnp.float64_t[::1] texture = np.zeros(P, dtype=np.float64)             # <<<<<<<<<<<<<<
+ *     cdef signed char[::1] signed_texture = np.zeros(P, dtype=np.int8)
+ *     cdef int[::1] rotation_chain = np.zeros(P, dtype=np.int32)
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 497, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_zeros); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 497, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_PyInt_From_int(__pyx_v_P); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 497, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 497, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_3);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_3)) __PYX_ERR(0, 497, __pyx_L1_error);
+  __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 497, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 497, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_float64); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 497, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_9) < 0) __PYX_ERR(0, 497, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __pyx_t_9 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 497, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_12 = __Pyx_PyObject_to_MemoryviewSlice_dc_nn___pyx_t_5numpy_float64_t(__pyx_t_9, PyBUF_WRITABLE); if (unlikely(!__pyx_t_12.memview)) __PYX_ERR(0, 497, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __pyx_v_texture = __pyx_t_12;
+  __pyx_t_12.memview = NULL;
+  __pyx_t_12.data = NULL;
+
+  /* "src/_lbp.pyx":498
+ *     # pre-allocate arrays for computation
+ *     cdef cnp.float64_t[::1] texture = np.zeros(P, dtype=np.float64)
+ *     cdef signed char[::1] signed_texture = np.zeros(P, dtype=np.int8)             # <<<<<<<<<<<<<<
+ *     cdef int[::1] rotation_chain = np.zeros(P, dtype=np.int32)
+ * 
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_np); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 498, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_zeros); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 498, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __pyx_t_9 = __Pyx_PyInt_From_int(__pyx_v_P); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 498, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 498, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_9);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_9)) __PYX_ERR(0, 498, __pyx_L1_error);
+  __pyx_t_9 = 0;
+  __pyx_t_9 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 498, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 498, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_int8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 498, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (PyDict_SetItem(__pyx_t_9, __pyx_n_s_dtype, __pyx_t_1) < 0) __PYX_ERR(0, 498, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_2, __pyx_t_9); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 498, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __pyx_t_13 = __Pyx_PyObject_to_MemoryviewSlice_dc_signed_char(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_13.memview)) __PYX_ERR(0, 498, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_v_signed_texture = __pyx_t_13;
+  __pyx_t_13.memview = NULL;
+  __pyx_t_13.data = NULL;
+
+  /* "src/_lbp.pyx":499
+ *     cdef cnp.float64_t[::1] texture = np.zeros(P, dtype=np.float64)
+ *     cdef signed char[::1] signed_texture = np.zeros(P, dtype=np.int8)
+ *     cdef int[::1] rotation_chain = np.zeros(P, dtype=np.int32)             # <<<<<<<<<<<<<<
+ * 
+ *     output_shape = (image.shape[0], image.shape[1])
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 499, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 499, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_P); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 499, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 499, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_1);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_1)) __PYX_ERR(0, 499, __pyx_L1_error);
+  __pyx_t_1 = 0;
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 499, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 499, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_int32); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 499, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 499, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_9, __pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 499, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_dc_int(__pyx_t_5, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 499, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_v_rotation_chain = __pyx_t_6;
+  __pyx_t_6.memview = NULL;
+  __pyx_t_6.data = NULL;
+
+  /* "src/_lbp.pyx":501
+ *     cdef int[::1] rotation_chain = np.zeros(P, dtype=np.int32)
+ * 
+ *     output_shape = (image.shape[0], image.shape[1])             # <<<<<<<<<<<<<<
+ *     cdef cnp.float64_t[:, ::1] output = np.zeros(output_shape, dtype=np.float64)
+ * 
+ */
+  __pyx_t_5 = PyInt_FromSsize_t((__pyx_v_image.shape[0])); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 501, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_1 = PyInt_FromSsize_t((__pyx_v_image.shape[1])); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 501, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = PyTuple_New(2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 501, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_5);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_t_5)) __PYX_ERR(0, 501, __pyx_L1_error);
+  __Pyx_GIVEREF(__pyx_t_1);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 1, __pyx_t_1)) __PYX_ERR(0, 501, __pyx_L1_error);
+  __pyx_t_5 = 0;
+  __pyx_t_1 = 0;
+  __pyx_v_output_shape = __pyx_t_2;
+  __pyx_t_2 = 0;
+
+  /* "src/_lbp.pyx":502
+ * 
+ *     output_shape = (image.shape[0], image.shape[1])
+ *     cdef cnp.float64_t[:, ::1] output = np.zeros(output_shape, dtype=np.float64)             # <<<<<<<<<<<<<<
+ * 
+ *     cdef Py_ssize_t rows = image.shape[0]
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 502, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_zeros); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 502, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_2 = PyTuple_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 502, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_INCREF(__pyx_v_output_shape);
+  __Pyx_GIVEREF(__pyx_v_output_shape);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_2, 0, __pyx_v_output_shape)) __PYX_ERR(0, 502, __pyx_L1_error);
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 502, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_np); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 502, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_float64); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 502, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_dtype, __pyx_t_3) < 0) __PYX_ERR(0, 502, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 502, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_14 = __Pyx_PyObject_to_MemoryviewSlice_d_dc_nn___pyx_t_5numpy_float64_t(__pyx_t_3, PyBUF_WRITABLE); if (unlikely(!__pyx_t_14.memview)) __PYX_ERR(0, 502, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+  __pyx_v_output = __pyx_t_14;
+  __pyx_t_14.memview = NULL;
+  __pyx_t_14.data = NULL;
+
+  /* "src/_lbp.pyx":504
+ *     cdef cnp.float64_t[:, ::1] output = np.zeros(output_shape, dtype=np.float64)
+ * 
+ *     cdef Py_ssize_t rows = image.shape[0]             # <<<<<<<<<<<<<<
+ *     cdef Py_ssize_t cols = image.shape[1]
+ * 
+ */
+  __pyx_v_rows = (__pyx_v_image.shape[0]);
+
+  /* "src/_lbp.pyx":505
+ * 
+ *     cdef Py_ssize_t rows = image.shape[0]
+ *     cdef Py_ssize_t cols = image.shape[1]             # <<<<<<<<<<<<<<
+ * 
+ *     cdef cnp.float64_t lbp
+ */
+  __pyx_v_cols = (__pyx_v_image.shape[1]);
+
+  /* "src/_lbp.pyx":515
+ *     cdef cnp.float64_t sum_, var_, texture_i
+ * 
+ *     with nogil:             # <<<<<<<<<<<<<<
+ *         for r in range(image.shape[0]):
+ *             for c in range(image.shape[1]):
+ */
+  {
+      #ifdef WITH_THREAD
+      PyThreadState *_save;
+      _save = NULL;
+      Py_UNBLOCK_THREADS
+      __Pyx_FastGIL_Remember();
+      #endif
+      /*try:*/ {
+
+        /* "src/_lbp.pyx":516
+ * 
+ *     with nogil:
+ *         for r in range(image.shape[0]):             # <<<<<<<<<<<<<<
+ *             for c in range(image.shape[1]):
+ *                 for i in range(P):
+ */
+        __pyx_t_15 = (__pyx_v_image.shape[0]);
+        __pyx_t_16 = __pyx_t_15;
+        for (__pyx_t_17 = 0; __pyx_t_17 < __pyx_t_16; __pyx_t_17+=1) {
+          __pyx_v_r = __pyx_t_17;
+
+          /* "src/_lbp.pyx":517
+ *     with nogil:
+ *         for r in range(image.shape[0]):
+ *             for c in range(image.shape[1]):             # <<<<<<<<<<<<<<
+ *                 for i in range(P):
+ *                     bilinear_interpolation[cnp.float64_t, cnp.float64_t, cnp.float64_t](
+ */
+          __pyx_t_18 = (__pyx_v_image.shape[1]);
+          __pyx_t_19 = __pyx_t_18;
+          for (__pyx_t_20 = 0; __pyx_t_20 < __pyx_t_19; __pyx_t_20+=1) {
+            __pyx_v_c = __pyx_t_20;
+
+            /* "src/_lbp.pyx":518
+ *         for r in range(image.shape[0]):
+ *             for c in range(image.shape[1]):
+ *                 for i in range(P):             # <<<<<<<<<<<<<<
+ *                     bilinear_interpolation[cnp.float64_t, cnp.float64_t, cnp.float64_t](
+ *                             &image[0, 0], rows, cols, r + rp[i], c + cp[i],
+ */
+            __pyx_t_11 = __pyx_v_P;
+            __pyx_t_21 = __pyx_t_11;
+            for (__pyx_t_22 = 0; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
+              __pyx_v_i = __pyx_t_22;
+
+              /* "src/_lbp.pyx":520
+ *                 for i in range(P):
+ *                     bilinear_interpolation[cnp.float64_t, cnp.float64_t, cnp.float64_t](
+ *                             &image[0, 0], rows, cols, r + rp[i], c + cp[i],             # <<<<<<<<<<<<<<
+ *                             b'C', 0, &texture[i])
+ *                 # signed / thresholded texture
+ */
+              __pyx_t_23 = 0;
+              __pyx_t_24 = 0;
+              __pyx_t_25 = __pyx_v_i;
+              __pyx_t_26 = __pyx_v_i;
+
+              /* "src/_lbp.pyx":521
+ *                     bilinear_interpolation[cnp.float64_t, cnp.float64_t, cnp.float64_t](
+ *                             &image[0, 0], rows, cols, r + rp[i], c + cp[i],
+ *                             b'C', 0, &texture[i])             # <<<<<<<<<<<<<<
+ *                 # signed / thresholded texture
+ *                 for i in range(P):
+ */
+              __pyx_t_27 = __pyx_v_i;
+
+              /* "src/_lbp.pyx":519
+ *             for c in range(image.shape[1]):
+ *                 for i in range(P):
+ *                     bilinear_interpolation[cnp.float64_t, cnp.float64_t, cnp.float64_t](             # <<<<<<<<<<<<<<
+ *                             &image[0, 0], rows, cols, r + rp[i], c + cp[i],
+ *                             b'C', 0, &texture[i])
+ */
+              __pyx_fuse_9_1_9__pyx_f_12fastlbp_imbg_4_lbp_bilinear_interpolation((&(*((__pyx_t_5numpy_float64_t *) ( /* dim=1 */ ((char *) (((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ (__pyx_v_image.data + __pyx_t_23 * __pyx_v_image.strides[0]) )) + __pyx_t_24)) )))), __pyx_v_rows, __pyx_v_cols, (__pyx_v_r + (*((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ ((char *) (((__pyx_t_5numpy_float64_t *) __pyx_v_rp.data) + __pyx_t_25)) )))), (__pyx_v_c + (*((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ ((char *) (((__pyx_t_5numpy_float64_t *) __pyx_v_cp.data) + __pyx_t_26)) )))), 'C', 0.0, (&(*((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ ((char *) (((__pyx_t_5numpy_float64_t *) __pyx_v_texture.data) + __pyx_t_27)) )))));
+            }
+
+            /* "src/_lbp.pyx":523
+ *                             b'C', 0, &texture[i])
+ *                 # signed / thresholded texture
+ *                 for i in range(P):             # <<<<<<<<<<<<<<
+ *                     if texture[i] - image[r, c] >= 0:
+ *                         signed_texture[i] = 1
+ */
+            __pyx_t_11 = __pyx_v_P;
+            __pyx_t_21 = __pyx_t_11;
+            for (__pyx_t_22 = 0; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
+              __pyx_v_i = __pyx_t_22;
+
+              /* "src/_lbp.pyx":524
+ *                 # signed / thresholded texture
+ *                 for i in range(P):
+ *                     if texture[i] - image[r, c] >= 0:             # <<<<<<<<<<<<<<
+ *                         signed_texture[i] = 1
+ *                     else:
+ */
+              __pyx_t_27 = __pyx_v_i;
+              __pyx_t_26 = __pyx_v_r;
+              __pyx_t_25 = __pyx_v_c;
+              __pyx_t_28 = (((*((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ ((char *) (((__pyx_t_5numpy_float64_t *) __pyx_v_texture.data) + __pyx_t_27)) ))) - (*((__pyx_t_5numpy_float64_t *) ( /* dim=1 */ ((char *) (((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ (__pyx_v_image.data + __pyx_t_26 * __pyx_v_image.strides[0]) )) + __pyx_t_25)) )))) >= 0.0);
+              if (__pyx_t_28) {
+
+                /* "src/_lbp.pyx":525
+ *                 for i in range(P):
+ *                     if texture[i] - image[r, c] >= 0:
+ *                         signed_texture[i] = 1             # <<<<<<<<<<<<<<
+ *                     else:
+ *                         signed_texture[i] = 0
+ */
+                __pyx_t_25 = __pyx_v_i;
+                *((signed char *) ( /* dim=0 */ ((char *) (((signed char *) __pyx_v_signed_texture.data) + __pyx_t_25)) )) = 1;
+
+                /* "src/_lbp.pyx":524
+ *                 # signed / thresholded texture
+ *                 for i in range(P):
+ *                     if texture[i] - image[r, c] >= 0:             # <<<<<<<<<<<<<<
+ *                         signed_texture[i] = 1
+ *                     else:
+ */
+                goto __pyx_L14;
+              }
+
+              /* "src/_lbp.pyx":527
+ *                         signed_texture[i] = 1
+ *                     else:
+ *                         signed_texture[i] = 0             # <<<<<<<<<<<<<<
+ * 
+ *                 lbp = 0
+ */
+              /*else*/ {
+                __pyx_t_25 = __pyx_v_i;
+                *((signed char *) ( /* dim=0 */ ((char *) (((signed char *) __pyx_v_signed_texture.data) + __pyx_t_25)) )) = 0;
+              }
+              __pyx_L14:;
+            }
+
+            /* "src/_lbp.pyx":529
+ *                         signed_texture[i] = 0
+ * 
+ *                 lbp = 0             # <<<<<<<<<<<<<<
+ * 
+ *                 # if method == b'var':
+ */
+            __pyx_v_lbp = 0.0;
+
+            /* "src/_lbp.pyx":532
+ * 
+ *                 # if method == b'var':
+ *                 if method == b'V':             # <<<<<<<<<<<<<<
+ *                     # Compute the variance without passing from numpy.
+ *                     # Following the LBP paper, we're taking a biased estimate
+ */
+            switch (__pyx_v_method) {
+              case 'V':
+
+              /* "src/_lbp.pyx":536
+ *                     # Following the LBP paper, we're taking a biased estimate
+ *                     # of the variance (ddof=0)
+ *                     sum_ = 0.0             # <<<<<<<<<<<<<<
+ *                     var_ = 0.0
+ *                     for i in range(P):
+ */
+              __pyx_v_sum_ = 0.0;
+
+              /* "src/_lbp.pyx":537
+ *                     # of the variance (ddof=0)
+ *                     sum_ = 0.0
+ *                     var_ = 0.0             # <<<<<<<<<<<<<<
+ *                     for i in range(P):
+ *                         texture_i = texture[i]
+ */
+              __pyx_v_var_ = 0.0;
+
+              /* "src/_lbp.pyx":538
+ *                     sum_ = 0.0
+ *                     var_ = 0.0
+ *                     for i in range(P):             # <<<<<<<<<<<<<<
+ *                         texture_i = texture[i]
+ *                         sum_ += texture_i
+ */
+              __pyx_t_11 = __pyx_v_P;
+              __pyx_t_21 = __pyx_t_11;
+              for (__pyx_t_22 = 0; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
+                __pyx_v_i = __pyx_t_22;
+
+                /* "src/_lbp.pyx":539
+ *                     var_ = 0.0
+ *                     for i in range(P):
+ *                         texture_i = texture[i]             # <<<<<<<<<<<<<<
+ *                         sum_ += texture_i
+ *                         var_ += texture_i * texture_i
+ */
+                __pyx_t_25 = __pyx_v_i;
+                __pyx_v_texture_i = (*((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ ((char *) (((__pyx_t_5numpy_float64_t *) __pyx_v_texture.data) + __pyx_t_25)) )));
+
+                /* "src/_lbp.pyx":540
+ *                     for i in range(P):
+ *                         texture_i = texture[i]
+ *                         sum_ += texture_i             # <<<<<<<<<<<<<<
+ *                         var_ += texture_i * texture_i
+ *                     var_ = (var_ - (sum_ * sum_) / P) / P
+ */
+                __pyx_v_sum_ = (__pyx_v_sum_ + __pyx_v_texture_i);
+
+                /* "src/_lbp.pyx":541
+ *                         texture_i = texture[i]
+ *                         sum_ += texture_i
+ *                         var_ += texture_i * texture_i             # <<<<<<<<<<<<<<
+ *                     var_ = (var_ - (sum_ * sum_) / P) / P
+ *                     if var_ != 0:
+ */
+                __pyx_v_var_ = (__pyx_v_var_ + (__pyx_v_texture_i * __pyx_v_texture_i));
+              }
+
+              /* "src/_lbp.pyx":542
+ *                         sum_ += texture_i
+ *                         var_ += texture_i * texture_i
+ *                     var_ = (var_ - (sum_ * sum_) / P) / P             # <<<<<<<<<<<<<<
+ *                     if var_ != 0:
+ *                         lbp = var_
+ */
+              __pyx_v_var_ = ((__pyx_v_var_ - ((__pyx_v_sum_ * __pyx_v_sum_) / ((__pyx_t_5numpy_float64_t)__pyx_v_P))) / ((__pyx_t_5numpy_float64_t)__pyx_v_P));
+
+              /* "src/_lbp.pyx":543
+ *                         var_ += texture_i * texture_i
+ *                     var_ = (var_ - (sum_ * sum_) / P) / P
+ *                     if var_ != 0:             # <<<<<<<<<<<<<<
+ *                         lbp = var_
+ *                     else:
+ */
+              __pyx_t_28 = (__pyx_v_var_ != 0.0);
+              if (__pyx_t_28) {
+
+                /* "src/_lbp.pyx":544
+ *                     var_ = (var_ - (sum_ * sum_) / P) / P
+ *                     if var_ != 0:
+ *                         lbp = var_             # <<<<<<<<<<<<<<
+ *                     else:
+ *                         lbp = NAN
+ */
+                __pyx_v_lbp = __pyx_v_var_;
+
+                /* "src/_lbp.pyx":543
+ *                         var_ += texture_i * texture_i
+ *                     var_ = (var_ - (sum_ * sum_) / P) / P
+ *                     if var_ != 0:             # <<<<<<<<<<<<<<
+ *                         lbp = var_
+ *                     else:
+ */
+                goto __pyx_L17;
+              }
+
+              /* "src/_lbp.pyx":546
+ *                         lbp = var_
+ *                     else:
+ *                         lbp = NAN             # <<<<<<<<<<<<<<
+ *                 # if method == b'uniform':
+ *                 elif method == b'U' or method == b'N':
+ */
+              /*else*/ {
+                __pyx_v_lbp = NPY_NAN;
+              }
+              __pyx_L17:;
+
+              /* "src/_lbp.pyx":532
+ * 
+ *                 # if method == b'var':
+ *                 if method == b'V':             # <<<<<<<<<<<<<<
+ *                     # Compute the variance without passing from numpy.
+ *                     # Following the LBP paper, we're taking a biased estimate
+ */
+              break;
+              case 'U':
+
+              /* "src/_lbp.pyx":548
+ *                         lbp = NAN
+ *                 # if method == b'uniform':
+ *                 elif method == b'U' or method == b'N':             # <<<<<<<<<<<<<<
+ *                     # determine number of 0 - 1 changes
+ *                     changes = 0
+ */
+              case 'N':
+
+              /* "src/_lbp.pyx":550
+ *                 elif method == b'U' or method == b'N':
+ *                     # determine number of 0 - 1 changes
+ *                     changes = 0             # <<<<<<<<<<<<<<
+ *                     for i in range(P - 1):
+ *                         changes += (signed_texture[i]
+ */
+              __pyx_v_changes = 0;
+
+              /* "src/_lbp.pyx":551
+ *                     # determine number of 0 - 1 changes
+ *                     changes = 0
+ *                     for i in range(P - 1):             # <<<<<<<<<<<<<<
+ *                         changes += (signed_texture[i]
+ *                                     - signed_texture[i + 1]) != 0
+ */
+              __pyx_t_29 = (__pyx_v_P - 1);
+              __pyx_t_30 = __pyx_t_29;
+              for (__pyx_t_22 = 0; __pyx_t_22 < __pyx_t_30; __pyx_t_22+=1) {
+                __pyx_v_i = __pyx_t_22;
+
+                /* "src/_lbp.pyx":552
+ *                     changes = 0
+ *                     for i in range(P - 1):
+ *                         changes += (signed_texture[i]             # <<<<<<<<<<<<<<
+ *                                     - signed_texture[i + 1]) != 0
+ *                     if method == b'N':
+ */
+                __pyx_t_25 = __pyx_v_i;
+
+                /* "src/_lbp.pyx":553
+ *                     for i in range(P - 1):
+ *                         changes += (signed_texture[i]
+ *                                     - signed_texture[i + 1]) != 0             # <<<<<<<<<<<<<<
+ *                     if method == b'N':
+ *                         # Uniform local binary patterns are defined as patterns
+ */
+                __pyx_t_26 = (__pyx_v_i + 1);
+
+                /* "src/_lbp.pyx":552
+ *                     changes = 0
+ *                     for i in range(P - 1):
+ *                         changes += (signed_texture[i]             # <<<<<<<<<<<<<<
+ *                                     - signed_texture[i + 1]) != 0
+ *                     if method == b'N':
+ */
+                __pyx_v_changes = (__pyx_v_changes + (((*((signed char *) ( /* dim=0 */ ((char *) (((signed char *) __pyx_v_signed_texture.data) + __pyx_t_25)) ))) - (*((signed char *) ( /* dim=0 */ ((char *) (((signed char *) __pyx_v_signed_texture.data) + __pyx_t_26)) )))) != 0));
+              }
+
+              /* "src/_lbp.pyx":554
+ *                         changes += (signed_texture[i]
+ *                                     - signed_texture[i + 1]) != 0
+ *                     if method == b'N':             # <<<<<<<<<<<<<<
+ *                         # Uniform local binary patterns are defined as patterns
+ *                         # with at most 2 value changes (from 0 to 1 or from 1 to
+ */
+              __pyx_t_28 = (__pyx_v_method == 'N');
+              if (__pyx_t_28) {
+
+                /* "src/_lbp.pyx":592
+ *                         # 0 found in the pattern.
+ * 
+ *                         if changes <= 2:             # <<<<<<<<<<<<<<
+ *                             # We have a uniform pattern
+ *                             n_ones = 0  # determines the number of ones
+ */
+                __pyx_t_28 = (__pyx_v_changes <= 2);
+                if (__pyx_t_28) {
+
+                  /* "src/_lbp.pyx":594
+ *                         if changes <= 2:
+ *                             # We have a uniform pattern
+ *                             n_ones = 0  # determines the number of ones             # <<<<<<<<<<<<<<
+ *                             first_one = -1  # position was the first one
+ *                             first_zero = -1  # position of the first zero
+ */
+                  __pyx_v_n_ones = 0;
+
+                  /* "src/_lbp.pyx":595
+ *                             # We have a uniform pattern
+ *                             n_ones = 0  # determines the number of ones
+ *                             first_one = -1  # position was the first one             # <<<<<<<<<<<<<<
+ *                             first_zero = -1  # position of the first zero
+ *                             for i in range(P):
+ */
+                  __pyx_v_first_one = -1;
+
+                  /* "src/_lbp.pyx":596
+ *                             n_ones = 0  # determines the number of ones
+ *                             first_one = -1  # position was the first one
+ *                             first_zero = -1  # position of the first zero             # <<<<<<<<<<<<<<
+ *                             for i in range(P):
+ *                                 if signed_texture[i]:
+ */
+                  __pyx_v_first_zero = -1;
+
+                  /* "src/_lbp.pyx":597
+ *                             first_one = -1  # position was the first one
+ *                             first_zero = -1  # position of the first zero
+ *                             for i in range(P):             # <<<<<<<<<<<<<<
+ *                                 if signed_texture[i]:
+ *                                     n_ones += 1
+ */
+                  __pyx_t_11 = __pyx_v_P;
+                  __pyx_t_21 = __pyx_t_11;
+                  for (__pyx_t_22 = 0; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
+                    __pyx_v_i = __pyx_t_22;
+
+                    /* "src/_lbp.pyx":598
+ *                             first_zero = -1  # position of the first zero
+ *                             for i in range(P):
+ *                                 if signed_texture[i]:             # <<<<<<<<<<<<<<
+ *                                     n_ones += 1
+ *                                     if first_one == -1:
+ */
+                    __pyx_t_26 = __pyx_v_i;
+                    __pyx_t_28 = ((*((signed char *) ( /* dim=0 */ ((char *) (((signed char *) __pyx_v_signed_texture.data) + __pyx_t_26)) ))) != 0);
+                    if (__pyx_t_28) {
+
+                      /* "src/_lbp.pyx":599
+ *                             for i in range(P):
+ *                                 if signed_texture[i]:
+ *                                     n_ones += 1             # <<<<<<<<<<<<<<
+ *                                     if first_one == -1:
+ *                                         first_one = i
+ */
+                      __pyx_v_n_ones = (__pyx_v_n_ones + 1);
+
+                      /* "src/_lbp.pyx":600
+ *                                 if signed_texture[i]:
+ *                                     n_ones += 1
+ *                                     if first_one == -1:             # <<<<<<<<<<<<<<
+ *                                         first_one = i
+ *                                 else:
+ */
+                      __pyx_t_28 = (__pyx_v_first_one == -1L);
+                      if (__pyx_t_28) {
+
+                        /* "src/_lbp.pyx":601
+ *                                     n_ones += 1
+ *                                     if first_one == -1:
+ *                                         first_one = i             # <<<<<<<<<<<<<<
+ *                                 else:
+ *                                     if first_zero == -1:
+ */
+                        __pyx_v_first_one = __pyx_v_i;
+
+                        /* "src/_lbp.pyx":600
+ *                                 if signed_texture[i]:
+ *                                     n_ones += 1
+ *                                     if first_one == -1:             # <<<<<<<<<<<<<<
+ *                                         first_one = i
+ *                                 else:
+ */
+                      }
+
+                      /* "src/_lbp.pyx":598
+ *                             first_zero = -1  # position of the first zero
+ *                             for i in range(P):
+ *                                 if signed_texture[i]:             # <<<<<<<<<<<<<<
+ *                                     n_ones += 1
+ *                                     if first_one == -1:
+ */
+                      goto __pyx_L24;
+                    }
+
+                    /* "src/_lbp.pyx":603
+ *                                         first_one = i
+ *                                 else:
+ *                                     if first_zero == -1:             # <<<<<<<<<<<<<<
+ *                                         first_zero = i
+ *                             if n_ones == 0:
+ */
+                    /*else*/ {
+                      __pyx_t_28 = (__pyx_v_first_zero == -1L);
+                      if (__pyx_t_28) {
+
+                        /* "src/_lbp.pyx":604
+ *                                 else:
+ *                                     if first_zero == -1:
+ *                                         first_zero = i             # <<<<<<<<<<<<<<
+ *                             if n_ones == 0:
+ *                                 lbp = 0
+ */
+                        __pyx_v_first_zero = __pyx_v_i;
+
+                        /* "src/_lbp.pyx":603
+ *                                         first_one = i
+ *                                 else:
+ *                                     if first_zero == -1:             # <<<<<<<<<<<<<<
+ *                                         first_zero = i
+ *                             if n_ones == 0:
+ */
+                      }
+                    }
+                    __pyx_L24:;
+                  }
+
+                  /* "src/_lbp.pyx":605
+ *                                     if first_zero == -1:
+ *                                         first_zero = i
+ *                             if n_ones == 0:             # <<<<<<<<<<<<<<
+ *                                 lbp = 0
+ *                             elif n_ones == P:
+ */
+                  __pyx_t_28 = (__pyx_v_n_ones == 0);
+                  if (__pyx_t_28) {
+
+                    /* "src/_lbp.pyx":606
+ *                                         first_zero = i
+ *                             if n_ones == 0:
+ *                                 lbp = 0             # <<<<<<<<<<<<<<
+ *                             elif n_ones == P:
+ *                                 lbp = P * (P - 1) + 1
+ */
+                    __pyx_v_lbp = 0.0;
+
+                    /* "src/_lbp.pyx":605
+ *                                     if first_zero == -1:
+ *                                         first_zero = i
+ *                             if n_ones == 0:             # <<<<<<<<<<<<<<
+ *                                 lbp = 0
+ *                             elif n_ones == P:
+ */
+                    goto __pyx_L27;
+                  }
+
+                  /* "src/_lbp.pyx":607
+ *                             if n_ones == 0:
+ *                                 lbp = 0
+ *                             elif n_ones == P:             # <<<<<<<<<<<<<<
+ *                                 lbp = P * (P - 1) + 1
+ *                             else:
+ */
+                  __pyx_t_28 = (__pyx_v_n_ones == __pyx_v_P);
+                  if (__pyx_t_28) {
+
+                    /* "src/_lbp.pyx":608
+ *                                 lbp = 0
+ *                             elif n_ones == P:
+ *                                 lbp = P * (P - 1) + 1             # <<<<<<<<<<<<<<
+ *                             else:
+ *                                 if first_one == 0:
+ */
+                    __pyx_v_lbp = ((__pyx_v_P * (__pyx_v_P - 1)) + 1);
+
+                    /* "src/_lbp.pyx":607
+ *                             if n_ones == 0:
+ *                                 lbp = 0
+ *                             elif n_ones == P:             # <<<<<<<<<<<<<<
+ *                                 lbp = P * (P - 1) + 1
+ *                             else:
+ */
+                    goto __pyx_L27;
+                  }
+
+                  /* "src/_lbp.pyx":610
+ *                                 lbp = P * (P - 1) + 1
+ *                             else:
+ *                                 if first_one == 0:             # <<<<<<<<<<<<<<
+ *                                     rot_index = n_ones - first_zero
+ *                                 else:
+ */
+                  /*else*/ {
+                    __pyx_t_28 = (__pyx_v_first_one == 0);
+                    if (__pyx_t_28) {
+
+                      /* "src/_lbp.pyx":611
+ *                             else:
+ *                                 if first_one == 0:
+ *                                     rot_index = n_ones - first_zero             # <<<<<<<<<<<<<<
+ *                                 else:
+ *                                     rot_index = P - first_one
+ */
+                      __pyx_v_rot_index = (__pyx_v_n_ones - __pyx_v_first_zero);
+
+                      /* "src/_lbp.pyx":610
+ *                                 lbp = P * (P - 1) + 1
+ *                             else:
+ *                                 if first_one == 0:             # <<<<<<<<<<<<<<
+ *                                     rot_index = n_ones - first_zero
+ *                                 else:
+ */
+                      goto __pyx_L28;
+                    }
+
+                    /* "src/_lbp.pyx":613
+ *                                     rot_index = n_ones - first_zero
+ *                                 else:
+ *                                     rot_index = P - first_one             # <<<<<<<<<<<<<<
+ *                                 lbp = 1 + (n_ones - 1) * P + rot_index
+ *                         else:  # changes > 2
+ */
+                    /*else*/ {
+                      __pyx_v_rot_index = (__pyx_v_P - __pyx_v_first_one);
+                    }
+                    __pyx_L28:;
+
+                    /* "src/_lbp.pyx":614
+ *                                 else:
+ *                                     rot_index = P - first_one
+ *                                 lbp = 1 + (n_ones - 1) * P + rot_index             # <<<<<<<<<<<<<<
+ *                         else:  # changes > 2
+ *                             lbp = P * (P - 1) + 2
+ */
+                    __pyx_v_lbp = ((1 + ((__pyx_v_n_ones - 1) * __pyx_v_P)) + __pyx_v_rot_index);
+                  }
+                  __pyx_L27:;
+
+                  /* "src/_lbp.pyx":592
+ *                         # 0 found in the pattern.
+ * 
+ *                         if changes <= 2:             # <<<<<<<<<<<<<<
+ *                             # We have a uniform pattern
+ *                             n_ones = 0  # determines the number of ones
+ */
+                  goto __pyx_L21;
+                }
+
+                /* "src/_lbp.pyx":616
+ *                                 lbp = 1 + (n_ones - 1) * P + rot_index
+ *                         else:  # changes > 2
+ *                             lbp = P * (P - 1) + 2             # <<<<<<<<<<<<<<
+ *                     else:  # method != 'N'
+ *                         if changes <= 2:
+ */
+                /*else*/ {
+                  __pyx_v_lbp = ((__pyx_v_P * (__pyx_v_P - 1)) + 2);
+                }
+                __pyx_L21:;
+
+                /* "src/_lbp.pyx":554
+ *                         changes += (signed_texture[i]
+ *                                     - signed_texture[i + 1]) != 0
+ *                     if method == b'N':             # <<<<<<<<<<<<<<
+ *                         # Uniform local binary patterns are defined as patterns
+ *                         # with at most 2 value changes (from 0 to 1 or from 1 to
+ */
+                goto __pyx_L20;
+              }
+
+              /* "src/_lbp.pyx":618
+ *                             lbp = P * (P - 1) + 2
+ *                     else:  # method != 'N'
+ *                         if changes <= 2:             # <<<<<<<<<<<<<<
+ *                             for i in range(P):
+ *                                 lbp += signed_texture[i]
+ */
+              /*else*/ {
+                __pyx_t_28 = (__pyx_v_changes <= 2);
+                if (__pyx_t_28) {
+
+                  /* "src/_lbp.pyx":619
+ *                     else:  # method != 'N'
+ *                         if changes <= 2:
+ *                             for i in range(P):             # <<<<<<<<<<<<<<
+ *                                 lbp += signed_texture[i]
+ *                         else:
+ */
+                  __pyx_t_11 = __pyx_v_P;
+                  __pyx_t_21 = __pyx_t_11;
+                  for (__pyx_t_22 = 0; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
+                    __pyx_v_i = __pyx_t_22;
+
+                    /* "src/_lbp.pyx":620
+ *                         if changes <= 2:
+ *                             for i in range(P):
+ *                                 lbp += signed_texture[i]             # <<<<<<<<<<<<<<
+ *                         else:
+ *                             lbp = P + 1
+ */
+                    __pyx_t_26 = __pyx_v_i;
+                    __pyx_v_lbp = (__pyx_v_lbp + (*((signed char *) ( /* dim=0 */ ((char *) (((signed char *) __pyx_v_signed_texture.data) + __pyx_t_26)) ))));
+                  }
+
+                  /* "src/_lbp.pyx":618
+ *                             lbp = P * (P - 1) + 2
+ *                     else:  # method != 'N'
+ *                         if changes <= 2:             # <<<<<<<<<<<<<<
+ *                             for i in range(P):
+ *                                 lbp += signed_texture[i]
+ */
+                  goto __pyx_L29;
+                }
+
+                /* "src/_lbp.pyx":622
+ *                                 lbp += signed_texture[i]
+ *                         else:
+ *                             lbp = P + 1             # <<<<<<<<<<<<<<
+ *                 else:
+ *                     # method == b'default'
+ */
+                /*else*/ {
+                  __pyx_v_lbp = (__pyx_v_P + 1);
+                }
+                __pyx_L29:;
+              }
+              __pyx_L20:;
+
+              /* "src/_lbp.pyx":548
+ *                         lbp = NAN
+ *                 # if method == b'uniform':
+ *                 elif method == b'U' or method == b'N':             # <<<<<<<<<<<<<<
+ *                     # determine number of 0 - 1 changes
+ *                     changes = 0
+ */
+              break;
+              default:
+
+              /* "src/_lbp.pyx":625
+ *                 else:
+ *                     # method == b'default'
+ *                     for i in range(P):             # <<<<<<<<<<<<<<
+ *                         lbp += signed_texture[i] * weights[i]
+ * 
+ */
+              __pyx_t_11 = __pyx_v_P;
+              __pyx_t_21 = __pyx_t_11;
+              for (__pyx_t_22 = 0; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
+                __pyx_v_i = __pyx_t_22;
+
+                /* "src/_lbp.pyx":626
+ *                     # method == b'default'
+ *                     for i in range(P):
+ *                         lbp += signed_texture[i] * weights[i]             # <<<<<<<<<<<<<<
+ * 
+ *                     # method == b'ror'
+ */
+                __pyx_t_26 = __pyx_v_i;
+                __pyx_t_25 = __pyx_v_i;
+                __pyx_v_lbp = (__pyx_v_lbp + ((*((signed char *) ( /* dim=0 */ ((char *) (((signed char *) __pyx_v_signed_texture.data) + __pyx_t_26)) ))) * (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_weights.data) + __pyx_t_25)) )))));
+              }
+
+              /* "src/_lbp.pyx":629
+ * 
+ *                     # method == b'ror'
+ *                     if method == b'R':             # <<<<<<<<<<<<<<
+ *                         # shift LBP P times to the right and get minimum value
+ *                         rotation_chain[0] = <int>lbp
+ */
+              __pyx_t_28 = (__pyx_v_method == 'R');
+              if (__pyx_t_28) {
+
+                /* "src/_lbp.pyx":631
+ *                     if method == b'R':
+ *                         # shift LBP P times to the right and get minimum value
+ *                         rotation_chain[0] = <int>lbp             # <<<<<<<<<<<<<<
+ *                         for i in range(1, P):
+ *                             rotation_chain[i] = \
+ */
+                __pyx_t_25 = 0;
+                *((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_rotation_chain.data) + __pyx_t_25)) )) = ((int)__pyx_v_lbp);
+
+                /* "src/_lbp.pyx":632
+ *                         # shift LBP P times to the right and get minimum value
+ *                         rotation_chain[0] = <int>lbp
+ *                         for i in range(1, P):             # <<<<<<<<<<<<<<
+ *                             rotation_chain[i] = \
+ *                                 _bit_rotate_right(rotation_chain[i - 1], P)
+ */
+                __pyx_t_11 = __pyx_v_P;
+                __pyx_t_21 = __pyx_t_11;
+                for (__pyx_t_22 = 1; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
+                  __pyx_v_i = __pyx_t_22;
+
+                  /* "src/_lbp.pyx":634
+ *                         for i in range(1, P):
+ *                             rotation_chain[i] = \
+ *                                 _bit_rotate_right(rotation_chain[i - 1], P)             # <<<<<<<<<<<<<<
+ *                         lbp = rotation_chain[0]
+ *                         for i in range(1, P):
+ */
+                  __pyx_t_25 = (__pyx_v_i - 1);
+                  __pyx_t_31 = __pyx_f_12fastlbp_imbg_4_lbp__bit_rotate_right((*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_rotation_chain.data) + __pyx_t_25)) ))), __pyx_v_P); if (unlikely(__pyx_t_31 == ((int)-1) && __Pyx_ErrOccurredWithGIL())) __PYX_ERR(0, 634, __pyx_L4_error)
+
+                  /* "src/_lbp.pyx":633
+ *                         rotation_chain[0] = <int>lbp
+ *                         for i in range(1, P):
+ *                             rotation_chain[i] = \             # <<<<<<<<<<<<<<
+ *                                 _bit_rotate_right(rotation_chain[i - 1], P)
+ *                         lbp = rotation_chain[0]
+ */
+                  __pyx_t_25 = __pyx_v_i;
+                  *((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_rotation_chain.data) + __pyx_t_25)) )) = __pyx_t_31;
+                }
+
+                /* "src/_lbp.pyx":635
+ *                             rotation_chain[i] = \
+ *                                 _bit_rotate_right(rotation_chain[i - 1], P)
+ *                         lbp = rotation_chain[0]             # <<<<<<<<<<<<<<
+ *                         for i in range(1, P):
+ *                             lbp = min(lbp, rotation_chain[i])
+ */
+                __pyx_t_25 = 0;
+                __pyx_v_lbp = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_rotation_chain.data) + __pyx_t_25)) )));
+
+                /* "src/_lbp.pyx":636
+ *                                 _bit_rotate_right(rotation_chain[i - 1], P)
+ *                         lbp = rotation_chain[0]
+ *                         for i in range(1, P):             # <<<<<<<<<<<<<<
+ *                             lbp = min(lbp, rotation_chain[i])
+ * 
+ */
+                __pyx_t_11 = __pyx_v_P;
+                __pyx_t_21 = __pyx_t_11;
+                for (__pyx_t_22 = 1; __pyx_t_22 < __pyx_t_21; __pyx_t_22+=1) {
+                  __pyx_v_i = __pyx_t_22;
+
+                  /* "src/_lbp.pyx":637
+ *                         lbp = rotation_chain[0]
+ *                         for i in range(1, P):
+ *                             lbp = min(lbp, rotation_chain[i])             # <<<<<<<<<<<<<<
+ * 
+ *                 output[r, c] = lbp
+ */
+                  __pyx_t_25 = __pyx_v_i;
+                  __pyx_t_31 = (*((int *) ( /* dim=0 */ ((char *) (((int *) __pyx_v_rotation_chain.data) + __pyx_t_25)) )));
+                  __pyx_t_32 = __pyx_v_lbp;
+                  __pyx_t_28 = (__pyx_t_31 < __pyx_t_32);
+                  if (__pyx_t_28) {
+                    __pyx_t_33 = __pyx_t_31;
+                  } else {
+                    __pyx_t_33 = __pyx_t_32;
+                  }
+                  __pyx_v_lbp = __pyx_t_33;
+                }
+
+                /* "src/_lbp.pyx":629
+ * 
+ *                     # method == b'ror'
+ *                     if method == b'R':             # <<<<<<<<<<<<<<
+ *                         # shift LBP P times to the right and get minimum value
+ *                         rotation_chain[0] = <int>lbp
+ */
+              }
+              break;
+            }
+
+            /* "src/_lbp.pyx":639
+ *                             lbp = min(lbp, rotation_chain[i])
+ * 
+ *                 output[r, c] = lbp             # <<<<<<<<<<<<<<
+ * 
+ *     return np.asarray(output)
+ */
+            __pyx_t_25 = __pyx_v_r;
+            __pyx_t_26 = __pyx_v_c;
+            *((__pyx_t_5numpy_float64_t *) ( /* dim=1 */ ((char *) (((__pyx_t_5numpy_float64_t *) ( /* dim=0 */ (__pyx_v_output.data + __pyx_t_25 * __pyx_v_output.strides[0]) )) + __pyx_t_26)) )) = __pyx_v_lbp;
+          }
+        }
+      }
+
+      /* "src/_lbp.pyx":515
+ *     cdef cnp.float64_t sum_, var_, texture_i
+ * 
+ *     with nogil:             # <<<<<<<<<<<<<<
+ *         for r in range(image.shape[0]):
+ *             for c in range(image.shape[1]):
+ */
+      /*finally:*/ {
+        /*normal exit:*/{
+          #ifdef WITH_THREAD
+          __Pyx_FastGIL_Forget();
+          Py_BLOCK_THREADS
+          #endif
+          goto __pyx_L5;
+        }
+        __pyx_L4_error: {
+          #ifdef WITH_THREAD
+          __Pyx_FastGIL_Forget();
+          Py_BLOCK_THREADS
+          #endif
+          goto __pyx_L1_error;
+        }
+        __pyx_L5:;
+      }
+  }
+
+  /* "src/_lbp.pyx":641
+ *                 output[r, c] = lbp
+ * 
+ *     return np.asarray(output)             # <<<<<<<<<<<<<<
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 641, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_asarray); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 641, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = __pyx_memoryview_fromslice(__pyx_v_output, 2, (PyObject *(*)(char *)) __pyx_memview_get_nn___pyx_t_5numpy_float64_t, (int (*)(char *, PyObject *)) __pyx_memview_set_nn___pyx_t_5numpy_float64_t, 0);; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 641, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_1 = NULL;
+  __pyx_t_11 = 0;
+  #if CYTHON_UNPACK_METHODS
+  if (unlikely(PyMethod_Check(__pyx_t_2))) {
+    __pyx_t_1 = PyMethod_GET_SELF(__pyx_t_2);
+    if (likely(__pyx_t_1)) {
+      PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_2);
+      __Pyx_INCREF(__pyx_t_1);
+      __Pyx_INCREF(function);
+      __Pyx_DECREF_SET(__pyx_t_2, function);
+      __pyx_t_11 = 1;
+    }
+  }
+  #endif
+  {
+    PyObject *__pyx_callargs[2] = {__pyx_t_1, __pyx_t_5};
+    __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_11, 1+__pyx_t_11);
+    __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 641, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  }
+  __pyx_r = __pyx_t_3;
+  __pyx_t_3 = 0;
+  goto __pyx_L0;
+
+  /* "src/_lbp.pyx":458
+ * 
+ * 
+ * def _uniform_lbp_uint8(cnp.float64_t[:, ::1] image,             # <<<<<<<<<<<<<<
+ *                           int P, cnp.float64_t R, char method=b'D'):
+ *     """Gray scale and rotation invariant Uniform LBP.
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __PYX_XCLEAR_MEMVIEW(&__pyx_t_6, 1);
+  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_XDECREF(__pyx_t_9);
+  __Pyx_XDECREF(__pyx_t_10);
+  __PYX_XCLEAR_MEMVIEW(&__pyx_t_12, 1);
+  __PYX_XCLEAR_MEMVIEW(&__pyx_t_13, 1);
+  __PYX_XCLEAR_MEMVIEW(&__pyx_t_14, 1);
+  __Pyx_AddTraceback("fastlbp_imbg._lbp._uniform_lbp_uint8", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __PYX_XCLEAR_MEMVIEW(&__pyx_v_weights, 1);
@@ -22976,7 +24665,7 @@ static PyType_Slot __pyx_type___pyx_array_slots[] = {
   {0, 0},
 };
 static PyType_Spec __pyx_type___pyx_array_spec = {
-  "fastlbp_imbg.lbp.array",
+  "fastlbp_imbg._lbp.array",
   sizeof(struct __pyx_array_obj),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_SEQUENCE,
@@ -23022,7 +24711,7 @@ static PyBufferProcs __pyx_tp_as_buffer_array = {
 
 static PyTypeObject __pyx_type___pyx_array = {
   PyVarObject_HEAD_INIT(0, 0)
-  "fastlbp_imbg.lbp.""array", /*tp_name*/
+  "fastlbp_imbg._lbp.""array", /*tp_name*/
   sizeof(struct __pyx_array_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_array, /*tp_dealloc*/
@@ -23182,7 +24871,7 @@ static PyType_Slot __pyx_type___pyx_MemviewEnum_slots[] = {
   {0, 0},
 };
 static PyType_Spec __pyx_type___pyx_MemviewEnum_spec = {
-  "fastlbp_imbg.lbp.Enum",
+  "fastlbp_imbg._lbp.Enum",
   sizeof(struct __pyx_MemviewEnum_obj),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC,
@@ -23192,7 +24881,7 @@ static PyType_Spec __pyx_type___pyx_MemviewEnum_spec = {
 
 static PyTypeObject __pyx_type___pyx_MemviewEnum = {
   PyVarObject_HEAD_INIT(0, 0)
-  "fastlbp_imbg.lbp.""Enum", /*tp_name*/
+  "fastlbp_imbg._lbp.""Enum", /*tp_name*/
   sizeof(struct __pyx_MemviewEnum_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_Enum, /*tp_dealloc*/
@@ -23489,7 +25178,7 @@ static PyType_Slot __pyx_type___pyx_memoryview_slots[] = {
   {0, 0},
 };
 static PyType_Spec __pyx_type___pyx_memoryview_spec = {
-  "fastlbp_imbg.lbp.memoryview",
+  "fastlbp_imbg._lbp.memoryview",
   sizeof(struct __pyx_memoryview_obj),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC,
@@ -23535,7 +25224,7 @@ static PyBufferProcs __pyx_tp_as_buffer_memoryview = {
 
 static PyTypeObject __pyx_type___pyx_memoryview = {
   PyVarObject_HEAD_INIT(0, 0)
-  "fastlbp_imbg.lbp.""memoryview", /*tp_name*/
+  "fastlbp_imbg._lbp.""memoryview", /*tp_name*/
   sizeof(struct __pyx_memoryview_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc_memoryview, /*tp_dealloc*/
@@ -23687,7 +25376,7 @@ static PyType_Slot __pyx_type___pyx_memoryviewslice_slots[] = {
   {0, 0},
 };
 static PyType_Spec __pyx_type___pyx_memoryviewslice_spec = {
-  "fastlbp_imbg.lbp._memoryviewslice",
+  "fastlbp_imbg._lbp._memoryviewslice",
   sizeof(struct __pyx_memoryviewslice_obj),
   0,
   Py_TPFLAGS_DEFAULT|Py_TPFLAGS_HAVE_VERSION_TAG|Py_TPFLAGS_CHECKTYPES|Py_TPFLAGS_HAVE_NEWBUFFER|Py_TPFLAGS_BASETYPE|Py_TPFLAGS_HAVE_GC|Py_TPFLAGS_SEQUENCE,
@@ -23697,7 +25386,7 @@ static PyType_Spec __pyx_type___pyx_memoryviewslice_spec = {
 
 static PyTypeObject __pyx_type___pyx_memoryviewslice = {
   PyVarObject_HEAD_INIT(0, 0)
-  "fastlbp_imbg.lbp.""_memoryviewslice", /*tp_name*/
+  "fastlbp_imbg._lbp.""_memoryviewslice", /*tp_name*/
   sizeof(struct __pyx_memoryviewslice_obj), /*tp_basicsize*/
   0, /*tp_itemsize*/
   __pyx_tp_dealloc__memoryviewslice, /*tp_dealloc*/
@@ -23836,7 +25525,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_ValueError, __pyx_k_ValueError, sizeof(__pyx_k_ValueError), 0, 0, 1, 1},
     {&__pyx_n_s_View_MemoryView, __pyx_k_View_MemoryView, sizeof(__pyx_k_View_MemoryView), 0, 0, 1, 1},
     {&__pyx_kp_u__2, __pyx_k__2, sizeof(__pyx_k__2), 0, 1, 0, 0},
-    {&__pyx_n_s__24, __pyx_k__24, sizeof(__pyx_k__24), 0, 0, 1, 1},
+    {&__pyx_n_s__25, __pyx_k__25, sizeof(__pyx_k__25), 0, 0, 1, 1},
     {&__pyx_n_s__3, __pyx_k__3, sizeof(__pyx_k__3), 0, 0, 1, 1},
     {&__pyx_kp_u__6, __pyx_k__6, sizeof(__pyx_k__6), 0, 1, 0, 0},
     {&__pyx_kp_u__7, __pyx_k__7, sizeof(__pyx_k__7), 0, 1, 0, 0},
@@ -23870,7 +25559,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_encode, __pyx_k_encode, sizeof(__pyx_k_encode), 0, 0, 1, 1},
     {&__pyx_n_s_enumerate, __pyx_k_enumerate, sizeof(__pyx_k_enumerate), 0, 0, 1, 1},
     {&__pyx_n_s_error, __pyx_k_error, sizeof(__pyx_k_error), 0, 0, 1, 1},
-    {&__pyx_n_s_fastlbp_imbg_lbp, __pyx_k_fastlbp_imbg_lbp, sizeof(__pyx_k_fastlbp_imbg_lbp), 0, 0, 1, 1},
+    {&__pyx_n_s_fastlbp_imbg__lbp, __pyx_k_fastlbp_imbg__lbp, sizeof(__pyx_k_fastlbp_imbg__lbp), 0, 0, 1, 1},
     {&__pyx_n_s_first_one, __pyx_k_first_one, sizeof(__pyx_k_first_one), 0, 0, 1, 1},
     {&__pyx_n_s_first_zero, __pyx_k_first_zero, sizeof(__pyx_k_first_zero), 0, 0, 1, 1},
     {&__pyx_n_s_flags, __pyx_k_flags, sizeof(__pyx_k_flags), 0, 0, 1, 1},
@@ -23942,7 +25631,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_sin, __pyx_k_sin, sizeof(__pyx_k_sin), 0, 0, 1, 1},
     {&__pyx_n_s_size, __pyx_k_size, sizeof(__pyx_k_size), 0, 0, 1, 1},
     {&__pyx_n_s_spec, __pyx_k_spec, sizeof(__pyx_k_spec), 0, 0, 1, 1},
-    {&__pyx_kp_s_src_lbp_pyx, __pyx_k_src_lbp_pyx, sizeof(__pyx_k_src_lbp_pyx), 0, 0, 1, 0},
+    {&__pyx_kp_s_src__lbp_pyx, __pyx_k_src__lbp_pyx, sizeof(__pyx_k_src__lbp_pyx), 0, 0, 1, 0},
     {&__pyx_n_s_start, __pyx_k_start, sizeof(__pyx_k_start), 0, 0, 1, 1},
     {&__pyx_n_s_step, __pyx_k_step, sizeof(__pyx_k_step), 0, 0, 1, 1},
     {&__pyx_n_s_stop, __pyx_k_stop, sizeof(__pyx_k_stop), 0, 0, 1, 1},
@@ -23958,6 +25647,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_texture_i, __pyx_k_texture_i, sizeof(__pyx_k_texture_i), 0, 0, 1, 1},
     {&__pyx_kp_s_unable_to_allocate_array_data, __pyx_k_unable_to_allocate_array_data, sizeof(__pyx_k_unable_to_allocate_array_data), 0, 0, 1, 0},
     {&__pyx_kp_s_unable_to_allocate_shape_and_str, __pyx_k_unable_to_allocate_shape_and_str, sizeof(__pyx_k_unable_to_allocate_shape_and_str), 0, 0, 1, 0},
+    {&__pyx_n_s_uniform_lbp_uint8, __pyx_k_uniform_lbp_uint8, sizeof(__pyx_k_uniform_lbp_uint8), 0, 0, 1, 1},
     {&__pyx_n_s_unpack, __pyx_k_unpack, sizeof(__pyx_k_unpack), 0, 0, 1, 1},
     {&__pyx_n_s_update, __pyx_k_update, sizeof(__pyx_k_update), 0, 0, 1, 1},
     {&__pyx_n_s_var, __pyx_k_var, sizeof(__pyx_k_var), 0, 0, 1, 1},
@@ -24027,7 +25717,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__8);
   __Pyx_GIVEREF(__pyx_tuple__8);
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":984
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":984
  *         __pyx_import_array()
  *     except Exception:
  *         raise ImportError("numpy.core.multiarray failed to import")             # <<<<<<<<<<<<<<
@@ -24038,7 +25728,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
 
-  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-751xrp5h/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":990
+  /* "C:/Users/mkrooted/AppData/Local/Temp/pip-build-env-3zlqvb_q/overlay/Lib/site-packages/numpy/__init__.cython-30.pxd":990
  *         _import_umath()
  *     except Exception:
  *         raise ImportError("numpy.core.umath failed to import")             # <<<<<<<<<<<<<<
@@ -24150,7 +25840,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__20);
   __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Enum, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(1, 1, __pyx_L1_error)
 
-  /* "src/lbp.pyx":272
+  /* "src/_lbp.pyx":272
  * 
  * 
  * def _local_binary_pattern(cnp.float64_t[:, ::1] image,             # <<<<<<<<<<<<<<
@@ -24160,7 +25850,16 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __pyx_tuple__22 = PyTuple_Pack(28, __pyx_n_s_image, __pyx_n_s_P, __pyx_n_s_R, __pyx_n_s_method, __pyx_n_s_weights, __pyx_n_s_rr, __pyx_n_s_cc, __pyx_n_s_rp, __pyx_n_s_cp, __pyx_n_s_texture, __pyx_n_s_signed_texture, __pyx_n_s_rotation_chain, __pyx_n_s_output_shape, __pyx_n_s_output, __pyx_n_s_rows, __pyx_n_s_cols, __pyx_n_s_lbp, __pyx_n_s_r, __pyx_n_s_c, __pyx_n_s_changes, __pyx_n_s_i, __pyx_n_s_rot_index, __pyx_n_s_n_ones, __pyx_n_s_first_zero, __pyx_n_s_first_one, __pyx_n_s_sum, __pyx_n_s_var, __pyx_n_s_texture_i); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(0, 272, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__22);
   __Pyx_GIVEREF(__pyx_tuple__22);
-  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(4, 0, 0, 28, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_lbp_pyx, __pyx_n_s_local_binary_pattern, 272, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(0, 272, __pyx_L1_error)
+  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(4, 0, 0, 28, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src__lbp_pyx, __pyx_n_s_local_binary_pattern, 272, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(0, 272, __pyx_L1_error)
+
+  /* "src/_lbp.pyx":458
+ * 
+ * 
+ * def _uniform_lbp_uint8(cnp.float64_t[:, ::1] image,             # <<<<<<<<<<<<<<
+ *                           int P, cnp.float64_t R, char method=b'D'):
+ *     """Gray scale and rotation invariant Uniform LBP.
+ */
+  __pyx_codeobj__24 = (PyObject*)__Pyx_PyCode_New(4, 0, 0, 28, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src__lbp_pyx, __pyx_n_s_uniform_lbp_uint8, 458, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__24)) __PYX_ERR(0, 458, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -24458,10 +26157,10 @@ static int __Pyx_modinit_function_import_code(void) {
 #if PY_MAJOR_VERSION >= 3
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 static PyObject* __pyx_pymod_create(PyObject *spec, PyModuleDef *def); /*proto*/
-static int __pyx_pymod_exec_lbp(PyObject* module); /*proto*/
+static int __pyx_pymod_exec__lbp(PyObject* module); /*proto*/
 static PyModuleDef_Slot __pyx_moduledef_slots[] = {
   {Py_mod_create, (void*)__pyx_pymod_create},
-  {Py_mod_exec, (void*)__pyx_pymod_exec_lbp},
+  {Py_mod_exec, (void*)__pyx_pymod_exec__lbp},
   {0, NULL}
 };
 #endif
@@ -24474,7 +26173,7 @@ namespace {
   #endif
   {
       PyModuleDef_HEAD_INIT,
-      "lbp",
+      "_lbp",
       0, /* m_doc */
     #if CYTHON_PEP489_MULTI_PHASE_INIT
       0, /* m_size */
@@ -24522,11 +26221,11 @@ namespace {
 
 
 #if PY_MAJOR_VERSION < 3
-__Pyx_PyMODINIT_FUNC initlbp(void) CYTHON_SMALL_CODE; /*proto*/
-__Pyx_PyMODINIT_FUNC initlbp(void)
+__Pyx_PyMODINIT_FUNC init_lbp(void) CYTHON_SMALL_CODE; /*proto*/
+__Pyx_PyMODINIT_FUNC init_lbp(void)
 #else
-__Pyx_PyMODINIT_FUNC PyInit_lbp(void) CYTHON_SMALL_CODE; /*proto*/
-__Pyx_PyMODINIT_FUNC PyInit_lbp(void)
+__Pyx_PyMODINIT_FUNC PyInit__lbp(void) CYTHON_SMALL_CODE; /*proto*/
+__Pyx_PyMODINIT_FUNC PyInit__lbp(void)
 #if CYTHON_PEP489_MULTI_PHASE_INIT
 {
   return PyModuleDef_Init(&__pyx_moduledef);
@@ -24607,7 +26306,7 @@ bad:
 }
 
 
-static CYTHON_SMALL_CODE int __pyx_pymod_exec_lbp(PyObject *__pyx_pyinit_module)
+static CYTHON_SMALL_CODE int __pyx_pymod_exec__lbp(PyObject *__pyx_pyinit_module)
 #endif
 #endif
 {
@@ -24631,7 +26330,7 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_lbp(PyObject *__pyx_pyinit_module)
   #if CYTHON_PEP489_MULTI_PHASE_INIT
   if (__pyx_m) {
     if (__pyx_m == __pyx_pyinit_module) return 0;
-    PyErr_SetString(PyExc_RuntimeError, "Module 'lbp' has already been imported. Re-initialisation is not supported.");
+    PyErr_SetString(PyExc_RuntimeError, "Module '_lbp' has already been imported. Re-initialisation is not supported.");
     return -1;
   }
   #elif PY_MAJOR_VERSION >= 3
@@ -24643,13 +26342,13 @@ static CYTHON_SMALL_CODE int __pyx_pymod_exec_lbp(PyObject *__pyx_pyinit_module)
   Py_INCREF(__pyx_m);
   #else
   #if PY_MAJOR_VERSION < 3
-  __pyx_m = Py_InitModule4("lbp", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
+  __pyx_m = Py_InitModule4("_lbp", __pyx_methods, 0, 0, PYTHON_API_VERSION); Py_XINCREF(__pyx_m);
   if (unlikely(!__pyx_m)) __PYX_ERR(0, 1, __pyx_L1_error)
   #elif CYTHON_USE_MODULE_STATE
   __pyx_t_1 = PyModule_Create(&__pyx_moduledef); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   {
     int add_module_result = PyState_AddModule(__pyx_t_1, &__pyx_moduledef);
-    __pyx_t_1 = 0; /* transfer ownership from __pyx_t_1 to "lbp" pseudovariable */
+    __pyx_t_1 = 0; /* transfer ownership from __pyx_t_1 to "_lbp" pseudovariable */
     if (unlikely((add_module_result < 0))) __PYX_ERR(0, 1, __pyx_L1_error)
     pystate_addmodule_run = 1;
   }
@@ -24673,7 +26372,7 @@ if (!__Pyx_RefNanny) {
       Py_FatalError("failed to import 'refnanny' module");
 }
 #endif
-  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit_lbp(void)", 0);
+  __Pyx_RefNannySetupContext("__Pyx_PyMODINIT_FUNC PyInit__lbp(void)", 0);
   if (__Pyx_check_binary_version(__PYX_LIMITED_VERSION_HEX, __Pyx_get_runtime_version(), CYTHON_COMPILING_IN_LIMITED_API) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #ifdef __Pxy_PyFrame_Initialize_Offsets
   __Pxy_PyFrame_Initialize_Offsets();
@@ -24711,14 +26410,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_fastlbp_imbg__lbp) {
+  if (__pyx_module_is_main_fastlbp_imbg___lbp) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name_2, __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "fastlbp_imbg.lbp")) {
-      if (unlikely((PyDict_SetItemString(modules, "fastlbp_imbg.lbp", __pyx_m) < 0))) __PYX_ERR(0, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "fastlbp_imbg._lbp")) {
+      if (unlikely((PyDict_SetItemString(modules, "fastlbp_imbg._lbp", __pyx_m) < 0))) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -25252,7 +26951,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pyx_unpickle_Enum, __pyx_t_7) < 0) __PYX_ERR(1, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "src/lbp.pyx":5
+  /* "src/_lbp.pyx":5
  * #cython: nonecheck=False
  * #cython: wraparound=False
  * import numpy as np             # <<<<<<<<<<<<<<
@@ -25264,7 +26963,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_7) < 0) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "src/lbp.pyx":16
+  /* "src/_lbp.pyx":16
  * # from .._shared.fused_numerics cimport np_anyint as any_int
  * 
  * cnp.import_array()             # <<<<<<<<<<<<<<
@@ -25273,7 +26972,7 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_t_9 = __pyx_f_5numpy_import_array(); if (unlikely(__pyx_t_9 == ((int)-1))) __PYX_ERR(0, 16, __pyx_L1_error)
 
-  /* "src/lbp.pyx":273
+  /* "src/_lbp.pyx":273
  * 
  * def _local_binary_pattern(cnp.float64_t[:, ::1] image,
  *                           int P, cnp.float64_t R, char method=b'D'):             # <<<<<<<<<<<<<<
@@ -25283,7 +26982,7 @@ if (!__Pyx_RefNanny) {
   __pyx_t_7 = __Pyx_PyInt_From_char(((char)'D')); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 273, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
 
-  /* "src/lbp.pyx":272
+  /* "src/_lbp.pyx":272
  * 
  * 
  * def _local_binary_pattern(cnp.float64_t[:, ::1] image,             # <<<<<<<<<<<<<<
@@ -25295,14 +26994,43 @@ if (!__Pyx_RefNanny) {
   __Pyx_GIVEREF(__pyx_t_7);
   if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_7)) __PYX_ERR(0, 272, __pyx_L1_error);
   __pyx_t_7 = 0;
-  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_12fastlbp_imbg_3lbp_1_local_binary_pattern, 0, __pyx_n_s_local_binary_pattern, NULL, __pyx_n_s_fastlbp_imbg_lbp, __pyx_d, ((PyObject *)__pyx_codeobj__23)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 272, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_12fastlbp_imbg_4_lbp_1_local_binary_pattern, 0, __pyx_n_s_local_binary_pattern, NULL, __pyx_n_s_fastlbp_imbg__lbp, __pyx_d, ((PyObject *)__pyx_codeobj__23)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 272, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_7, __pyx_t_4);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_local_binary_pattern, __pyx_t_7) < 0) __PYX_ERR(0, 272, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-  /* "src/lbp.pyx":1
+  /* "src/_lbp.pyx":459
+ * 
+ * def _uniform_lbp_uint8(cnp.float64_t[:, ::1] image,
+ *                           int P, cnp.float64_t R, char method=b'D'):             # <<<<<<<<<<<<<<
+ *     """Gray scale and rotation invariant Uniform LBP.
+ * 
+ */
+  __pyx_t_7 = __Pyx_PyInt_From_char(((char)'D')); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 459, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+
+  /* "src/_lbp.pyx":458
+ * 
+ * 
+ * def _uniform_lbp_uint8(cnp.float64_t[:, ::1] image,             # <<<<<<<<<<<<<<
+ *                           int P, cnp.float64_t R, char method=b'D'):
+ *     """Gray scale and rotation invariant Uniform LBP.
+ */
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 458, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_7);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_7)) __PYX_ERR(0, 458, __pyx_L1_error);
+  __pyx_t_7 = 0;
+  __pyx_t_7 = __Pyx_CyFunction_New(&__pyx_mdef_12fastlbp_imbg_4_lbp_3_uniform_lbp_uint8, 0, __pyx_n_s_uniform_lbp_uint8, NULL, __pyx_n_s_fastlbp_imbg__lbp, __pyx_d, ((PyObject *)__pyx_codeobj__24)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 458, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_7, __pyx_t_4);
+  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_uniform_lbp_uint8, __pyx_t_7) < 0) __PYX_ERR(0, 458, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+
+  /* "src/_lbp.pyx":1
  * #cython: cdivision=True             # <<<<<<<<<<<<<<
  * #cython: boundscheck=False
  * #cython: nonecheck=False
@@ -25321,7 +27049,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_7);
   if (__pyx_m) {
     if (__pyx_d && stringtab_initialized) {
-      __Pyx_AddTraceback("init fastlbp_imbg.lbp", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init fastlbp_imbg._lbp", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     #if !CYTHON_USE_MODULE_STATE
     Py_CLEAR(__pyx_m);
@@ -25335,7 +27063,7 @@ if (!__Pyx_RefNanny) {
     }
     #endif
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init fastlbp_imbg.lbp");
+    PyErr_SetString(PyExc_ImportError, "init fastlbp_imbg._lbp");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();
@@ -32685,7 +34413,7 @@ __Pyx_PyType_GetName(PyTypeObject* tp)
     if (unlikely(name == NULL) || unlikely(!PyUnicode_Check(name))) {
         PyErr_Clear();
         Py_XDECREF(name);
-        name = __Pyx_NewRef(__pyx_n_s__24);
+        name = __Pyx_NewRef(__pyx_n_s__25);
     }
     return name;
 }

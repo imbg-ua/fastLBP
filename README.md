@@ -27,8 +27,8 @@ Our lustre directory is
 ## Cython2 branch details
 TODO:
 - [x] Data Contiguity (`e3293cd`)
-- [x] Job sorting (from slow to quick) in fastlbp.py (`TBD`)
-- [ ] Change data types in lbp.pyx from float64 to something smaller
+- [x] Job sorting (from slow to quick) in fastlbp.py (`8a21a04`)
+- [ ] Change data types in lbp.pyx from float64 to something smaller (`IN PROGRESS`)
 - [ ] Add mask feature to lbp.pyx
 - [ ] Add mask feature to fastlbp.py
 - [ ] Fill all commit numbers
