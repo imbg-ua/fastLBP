@@ -29,9 +29,9 @@ TODO:
 - [x] Data Contiguity (`e3293cd`)
 - [x] Job sorting (from slow to quick) in fastlbp.py (`8a21a04`)
 - [x] Change data types in lbp.pyx from float64 to something smaller (`f177823`)
-- [x] Add mask feature to lbp.pyx (`TBD`)
-- [ ] Add mask feature to fastlbp.py (IN PROGRESS)
-- [ ] Fill all commit numbers
+- [x] Add mask feature to lbp.pyx (`d70bc93`)
+- [x] Add mask feature to fastlbp.py (`TBD`)
+- [ ] Fill all commit numbers (IN PROGRESS)
 
 
 ## Implemented modules

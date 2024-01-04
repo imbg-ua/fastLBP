@@ -13,7 +13,7 @@ from multiprocessing import Pool, shared_memory
 
 import hashlib
 
-from .lbp import uniform_lbp_uint8_masked_stub
+from .lbp import uniform_lbp_uint8, uniform_lbp_uint8_masked
 
 _features_dtype = np.uint16
 
@@ -75,7 +75,15 @@ def __worker_fastlbp(args):
             assert img_channel.flags.c_contiguous
             assert img_channel.dtype == np.uint8
             
-            lbp_results = uniform_lbp_uint8_masked_stub(image=img_channel, P=job['npoints'], R=job['radius'])
+            if not job['img_mask_shm_name']:
+                lbp_results = uniform_lbp_uint8(image=img_channel, P=job['npoints'], R=job['radius'])
+            else:
+                # if mask is provided
+                img_mask_shm = shared_memory.SharedMemory(name=job['img_mask_shm_name'])
+                img_mask = np.ndarray((h,w), dtype=np.uint8, buffer=img_mask_shm.buf)
+                lbp_results = uniform_lbp_uint8_masked(image=img_channel, mask=img_mask, P=job['npoints'], R=job['radius'])
+                img_mask_shm.close()
+            
             assert lbp_results.dtype == _features_dtype
 
             img_data_shm.close()
@@ -140,7 +148,8 @@ def get_p_for_r(r):
 #####
 # PIPELINE METHODS
 
-def run_fastlbp(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=None, img_name='img', 
+def run_fastlbp(img_data, radii_list, npoints_list, patchsize, ncpus, 
+                img_mask=None, max_ram=None, img_name='img', 
                 outfile_name='lbp_features.npy', save_intermediate_results=True, overwrite_output=False):
     
     # validate params and prepare a pipeline
@@ -148,6 +157,10 @@ def run_fastlbp(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
     assert len(img_data.shape) == 3
     assert img_data.dtype == np.uint8
     
+    if img_mask is not None:
+        assert img_mask.shape == img_data.shape[:2]
+        assert img_mask.dtype == np.uint8
+
     t = time.perf_counter()
     
     log.info('run_fastlbp: initial setup...')
@@ -200,7 +213,7 @@ def run_fastlbp(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
             [channel_list, radii_list], names=['channel', 'radius']), 
             columns=['channel','radius','img_name','label','npoints','patchsize','img_shm_name',
                      'img_pixel_dtype','img_shape_0','img_shape_1','img_shape_2', 'output_shm_name', 
-                     'output_offset', 'tmp_fpath']
+                     'output_offset', 'tmp_fpath', 'img_mask_shm_name']
         )
     jobs['img_name'] = img_name
 
@@ -231,21 +244,30 @@ def run_fastlbp(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
     # Channels will go first. Then h and w.
     img_data = np.ascontiguousarray(np.moveaxis(img_data, (0,1,2), (1,2,0)))
     
-    # create shared memory for all processes
     log.info(f"run_fastlbp({pipeline_hash}): creating shared memory")
+    # create shared memory for input image
     input_img_shm = shared_memory.SharedMemory(create=True, size=img_data.nbytes)
-    patch_features_shm = shared_memory.SharedMemory(
-        create=True, size=(int(np.prod(patch_features_shape)) * np.dtype(_features_dtype).itemsize))
-    
+
     # copy image to shared memory 
     input_img_np = np.ndarray(img_data.shape, img_data.dtype, input_img_shm.buf)
     np.copyto(input_img_np, img_data, casting='no')
 
-    # output
+    # copy mask to shared memory if provided
+    img_mask_shm = None
+    if img_mask is not None:
+        img_mask_shm = shared_memory.SharedMemory(create=True, size=img_mask.nbytes)
+        img_mask_np = np.ndarray(img_mask.shape, img_mask.dtype, input_img_shm.buf)
+        np.copyto(img_mask_np, img_mask, casting='no')
+
+    # create and initialize shared memory for output
+    patch_features_shm = shared_memory.SharedMemory(
+        create=True, size=(int(np.prod(patch_features_shape)) * np.dtype(_features_dtype).itemsize))
     patch_features = np.ndarray(patch_features_shape, _features_dtype, buffer=patch_features_shm.buf)
     patch_features.fill(0)
+    log.info(f"run_fastlbp({pipeline_hash}): shared memory created")
 
     jobs['img_shm_name'] = input_img_shm.name
+    jobs['img_mask_shm_name'] = img_mask_shm.name if img_mask_shm is not None else ""
     jobs['img_pixel_dtype'] = input_img_np.dtype # note: always uint8
     jobs['img_shape_0'] = input_img_np.shape[0] # nchannels
     jobs['img_shape_1'] = input_img_np.shape[1] # h
@@ -278,6 +300,8 @@ def run_fastlbp(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
     log.info(f'run_fastlbp({pipeline_hash}): saving finished to {output_fpath}')
     
     input_img_shm.unlink()
+    if img_mask_shm is not None:
+        img_mask_shm.unlink()
     patch_features_shm.unlink()
 
     log.info(f"run_fastlbp({pipeline_hash}): shared memory unlinked. Goodbye")
