@@ -13,7 +13,7 @@ from multiprocessing import Pool, shared_memory
 
 import hashlib
 
-from .lbp import uniform_lbp_uint8
+from .lbp import uniform_lbp_uint8_masked_stub
 
 _features_dtype = np.uint16
 
@@ -75,7 +75,7 @@ def __worker_fastlbp(args):
             assert img_channel.flags.c_contiguous
             assert img_channel.dtype == np.uint8
             
-            lbp_results = uniform_lbp_uint8(image=img_channel, P=job['npoints'], R=job['radius'])
+            lbp_results = uniform_lbp_uint8_masked_stub(image=img_channel, P=job['npoints'], R=job['radius'])
             assert lbp_results.dtype == _features_dtype
 
             img_data_shm.close()
