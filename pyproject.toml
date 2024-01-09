@@ -25,5 +25,9 @@ dynamic = ["version"]
 "Homepage" = "https://github.com/imbg-ua/fastLBP"
 "Bug Tracker" = "https://github.com/imbg-ua/fastLBP/issues"
 
+[build-system]
+requires = ["setuptools>=61.0", "numpy", "cython"]
+build-backend = "setuptools.build_meta"
+
 [tool.setuptools.dynamic]
 version = {attr = "fastlbp_imbg.__version__"}

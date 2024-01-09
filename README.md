@@ -3,19 +3,35 @@ Highly parallel LBP implementation
 
 ## Installation
 
-Підготовка середовища пітона (краще робити **не** на head node)
-- Знайти десь Python 3.11 (напр. `conda create -n p11 python=3.11`)
-- Перевірити що середовище правильне 
-	- `python --version` та `pip --version`
-- Встановити пакет через 
-	- `pip install fastlbp-imbg`
-- Або вручну через 
-	- `git clone git@github.com:imbg-ua/fastLBP.git`
-	- `pip install fastLBP`
+Note: it is not recommended to proceed on a head node; consider starting an ijob or a jupyter instance.
 
-Наша директорія на lustre
+- Activate a Python 3.11 environment (e.g. using `conda create -y -n p11 python=3.11 && conda activate p11`)
+- Verify you are using the right env
+	- `python --version` та `pip --version`
+- Install a stable version from PyPI
+	- `pip install fastlbp-imbg`
+- Or build the latest version from sources
+```
+git clone git@github.com:imbg-ua/fastLBP.git
+cd fastLBP
+# git checkout <branchname> # if you need a specific branch
+pip install . # this will install the fastlbp_imbg package in the current env
+```
+- You can use `import fastlbp_imbg` now
+
+#### Misc
+Our lustre directory is
 `/lustre/scratch126/casm/team268im/`
 
+
+## Cython2 branch details
+TODO:
+- [x] Data Contiguity (`e3293cd`)
+- [x] Job sorting (from slow to quick) in fastlbp.py (`8a21a04`)
+- [x] Change data types in lbp.pyx from float64 to something smaller (`f177823`)
+- [x] Add mask feature to lbp.pyx (`d70bc93`)
+- [x] Add mask feature to fastlbp.py (`d812831`)
+- [x] Fill all commit numbers
 
 
 ## Implemented modules
@@ -31,7 +47,7 @@ Features:
 - It computes everything in RAM, no filesystem usage
 
 TODO: 
-- Use `max_ram` parameter to estimate optimal number of sub-processes and collect memory stats. Now `max_ram` is ignored.
+- Use `max_ram` parameter to estimate optimal number of sub-processes and collect memory stats. Now `max_ram` **is ignored**.
 
 ## Planned modules
 ### run_chunked_skimage

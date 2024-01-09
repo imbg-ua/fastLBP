@@ -1,5 +1,4 @@
 import numpy as np
-import skimage as ski
 from pandas import DataFrame
 import pandas as pd
 
@@ -14,16 +13,20 @@ from multiprocessing import Pool, shared_memory
 
 import hashlib
 
+from .lbp import uniform_lbp_uint8, uniform_lbp_uint8_masked
+
+_features_dtype = np.uint16
+
 #####
 # PIPELINE WORKERS FOR INTERNAL USAGE
 
-def __worker_skimage(args):
+def __worker_fastlbp(args):
     row_id, job = args
     tmp_fpath = job['tmp_fpath']
 
     pid = os.getpid()
     jobname = job['label']
-    log.info(f"run_skimage: worker {pid}: starting job {jobname}")
+    log.info(f"run_fastlbp: worker {pid}: starting job {jobname}")
 
     try:
         t0 = time.perf_counter()
@@ -33,7 +36,7 @@ def __worker_skimage(args):
         output_offset = job['output_offset']
         
         patchsize = job['patchsize']
-        h,w,nchannels = shape
+        nchannels,h,w = shape
         nprows, npcols = h//patchsize, w//patchsize
         
         job_nfeatures = job['npoints']+2
@@ -42,44 +45,46 @@ def __worker_skimage(args):
         # Obtain output memory
         output_shm = shared_memory.SharedMemory(name=job['output_shm_name'])
         all_patch_histograms = np.ndarray(
-            (nprows, npcols, total_nfeatures), dtype=np.uint32, buffer=output_shm.buf)
+            (nprows, npcols, total_nfeatures), dtype=_features_dtype, buffer=output_shm.buf)
         job_patch_histograms = all_patch_histograms[:,:,output_offset:(output_offset+job_nfeatures)]
         
-        # if ((0 < job_patch_histograms) & (job_patch_histograms < np.iinfo(np.uint32).max)).any():
-        #     log.warning(f"run_skimage: worker {jobname}({pid}): job_patch_histograms is not zero! Possible memory corruption")
-
-        # log.info(f"run_skimage: worker {jobname}({pid}): job_nfeatures={job_nfeatures}, job_patch_histograms_shape={job_patch_histograms_shape}, job_interval=[{output_offset},{output_offset+job_nfeatures-1}]")
-
         # Try to use cached data
         cached_result_mm = None
         if not tmp_fpath:
-            log.info(f"run_skimage: worker {jobname}({pid}): skipping cache")
+            log.info(f"run_fastlbp: worker {jobname}({pid}): skipping cache")
         else:
             try:
-                cached_result_mm = np.memmap(tmp_fpath, dtype=np.uint32, mode='r', shape=job_patch_histograms_shape)
+                cached_result_mm = np.memmap(tmp_fpath, dtype=_features_dtype, mode='r', shape=job_patch_histograms_shape)
             except:
                 cached_result_mm = None
-                log.info(f"run_skimage: worker {jobname}({pid}): no usable cache")
+                log.info(f"run_fastlbp: worker {jobname}({pid}): no usable cache")
         
         if cached_result_mm is not None:
             # Use cache and return
             
-            log.info(f"run_skimage: worker {jobname}({pid}): cache found! copying to output.")
+            log.info(f"run_fastlbp: worker {jobname}({pid}): cache found! copying to output.")
             job_patch_histograms = cached_result_mm
 
         else: 
-            # Compute LBP
+             # Compute LBP
 
             img_data_shm = shared_memory.SharedMemory(name=job['img_shm_name'])
             img_data = np.ndarray(shape, dtype=job['img_pixel_dtype'], buffer=img_data_shm.buf)
             
-            lbp_results = ski.feature.local_binary_pattern(
-                img_data[:,:,job['channel']], method='uniform', 
-                P=job['npoints'], R=job['radius']
-            ).astype(np.uint32)
+            img_channel = img_data[job['channel']]
+            assert img_channel.flags.c_contiguous
+            assert img_channel.dtype == np.uint8
             
-            # log.info(f"run_skimage: worker {jobname}({pid}): image: min={img_data[:,:,job['channel']].min()} max={img_data[:,:,job['channel']].max()} avg={img_data[:,:,job['channel']].mean()}")
-            # log.info(f"run_skimage: worker {jobname}({pid}): lbp codes: min={lbp_results.min()} max={lbp_results.max()}")
+            if not job['img_mask_shm_name']:
+                lbp_results = uniform_lbp_uint8(image=img_channel, P=job['npoints'], R=job['radius'])
+            else:
+                # if mask is provided
+                img_mask_shm = shared_memory.SharedMemory(name=job['img_mask_shm_name'])
+                img_mask = np.ndarray((h,w), dtype=np.uint8, buffer=img_mask_shm.buf)
+                lbp_results = uniform_lbp_uint8_masked(image=img_channel, mask=img_mask, P=job['npoints'], R=job['radius'])
+                img_mask_shm.close()
+            
+            assert lbp_results.dtype == _features_dtype
 
             img_data_shm.close()
 
@@ -96,17 +101,13 @@ def __worker_skimage(args):
                     os.makedirs( os.path.dirname(tmp_fpath), exist_ok=True)
                     np.save(tmp_fpath, job_patch_histograms)
                 except:
-                    log.warning(f"run_skimage: worker {jobname}({pid}): computation successful, but cannot save tmp file")
+                    log.warning(f"run_fastlbp: worker {jobname}({pid}): computation successful, but cannot save tmp file")
 
-        
-
-        # log.info(f"run_skimage: worker {jobname}({pid}): feature vector for (4,3) = {job_patch_histograms[4,3,:]}")
-        
         output_shm.close()
 
-        log.info(f"run_skimage: worker {pid}: finished job {jobname} in {time.perf_counter()-t0:.5g}s")
+        log.info(f"run_fastlbp: worker {pid}: finished job {jobname} in {time.perf_counter()-t0:.5g}s")
     except Exception as e:
-        log.error(f"run_skimage: worker {jobname}({pid}): exception! Aborting execution.")
+        log.error(f"run_fastlbp: worker {jobname}({pid}): exception! Aborting execution.")
         log.error(e, exc_info=True)
 
     return 0
@@ -116,7 +117,8 @@ def __worker_skimage(args):
 # MISC ROUTINES FOR INTERNAL USAGE
 
 def __create_pipeline_hash(method_name, *pipeline_params):
-    s = method_name + ";" + (";".join([str(p) for p in pipeline_params]))
+    from . import __version__
+    s = __version__ + ";" + method_name + ";" + (";".join([str(p) for p in pipeline_params]))
     return hashlib.sha1(s.encode('utf-8'), usedforsecurity=False).hexdigest()[:7]
 def __sanitize_img_name(img_name):
     return img_name.replace('.','_').replace('-','_')
@@ -146,28 +148,36 @@ def get_p_for_r(r):
 #####
 # PIPELINE METHODS
 
-def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=None, img_name='img', 
-                outfile_name='lbp_features_skimage.npy', save_intermediate_results=True, overwrite_output=False):
+def run_fastlbp(img_data, radii_list, npoints_list, patchsize, ncpus, 
+                img_mask=None, max_ram=None, img_name='img', 
+                outfile_name='lbp_features.npy', save_intermediate_results=True, overwrite_output=False):
     
     # validate params and prepare a pipeline
     assert len(radii_list) == len(npoints_list)
     assert len(img_data.shape) == 3
+    assert img_data.dtype == np.uint8
     
+    if img_mask is not None:
+        assert img_mask.shape == img_data.shape[:2]
+        assert img_mask.dtype == np.uint8
+
     t = time.perf_counter()
     
-    log.info('run_skimage: initial setup...')
+    log.info('run_fastlbp: initial setup...')
 
     img_name = __sanitize_img_name(img_name)
     outfile_name = __sanitize_outfile_name(outfile_name)
     # data_hash = hashlib.sha1(img_data.data).hexdigest()
 
-    pipeline_params = [str(img_data.shape), radii_list, npoints_list, patchsize, ncpus, max_ram, img_name]
-    pipeline_hash = __create_pipeline_hash("skimage", pipeline_params)
-    pipeline_name = f"{img_name}-skimage-{pipeline_hash}"
+    # this way pipelines with different ncpus/radii/npoints can reuse tmp files if patchsize, img name and version are the same 
+    pipeline_hash = __create_pipeline_hash("fastlbp", [str(img_data.shape), patchsize, img_name])
+    pipeline_name = f"{img_name}-fastlbp-{pipeline_hash}"
 
-    log.info('run_skimage: params:')
-    log.info('[data_hash, radii_list, npoints_list, patchsize, ncpus, max_ram, img_name]')
-    log.info(pipeline_params)
+    log.info('run_fastlbp: params:')
+    log.info("img_shape, radii_list, npoints_list, patchsize, ncpus, max_ram, img_name")
+    log.info(f"{img_data.shape}, {radii_list}, {npoints_list}, {patchsize}, {ncpus}, {max_ram}, {img_name}")
+    log.info(f"outfile_name={outfile_name}, save_intermediate_results={save_intermediate_results}, overwrite_output={overwrite_output}")
+    log.info(f"pipeline hash is {pipeline_hash}")
 
     # check if output file is writable
 
@@ -175,18 +185,18 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
     output_abspath = os.path.abspath(output_fpath)
     try:
         if os.path.exists(output_fpath) and not overwrite_output:
-            log.error(f'run_skimage({pipeline_hash}): overwrite_output is False and output file {output_abspath} already exists. Aborting.')
+            log.error(f'run_fastlbp({pipeline_hash}): overwrite_output is False and output file {output_abspath} already exists. Aborting.')
             return output_abspath
         os.makedirs(__get_output_dir(), exist_ok=True)
         if not os.access(__get_output_dir(), os.W_OK):
-            log.error(f'run_skimage({pipeline_hash}): output dir {os.path.dirname(output_abspath)} is not writable. Aborting.')
+            log.error(f'run_fastlbp({pipeline_hash}): output dir {os.path.dirname(output_abspath)} is not writable. Aborting.')
             return output_abspath
     except:
-        log.error(f'run_skimage({pipeline_hash}): error accessing output dir {os.path.dirname(output_abspath)}. Aborting.')
+        log.error(f'run_fastlbp({pipeline_hash}): error accessing output dir {os.path.dirname(output_abspath)}. Aborting.')
         return output_abspath
 
-    log.info(f'run_skimage({pipeline_hash}): initial setup took {time.perf_counter()-t:.5g}s')
-    log.info(f'run_skimage({pipeline_hash}): creating a list of jobs...')
+    log.info(f'run_fastlbp({pipeline_hash}): initial setup took {time.perf_counter()-t:.5g}s')
+    log.info(f'run_fastlbp({pipeline_hash}): creating a list of jobs...')
     t = time.perf_counter()
 
     # method-specific params
@@ -203,7 +213,7 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
             [channel_list, radii_list], names=['channel', 'radius']), 
             columns=['channel','radius','img_name','label','npoints','patchsize','img_shm_name',
                      'img_pixel_dtype','img_shape_0','img_shape_1','img_shape_2', 'output_shm_name', 
-                     'output_offset', 'tmp_fpath']
+                     'output_offset', 'tmp_fpath', 'img_mask_shm_name']
         )
     jobs['img_name'] = img_name
 
@@ -230,31 +240,47 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
     patch_features_shape = (nprows, npcols, total_nfeatures)
     jobs['total_nfeatures'] = total_nfeatures
 
-    # create shared memory for all processes
-
-    log.info(f"run_skimage({pipeline_hash}): creating shared memory")
-    input_img_shm = shared_memory.SharedMemory(create=True, size=img_data.nbytes)
-    patch_features_shm = shared_memory.SharedMemory(
-        create=True, size=(int(np.prod(patch_features_shape)) * np.dtype('uint32').itemsize))
+    # Prepare contigous array.
+    # Channels will go first. Then h and w.
+    img_data = np.ascontiguousarray(np.moveaxis(img_data, (0,1,2), (1,2,0)))
     
+    log.info(f"run_fastlbp({pipeline_hash}): creating shared memory")
+    # create shared memory for input image
+    input_img_shm = shared_memory.SharedMemory(create=True, size=img_data.nbytes)
+
     # copy image to shared memory 
     input_img_np = np.ndarray(img_data.shape, img_data.dtype, input_img_shm.buf)
-    input_img_np[:] = img_data[:]
-    
+    np.copyto(input_img_np, img_data, casting='no')
 
-    # output
-    patch_features = np.ndarray(patch_features_shape, np.uint32, buffer=patch_features_shm.buf)
-    patch_features.fill(np.iinfo(np.uint32).max)
+    # copy mask to shared memory if provided
+    img_mask_shm = None
+    if img_mask is not None:
+        log.info(f"run_fastlbp({pipeline_hash}): using image mask.")
+        img_mask_shm = shared_memory.SharedMemory(create=True, size=img_mask.nbytes)
+        img_mask_np = np.ndarray(img_mask.shape, dtype=img_mask.dtype, buffer=img_mask_shm.buf)
+        np.copyto(img_mask_np, img_mask, casting='no')
+
+    # create and initialize shared memory for output
+    patch_features_shm = shared_memory.SharedMemory(
+        create=True, size=(int(np.prod(patch_features_shape)) * np.dtype(_features_dtype).itemsize))
+    patch_features = np.ndarray(patch_features_shape, _features_dtype, buffer=patch_features_shm.buf)
+    patch_features.fill(0)
+    log.info(f"run_fastlbp({pipeline_hash}): shared memory created")
 
     jobs['img_shm_name'] = input_img_shm.name
-    jobs['img_pixel_dtype'] = img_data.dtype
-    jobs['img_shape_0'] = img_data.shape[0]
-    jobs['img_shape_1'] = img_data.shape[1]
-    jobs['img_shape_2'] = img_data.shape[2]
+    jobs['img_mask_shm_name'] = img_mask_shm.name if img_mask_shm is not None else ""
+    jobs['img_pixel_dtype'] = input_img_np.dtype # note: always uint8
+    jobs['img_shape_0'] = input_img_np.shape[0] # nchannels
+    jobs['img_shape_1'] = input_img_np.shape[1] # h
+    jobs['img_shape_2'] = input_img_np.shape[2] # w
     jobs['output_shm_name'] = patch_features_shm.name
 
-    log.info(f'run_skimage({pipeline_hash}): creating a list of jobs took {time.perf_counter()-t:.5g}s')
-    log.info(f"run_skimage({pipeline_hash}): jobs:")
+    # Sort jobs starting from the longest ones, i.e. from larger radii to smaller ones.
+    # `level=1` values are radii
+    jobs.sort_index(level=1, ascending=False, inplace=True)
+
+    log.info(f'run_fastlbp({pipeline_hash}): creating a list of jobs took {time.perf_counter()-t:.5g}s')
+    log.info(f"run_fastlbp({pipeline_hash}): jobs:")
     log.info(jobs)
     jobs.to_csv(__get_output_dir() + f"/jobs_{img_name}.csv")
 
@@ -262,26 +288,28 @@ def run_skimage(img_data, radii_list, npoints_list, patchsize, ncpus, max_ram=No
 
     # compute
 
-    log.info(f'run_skimage({pipeline_hash}): start computation')
+    log.info(f'run_fastlbp({pipeline_hash}): start computation')
     t0 = time.perf_counter()
     with Pool(ncpus) as pool:
-        jobs_results = pool.map(func=__worker_skimage, iterable=jobs.iterrows())
+        jobs_results = pool.map(func=__worker_fastlbp, iterable=jobs.iterrows())
     t_elapsed = time.perf_counter() - t0
-    log.info(f'run_skimage({pipeline_hash}): computation finished in {t_elapsed:.5g}s. Start saving')
+    log.info(f'run_fastlbp({pipeline_hash}): computation finished in {t_elapsed:.5g}s. Start saving')
 
     # save results
 
     np.save(output_fpath, patch_features)
-    log.info(f'run_skimage({pipeline_hash}): saving finished to {output_fpath}')
+    log.info(f'run_fastlbp({pipeline_hash}): saving finished to {output_fpath}')
     
     input_img_shm.unlink()
+    if img_mask_shm is not None:
+        img_mask_shm.unlink()
     patch_features_shm.unlink()
 
-    log.info(f"run_skimage({pipeline_hash}): shared memory unlinked. Goodbye")
+    log.info(f"run_fastlbp({pipeline_hash}): shared memory unlinked. Goodbye")
     
     return output_abspath
     
-def run_chunked_skimage():
+def run_chunked_fastlbp():
     # TODO
     pass
 
