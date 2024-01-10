@@ -11,9 +11,13 @@ import fastlbp_imbg as fastlbp
 def main():
     print(f"hewlo. running fastlbp ver. {fastlbp.__version__}")
 
-    # will a create random input image in ./tmp if not exists yet
+    # Will a create random input image in ./tmp if not exists yet
     img_data = fastlbp.load_sample_image(5000,5000,3,'tiff',create=True)
     print(img_data.shape)
+
+    # Alternatively, load an image from existing file
+    # img = Image.open('data/bark.tiff') 
+    # img_data = np.asarray(img)
 
     if len(img_data.shape) == 2: 
         img_data = img_data[:,:,None]
@@ -24,6 +28,9 @@ def main():
     print(npoints_list)
 
     patchsize = 16
+
+    features_details = fastlbp.get_all_features_details(3, radii_list, npoints_list)
+    print("\n".join(map(str,features_details)))
 
     output_abs_path = fastlbp.run_fastlbp(
         img_data, radii_list, npoints_list, patchsize, 

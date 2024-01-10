@@ -1,2 +1,2 @@
-include src/lbp.pyx
-include src/lbp.c
+include src/_lbp.pyx
+include src/_lbp.c

@@ -67,3 +67,39 @@ def load_sample_image(height, width, nchannels, type="png", dir='tmp', create=Tr
     if len(data.shape) == 2:
         data = data[:,:,None]
     return data
+
+
+from dataclasses import dataclass
+@dataclass
+class FeatureDetails:
+    channel: int
+    R: float
+    P: int
+    lbp_code: int
+    feature_number: int
+    label: str
+    def __init__(self, channel, R, P, lbp_code, feature_number=-1, label=""):
+        self.channel=channel
+        self.R=R
+        self.P=P
+        self.lbp_code=lbp_code
+        self.feature_number=feature_number
+        self.label=label
+
+def get_all_features_details(nchannels:int, radii_list:[float], npoints_list:[int]) -> [FeatureDetails]:
+    features = []
+    feature_number = 0
+    for nc in range(nchannels):
+        for (r,p) in zip(radii_list, npoints_list):
+            for i in range(p+2):
+                label = f"ch{nc}_r{r}_p{p}_lbp{i}"
+                features.append(FeatureDetails(nc,r,p,i,feature_number,label))
+                feature_number += 1
+    return features
+
+def get_feature_details(nchannels:int, radii_list:[float], npoints_list:[int], feature_number:int) -> FeatureDetails:
+    assert len(radii_list) == len(npoints_list)
+    nfeat = (np.array(npoints_list) + 2).sum()
+    assert 0 <= feature_number <= nfeat
+    return get_all_features_details(nchannels,radii_list,npoints_list)[feature_number]
+
