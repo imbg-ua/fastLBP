@@ -1,7 +1,7 @@
 import numpy as np
 import skimage as ski
-from .lbp import uniform_lbp_uint8
-from .fastlbp import get_p_for_r
+from ..lbp import uniform_lbp_uint8
+from ..fastlbp import get_p_for_r
 import unittest
 
 class TestCythonLBP(unittest.TestCase):
