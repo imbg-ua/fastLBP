@@ -586,10 +586,10 @@ def _uniform_lbp_uint8_patch_masked(cnp.uint8_t[:, ::1] image, cnp.uint8_t[:, ::
     cdef Py_ssize_t rot_index, n_ones
 
     # current patch row/col and an internal counter
-    cdef Py_ssize_t pri=0, pci=0
     cdef Py_ssize_t patch_rows = rows/patchsize
     cdef Py_ssize_t patch_cols = cols/patchsize
-    cdef Py_ssize_t r0=0, c0=0
+    cdef Py_ssize_t pr, pc
+    cdef Py_ssize_t pri=0, pci=0, r0=0, c0=0
 
     with nogil:
         for pr in range(patch_rows):

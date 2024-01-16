@@ -20,7 +20,7 @@ class TestFastlbpUtils(unittest.TestCase):
         patch = get_patch(data, patchsize, 1, 1)
         patch.fill(1)
         expected = np.zeros((9,9), dtype=np.uint8)
-        expected[4:7,4:7] = 1
+        expected[3:6,3:6] = 1
         self.assertTrue((data == expected).all(), "invalid write")
 
     def test_complete_background_mask(self):
@@ -47,11 +47,11 @@ class TestFastlbpUtils(unittest.TestCase):
             [0, 0,  1, 1,  1, 1,  5],
             [0, 0,  1, 1,  1, 1,  6],
 
-            [1, 1,  2, 1,  1, 2,  7],
+            [1, 1,  1, 1,  1, 1,  7],
             [1, 1,  1, 1,  1, 1,  8],
 
             [1, 1,  1, 2,  0, 0,  9],
-            [2, 3,  3, 4,  0, 0,  10],
+            [1, 1,  3, 4,  0, 0,  10],
 
             [11, 12, 13, 14, 15, 16, 17]
         ])
@@ -62,14 +62,14 @@ class TestFastlbpUtils(unittest.TestCase):
             [0, 1, 0],
         ])
         expected_exclude_mask = np.array([
-            [0, 0,  0, 0,  0,  5],
-            [0, 0,  0, 0,  0,  6],
+            [0, 0,  0, 0,  0, 0,  5],
+            [0, 0,  0, 0,  0, 0,  6],
 
-            [1, 1,  0, 0,  0,  7],
-            [1, 1,  0, 0,  0,  8],
+            [1, 1,  0, 0,  0, 0,  7],
+            [1, 1,  0, 0,  0, 0,  8],
 
-            [0, 0,  1, 2,  0,  9],
-            [0, 0,  3, 4,  0,  10],
+            [0, 0,  1, 2,  0, 0,  9],
+            [0, 0,  3, 4,  0, 0,  10],
 
             [11, 12, 13, 14, 15, 16, 17]
         ])

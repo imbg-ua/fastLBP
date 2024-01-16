@@ -158,8 +158,8 @@ def run_fastlbp(img_data, radii_list, npoints_list, patchsize, ncpus,
     # copy mask to shared memory if provided.
 
     """
-    We won't compute a patch if it has at least one pixel ignored in img_mask.
-    EVERY feature will be zero.
+    We won't compute a patch if it has at least one pixel is ignored in img_mask.
+    EVERY feature for this patch will be zero.
     Thus it is sensible to store a patch-wise mask, not the whole image mask. 
     This behavior might change in the future.
 
@@ -173,6 +173,7 @@ def run_fastlbp(img_data, radii_list, npoints_list, patchsize, ncpus,
     if img_mask is not None:
         log.info(f"run_fastlbp({pipeline_hash}): using image mask.")
         patch_mask = complete_background_mask(img_mask, patchsize, edit_img_mask=False, method='exclude')
+        assert patch_mask.shape == patch_mask_shape
 
         # img_mask_shm = shared_memory.SharedMemory(create=True, size=img_mask.nbytes)
         # img_mask_np = np.ndarray(img_mask.shape, dtype=img_mask.dtype, buffer=img_mask_shm.buf)

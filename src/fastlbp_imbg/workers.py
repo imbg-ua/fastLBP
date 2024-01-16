@@ -46,13 +46,13 @@ def __worker_fastlbp(args):
         # Try to use cached data
         cached_result_mm = None
         if not tmp_fpath:
-            log.info(f"run_fastlbp: worker {jobname}({pid}): skipping cache")
+            log.debug(f"run_fastlbp: worker {jobname}({pid}): skipping cache")
         else:
             try:
                 cached_result_mm = np.memmap(tmp_fpath, dtype=_features_dtype, mode='r', shape=job_patch_histograms_shape)
             except:
                 cached_result_mm = None
-                log.info(f"run_fastlbp: worker {jobname}({pid}): no usable cache")
+                log.debug(f"run_fastlbp: worker {jobname}({pid}): no usable cache")
         
         if cached_result_mm is not None:
             # Use cache and return
@@ -74,6 +74,7 @@ def __worker_fastlbp(args):
             using_patch_mask = 'patch_mask_shm_name' in job and job['patch_mask_shm_name']
 
             if using_image_mask:
+                log.debug(f"run_fastlbp: worker {jobname}({pid}): using image mask")
                 img_mask_shm = shared_memory.SharedMemory(name=job['img_mask_shm_name'])
                 img_mask = np.ndarray((h,w), dtype=np.uint8, buffer=img_mask_shm.buf)
                 lbp_results = uniform_lbp_uint8_masked(
@@ -82,15 +83,16 @@ def __worker_fastlbp(args):
                 )
                 img_mask_shm.close()
             elif using_patch_mask:
+                log.debug(f"run_fastlbp: worker {jobname}({pid}): using patch mask")
                 patch_mask_shm = shared_memory.SharedMemory(name=job['patch_mask_shm_name'])
                 patch_mask = np.ndarray((nprows, npcols), dtype=np.uint8, buffer=patch_mask_shm.buf)
                 lbp_results = uniform_lbp_uint8_patch_masked(
                     image=img_channel, patch_mask=patch_mask, patchsize=patchsize, 
                     P=job['npoints'], R=job['radius']
                 )
-                patch_mask_shm.close()
             else:
                 # if no mask is provided
+                log.debug(f"run_fastlbp: worker {jobname}({pid}): do not use mask")
                 lbp_results = uniform_lbp_uint8(image=img_channel, P=job['npoints'], R=job['radius'])
             
             assert lbp_results.dtype == _features_dtype
@@ -108,6 +110,8 @@ def __worker_fastlbp(args):
                             )
                         job_patch_histograms[pr,pc,:] = hist
 
+            if using_patch_mask:
+                patch_mask_shm.close()
             if tmp_fpath:
                 try:
                     os.makedirs( os.path.dirname(tmp_fpath), exist_ok=True)
