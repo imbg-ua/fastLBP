@@ -50,6 +50,7 @@ def run_fastlbp(img_data, radii_list, npoints_list, patchsize, ncpus,
     from multiprocessing import Pool, shared_memory
     from .common import _features_dtype
     from .workers import __worker_fastlbp
+    from .utils import complete_background_mask
 
     # validate params and prepare a pipeline
     assert len(radii_list) == len(npoints_list)
@@ -112,7 +113,10 @@ def run_fastlbp(img_data, radii_list, npoints_list, patchsize, ncpus,
             [channel_list, radii_list], names=['channel', 'radius']), 
             columns=['channel','radius','img_name','label','npoints','patchsize','img_shm_name',
                      'img_pixel_dtype','img_shape_0','img_shape_1','img_shape_2', 'output_shm_name', 
-                     'output_offset', 'tmp_fpath', 'img_mask_shm_name']
+                     'output_offset', 'tmp_fpath', 
+                     #'img_mask_shm_name',
+                     'patch_mask_shm_name',
+                    ]
         )
     jobs['img_name'] = img_name
 
@@ -151,13 +155,34 @@ def run_fastlbp(img_data, radii_list, npoints_list, patchsize, ncpus,
     input_img_np = np.ndarray(img_data.shape, img_data.dtype, input_img_shm.buf)
     np.copyto(input_img_np, img_data, casting='no')
 
-    # copy mask to shared memory if provided
-    img_mask_shm = None
+    # copy mask to shared memory if provided.
+
+    """
+    We won't compute a patch if it has at least one pixel ignored in img_mask.
+    EVERY feature will be zero.
+    Thus it is sensible to store a patch-wise mask, not the whole image mask. 
+    This behavior might change in the future.
+
+    TODO: control complete_background_mask's method in parameters. 
+    e.g. 'exclude whole patch if at least 1 zero' vs 'include whole patch if at least 1 non-zero'
+    """
+
+    # img_mask_shm = None   # per pixel mask
+    patch_mask_shm = None # per patch mask
+    patch_mask_shape = (nprows, npcols)
     if img_mask is not None:
         log.info(f"run_fastlbp({pipeline_hash}): using image mask.")
-        img_mask_shm = shared_memory.SharedMemory(create=True, size=img_mask.nbytes)
-        img_mask_np = np.ndarray(img_mask.shape, dtype=img_mask.dtype, buffer=img_mask_shm.buf)
-        np.copyto(img_mask_np, img_mask, casting='no')
+        patch_mask = complete_background_mask(img_mask, patchsize, edit_img_mask=False, method='exclude')
+
+        # img_mask_shm = shared_memory.SharedMemory(create=True, size=img_mask.nbytes)
+        # img_mask_np = np.ndarray(img_mask.shape, dtype=img_mask.dtype, buffer=img_mask_shm.buf)
+        # np.copyto(img_mask_np, img_mask, casting='no')
+    
+        patch_mask_shm = shared_memory.SharedMemory(create=True, size=patch_mask.nbytes)
+        patch_mask_np = np.ndarray(patch_mask_shape, dtype=np.uint8, buffer=patch_mask_shm.buf)
+        np.copyto(patch_mask_np, patch_mask, casting='no')
+
+        log.info(f"run_fastlbp({pipeline_hash}): mask processed.")
 
     # create and initialize shared memory for output
     patch_features_shm = shared_memory.SharedMemory(
@@ -167,13 +192,17 @@ def run_fastlbp(img_data, radii_list, npoints_list, patchsize, ncpus,
     log.info(f"run_fastlbp({pipeline_hash}): shared memory created")
 
     jobs['img_shm_name'] = input_img_shm.name
-    jobs['img_mask_shm_name'] = img_mask_shm.name if img_mask_shm is not None else ""
+    # jobs['img_mask_shm_name'] = img_mask_shm.name if img_mask_shm is not None else ""
+    jobs['patch_mask_shm_name'] = patch_mask_shm.name if patch_mask_shm is not None else ""
     jobs['img_pixel_dtype'] = input_img_np.dtype # note: always uint8
     jobs['img_shape_0'] = input_img_np.shape[0] # nchannels
     jobs['img_shape_1'] = input_img_np.shape[1] # h
     jobs['img_shape_2'] = input_img_np.shape[2] # w
     jobs['output_shm_name'] = patch_features_shm.name
 
+    # Log jobs before sorting
+    jobs.to_csv(__get_output_dir() + f"/jobs_{img_name}.csv")
+    
     # Sort jobs starting from the longest ones, i.e. from larger radii to smaller ones.
     # `level=1` values are radii
     jobs.sort_index(level=1, ascending=False, inplace=True)
@@ -181,7 +210,6 @@ def run_fastlbp(img_data, radii_list, npoints_list, patchsize, ncpus,
     log.info(f'run_fastlbp({pipeline_hash}): creating a list of jobs took {time.perf_counter()-t:.5g}s')
     log.info(f"run_fastlbp({pipeline_hash}): jobs:")
     log.info(jobs)
-    jobs.to_csv(__get_output_dir() + f"/jobs_{img_name}.csv")
 
     assert jobs.isna().sum().sum() == 0
 
@@ -200,9 +228,11 @@ def run_fastlbp(img_data, radii_list, npoints_list, patchsize, ncpus,
     log.info(f'run_fastlbp({pipeline_hash}): saving finished to {output_fpath}')
     
     input_img_shm.unlink()
-    if img_mask_shm is not None:
-        img_mask_shm.unlink()
     patch_features_shm.unlink()
+    # if img_mask_shm is not None:
+    #     img_mask_shm.unlink()
+    if patch_mask_shm is not None:
+        patch_mask_shm.unlink()
 
     log.info(f"run_fastlbp({pipeline_hash}): shared memory unlinked. Goodbye")
     
