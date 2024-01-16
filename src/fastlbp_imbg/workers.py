@@ -9,7 +9,11 @@ from multiprocessing import shared_memory
 
 from .common import _features_dtype
 from .utils import get_patch
-from .lbp import uniform_lbp_uint8, uniform_lbp_uint8_masked
+from .lbp import (
+    uniform_lbp_uint8, 
+    uniform_lbp_uint8_masked, 
+    uniform_lbp_uint8_patch_masked,
+)
 
 def __worker_fastlbp(args):
     row_id, job = args
@@ -66,26 +70,43 @@ def __worker_fastlbp(args):
             assert img_channel.flags.c_contiguous
             assert img_channel.dtype == np.uint8
             
-            if not job['img_mask_shm_name']:
-                lbp_results = uniform_lbp_uint8(image=img_channel, P=job['npoints'], R=job['radius'])
-            else:
-                # if mask is provided
+            using_image_mask = 'img_mask_shm_name' in job and job['img_mask_shm_name']
+            using_patch_mask = 'patch_mask_shm_name' in job and job['patch_mask_shm_name']
+
+            if using_image_mask:
                 img_mask_shm = shared_memory.SharedMemory(name=job['img_mask_shm_name'])
                 img_mask = np.ndarray((h,w), dtype=np.uint8, buffer=img_mask_shm.buf)
-                lbp_results = uniform_lbp_uint8_masked(image=img_channel, mask=img_mask, P=job['npoints'], R=job['radius'])
+                lbp_results = uniform_lbp_uint8_masked(
+                    image=img_channel, mask=img_mask, 
+                    P=job['npoints'], R=job['radius']
+                )
                 img_mask_shm.close()
+            elif using_patch_mask:
+                patch_mask_shm = shared_memory.SharedMemory(name=job['patch_mask_shm_name'])
+                patch_mask = np.ndarray((nprows, npcols), dtype=np.uint8, buffer=patch_mask_shm.buf)
+                lbp_results = uniform_lbp_uint8_patch_masked(
+                    image=img_channel, patch_mask=patch_mask, patchsize=patchsize, 
+                    P=job['npoints'], R=job['radius']
+                )
+                patch_mask_shm.close()
+            else:
+                # if no mask is provided
+                lbp_results = uniform_lbp_uint8(image=img_channel, P=job['npoints'], R=job['radius'])
             
             assert lbp_results.dtype == _features_dtype
 
             img_data_shm.close()
 
-            for i in range(nprows):
-                for j in range(npcols):
-                    hist = np.bincount(
-                        get_patch(lbp_results, patchsize, i, j).flat, 
-                        minlength=job_nfeatures
-                        )
-                    job_patch_histograms[i,j,:] = hist
+            for pr in range(nprows):
+                for pc in range(npcols):
+                    if using_patch_mask and patch_mask[pr,pc] == 0:
+                        job_patch_histograms[pr,pc,:] = 0
+                    else:
+                        hist = np.bincount(
+                            get_patch(lbp_results, patchsize, pr, pc).flat, 
+                            minlength=job_nfeatures
+                            )
+                        job_patch_histograms[pr,pc,:] = hist
 
             if tmp_fpath:
                 try:
