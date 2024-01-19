@@ -1,5 +1,7 @@
 # This file does not depend on fastlbp_imbg lib and fastlbp.py file.
 
+import numpy as np
+
 # Create a white noise image of specified size and file type.
 # Return the absolute path of this image.
 #
@@ -103,3 +105,46 @@ def get_feature_details(nchannels:int, radii_list:[float], npoints_list:[int], f
     assert 0 <= feature_number <= nfeat
     return get_all_features_details(nchannels,radii_list,npoints_list)[feature_number]
 
+
+def get_patch(data, patchsize, pr, pc):
+    return data[(pr*patchsize):((pr+1)*patchsize), (pc*patchsize):((pc+1)*patchsize)]
+
+def complete_background_mask(img_mask, patchsize, edit_img_mask=False, method='exclude'):
+    """
+    Divide mask in patches of size `patchsize*patchsize`. 
+
+    if method is 'exclude':
+        If `edit_img_mask`, then fill the mask patch with ZEROS INPLACE if at least one mask pixel is 0.
+        Do not change the patch if it has no zeros.
+    
+    if method is 'include':
+        If `edit_img_mask`, then fill the mask patch with ONES INPLACE if at least one mask pixel is non-0.
+        Do not change the patch if it has no zeros.
+    
+    Ignore trailing pixels if img_mask cannot be divided in the integer number of patches.
+
+    Return another mask of size (n_patch_rows, n_patch_cols) with a val of 1 for patches that _will_ have no zeros.
+    """
+    mask_shape = img_mask.shape
+    nprows, npcols = mask_shape[0] // patchsize, mask_shape[1] // patchsize
+
+    # patch mask is filled with ONES at first
+    patch_mask = np.ones((nprows, npcols), dtype=np.uint8)
+    method_exclude = (method == 'exclude')
+    method_include = not method_exclude
+
+    for pr in range(nprows):
+        for pc in range(npcols):
+            patch = get_patch(img_mask, patchsize, pr, pc)
+            if (patch == 0).any():
+                zeropatch = (patch == 0).all()
+                if method_exclude or zeropatch:
+                    patch_mask[pr,pc] = 0
+                    if edit_img_mask:
+                        patch.fill(0)
+                else: # method_include and not zeropatch
+                    patch_mask[pr,pc] = 1
+                    if edit_img_mask:
+                        patch.fill(1)
+                
+    return patch_mask
