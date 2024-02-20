@@ -19,11 +19,6 @@ pip install . # this will install the fastlbp_imbg package in the current env
 ```
 - You can use `import fastlbp_imbg` now
 
-#### Misc
-Our lustre directory is
-`/lustre/scratch126/casm/team268im/`
-
-
 ## Cython2 branch details
 TODO:
 - [x] Data Contiguity (`e3293cd`)
