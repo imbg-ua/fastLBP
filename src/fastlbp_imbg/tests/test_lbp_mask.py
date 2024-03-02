@@ -1,7 +1,7 @@
 import numpy as np
 from ..utils import (
     get_patch,
-    complete_background_mask,
+    patchify_image_mask,
     load_sample_image
 )
 from ..lbp import (
@@ -46,7 +46,7 @@ class TestFastlbpUtils(unittest.TestCase):
         self.assertTrue((A2==B2).all())
         self.assertTrue((A3==B3).all())
 
-    def test_patch_mask_exclude(self):
+    def test_patchify_mask_all(self):
         noise = load_sample_image(512,512,1,'tiff',create=True)[:,:,0]
         x = np.arange(-256,256)
         assert x.shape == (512,)
@@ -57,7 +57,7 @@ class TestFastlbpUtils(unittest.TestCase):
         assert mask.shape == (512,512)
 
         patchsize = 32
-        patch_mask = complete_background_mask(mask, patchsize, edit_img_mask=True, method='exclude')
+        patch_mask = patchify_image_mask(mask, patchsize, edit_img_mask=True, method='all')
         
         B1 = uniform_lbp_uint8_masked(image, mask, 7, 1)
         B2 = uniform_lbp_uint8_masked(image, mask, 13, 2)
@@ -70,3 +70,31 @@ class TestFastlbpUtils(unittest.TestCase):
         self.assertTrue((C1==B1).all())
         self.assertTrue((C2==B2).all())
         self.assertTrue((C3==B3).all())
+
+    def test_patchify_mask_any(self):
+        noise = load_sample_image(512,512,1,'tiff',create=True)[:,:,0]
+        x = np.arange(-256,256)
+        assert x.shape == (512,)
+        xx,yy = np.meshgrid(x,x,sparse=True)
+        disk = (xx*xx + yy*yy) < 200*200
+        image = noise * disk
+        mask = disk.copy().astype(np.uint8)
+        assert mask.shape == (512,512)
+
+        patchsize = 32
+        patch_mask = patchify_image_mask(mask, patchsize, edit_img_mask=True, method='any')
+        
+        B1 = uniform_lbp_uint8_masked(image, mask, 7, 1)
+        B2 = uniform_lbp_uint8_masked(image, mask, 13, 2)
+        B3 = uniform_lbp_uint8_masked(image, mask, 25, 3)
+        
+        C1 = uniform_lbp_uint8_patch_masked(image, patch_mask, patchsize, 7, 1)
+        C2 = uniform_lbp_uint8_patch_masked(image, patch_mask, patchsize, 13, 2)
+        C3 = uniform_lbp_uint8_patch_masked(image, patch_mask, patchsize, 25, 3)
+        
+        self.assertTrue((C1==B1).all())
+        self.assertTrue((C2==B2).all())
+        self.assertTrue((C3==B3).all())
+
+if __name__ == '__main__':
+    unittest.main()

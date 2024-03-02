@@ -1,7 +1,7 @@
 import numpy as np
 from ..utils import (
     get_patch,
-    complete_background_mask,
+    patchify_image_mask,
 )
 import unittest
 
@@ -75,11 +75,15 @@ class TestFastlbpUtils(unittest.TestCase):
         ])
 
         A = mask.copy()
-        patchmask_include = complete_background_mask(A, patchsize=2, edit_img_mask=True, method='include')
+        patchmask_include = patchify_image_mask(A, patchsize=2, edit_img_mask=True, method='any')
         self.assertTrue((A == expected_include_mask).all())
         self.assertTrue((patchmask_include == expected_include_patchmask).all())
         
         B = mask.copy()
-        patchmask_exclude = complete_background_mask(B, patchsize=2, edit_img_mask=True, method='exclude')
+        patchmask_exclude = patchify_image_mask(B, patchsize=2, edit_img_mask=True, method='all')
         self.assertTrue((B == expected_exclude_mask).all())
         self.assertTrue((patchmask_exclude == expected_exclude_patchmask).all())
+
+
+if __name__ == '__main__':
+    unittest.main()
