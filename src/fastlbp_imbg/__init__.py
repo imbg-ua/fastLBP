@@ -26,4 +26,4 @@ __all__ = [
 ]
 
 # I will use the following versioning scheme https://stackoverflow.com/a/76129798
-__version__ = "0.1.1"  
+__version__ = "0.1.2"  
