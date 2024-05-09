@@ -202,9 +202,18 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
 
     h,w,nchannels = img_data.shape
     nprows, npcols = h//patchsize, w//patchsize
-    nfeatures_cumsum = np.cumsum(np.array(npoints_list)+2)
+
+    # !!!
+    pre_15 = npoints_list[npoints_list < 15]
+    post_15_n = len(npoints_list) - len(pre_15)
+    nfeatures = np.zeros(len(npoints_list))
+    nfeatures[:len(pre_15)] = pre_15 + 2
+    nfeatures[(len(pre_15)+1):] = 4
+    nfeatures_cumsum = np.cumsum(nfeatures)
     nfeatures_per_channel = nfeatures_cumsum[-1]
     channel_list = range(nchannels)
+
+    assert nfeatures_per_channel == np.sum(pre_15 + 2) + post_15_n*4
 
     # create a list of jobs
     jobs = DataFrame(

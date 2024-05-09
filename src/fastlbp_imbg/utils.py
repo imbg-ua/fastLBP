@@ -173,3 +173,26 @@ def patchify_image_mask(img_mask, patchsize, edit_img_mask=False, method='any'):
                         patch.fill(1)
                 
     return patch_mask
+
+def get_reduced_hist_masks(P):
+    """
+    Return 4 masks for a histogram: flat, corner, edge, nonuniform.
+    Each correspond to a certain type of lbp codes that are worth grouping together.
+
+    ## Returns:
+    flat, corner, edge, nonuniform - np boolean arrays of length P+2
+
+    """
+    P = float(P)
+    ps = np.arange(P+1+1)
+    bins = np.floor([0, P/5, 2*P/5, 3*P/5, 4*P/5, P])
+    flat = (ps <= bins[1]) | (ps > bins[4])
+    flat[-1] = 0
+    corner = ((ps > bins[1]) & (ps <= bins[2])) | ((ps > bins[3]) & (ps <= bins[4]))
+    edge = (ps > bins[2]) & (ps <= bins[3])
+    nonuniform = (ps == P+1)
+    return flat, corner, edge, nonuniform
+
+def reduce_histogram(full_histogram, flat, corner, edge, nonuniform):
+    # bins = np.array(histogram @ flat, histogram @ corner, histogram @ edge, histogram[-1])
+    return np.stack((flat, corner, edge, nonuniform)).astype(np.uint8) @ full_histogram

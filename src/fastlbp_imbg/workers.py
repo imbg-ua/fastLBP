@@ -8,7 +8,7 @@ import numpy as np
 from multiprocessing import shared_memory
 
 from .common import _features_dtype
-from .utils import get_patch
+from .utils import get_patch, get_reduced_hist_masks, reduce_histogram
 from .lbp import (
     uniform_lbp_uint8, 
     uniform_lbp_uint8_masked, 
@@ -34,7 +34,11 @@ def __worker_fastlbp(args):
         nchannels,h,w = shape
         nprows, npcols = h//patchsize, w//patchsize
         
-        job_nfeatures = job['npoints']+2
+        # !!! magic const
+        if job['npoints'] < 15:
+            job_nfeatures = job['npoints']+2
+        else:
+            job_nfeatures = 4
         job_patch_histograms_shape = (nprows, npcols, job_nfeatures)
 
         # Obtain output memory
@@ -99,6 +103,9 @@ def __worker_fastlbp(args):
 
             img_data_shm.close()
 
+            # flat, corner, edge, nonuniform
+            reduced_hist_masks = get_reduced_hist_masks(job['npoints'])
+
             for pr in range(nprows):
                 for pc in range(npcols):
                     if using_patch_mask and patch_mask[pr,pc] == 0:
@@ -108,7 +115,13 @@ def __worker_fastlbp(args):
                             get_patch(lbp_results, patchsize, pr, pc).flat, 
                             minlength=job_nfeatures
                             )
-                        job_patch_histograms[pr,pc,:] = hist
+                        
+                        # UNTESTED
+                        # reduced feature vector. unoptimized, slow, and a mess but should work
+                        reduced_hist = reduce_histogram(hist, *reduced_hist_masks)
+                        # \UNTESTED
+
+                        job_patch_histograms[pr,pc,:] = reduced_hist
 
             if using_patch_mask:
                 patch_mask_shm.close()
