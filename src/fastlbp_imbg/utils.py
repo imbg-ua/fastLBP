@@ -188,7 +188,7 @@ ReducedHistMasks = namedtuple('ReducedHistMasks', 'flat_lo, corner_lo, edge, cor
 
 def get_reduced_hist_masks(P, method='reduced'):
     """
-    Return an array of 4 or 6 masks for a single histogram. 
+    Return an array of 4 or 6 masks or np.eye for a single histogram. 
     That is, for a single LBP run, NOT multiradial LBP features.
     Each mask correspond to a certain type of lbp codes that are worth grouping together.
 
