@@ -2,6 +2,10 @@ import numpy as np
 from ..utils import (
     get_patch,
     patchify_image_mask,
+    get_reduced_hist_masks,
+    get_reduction_matrix,
+    reduce_features,
+    hist_masks_as_tuple
 )
 import unittest
 
@@ -84,6 +88,11 @@ class TestFastlbpUtils(unittest.TestCase):
         self.assertTrue((B == expected_exclude_mask).all())
         self.assertTrue((patchmask_exclude == expected_exclude_patchmask).all())
 
+    def test_histogram_masks(self):
+        pass
+
+    def test_histogram_reduction(self):
+        pass
 
 if __name__ == '__main__':
     unittest.main()
