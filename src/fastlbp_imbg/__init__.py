@@ -27,4 +27,7 @@ __all__ = [
 ]
 
 # I will use the following versioning scheme https://stackoverflow.com/a/76129798
-__version__ = "0.1.2"  
+# - main branch gets 1.2.3
+# - dev branch gets 1.2.3.dev1
+# - feature branch gets 1.2.3.dev0+feature.improve.logs
+__version__ = "0.1.2.dev0+grouped.features.2"  
