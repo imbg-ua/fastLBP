@@ -23,6 +23,7 @@ __all__ = [
     "patchify_image_mask",
     "lbp", 
     "_lbp",
+    "utils"
 ]
 
 # I will use the following versioning scheme https://stackoverflow.com/a/76129798

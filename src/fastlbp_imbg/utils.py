@@ -186,13 +186,13 @@ Reduced features utils.
 MinimalHistMasks = namedtuple('MinimalHistMasks', 'flat, corner, edge, nonuniform')
 ReducedHistMasks = namedtuple('ReducedHistMasks', 'flat_lo, corner_lo, edge, corner_hi, flat_hi, nonuniform')
 
-def get_reduced_hist_masks(P, method='reduced'):
+def get_reduced_hist_masks(P, method='reduced', min_features_to_reduce=12):
     """
     Return an array of 4 or 6 masks or np.eye for a single histogram. 
     That is, for a single LBP run, NOT multiradial LBP features.
     Each mask correspond to a certain type of lbp codes that are worth grouping together.
 
-    Note: no feature reduction is done for P < 10 
+    Note: no feature reduction is done for P+2 < min_features_to_reduce 
 
     ## Parameters:
     - P: int, npoints
@@ -206,12 +206,12 @@ def get_reduced_hist_masks(P, method='reduced'):
     None or a boolean numpy array of shape (6, P+2), (4, P+2) or np.eye(P+2).  
     - if method='reduced': np.stack((flat_lo, corner_lo, edge, corner_hi, flat_hi, nonuniform))
     - if method='minimal': np.stack((flat, corner, edge, nonuniform))
-    - np.eye(P+2) if P<10
+    - np.eye(P+2) if P+2 < min_features_to_reduce
 
     
     See also `reduce_features`.
     """
-    if P<10: return np.eye(P+2)
+    if P+2 < min_features_to_reduce: return np.eye(P+2, dtype=np.uint8)
     
     P = float(P)
     ps = np.arange(P+2)
@@ -249,7 +249,7 @@ def hist_masks_as_tuple(hist_masks_array) ->  Union[MinimalHistMasks, ReducedHis
         return None
     raise NotImplementedError()
 
-def get_reduction_matrix(npoints_list: list[int], method='reduced'):
+def get_reduction_matrix(npoints_list: list[int], method='reduced', min_features_to_reduce=12):
     """
     Get a matrix for full multiradial LBP feature reduction.
 
@@ -258,7 +258,7 @@ def get_reduction_matrix(npoints_list: list[int], method='reduced'):
 
     See also `reduce_features`.
     """
-    return block_diag(get_reduced_hist_masks(P, method) for P in npoints_list)
+    return block_diag(*(get_reduced_hist_masks(P, method, min_features_to_reduce) for P in npoints_list))
 
 def reduce_features(features, hist_masks_array):
     """
