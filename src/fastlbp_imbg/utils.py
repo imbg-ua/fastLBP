@@ -107,7 +107,7 @@ def get_all_features_details(nchannels: int, radii_list: list[float], npoints_li
     for nc in range(nchannels):
         for (r,p) in zip(radii_list, npoints_list):
             for i in range(p+2):
-                label = f"ch{nc}_r{r}_p{p}_lbp{i}"
+                label = f"{feature_number}_ch{nc}_r{r}_p{p}_lbp{i}"
                 features.append(FeatureDetails(nc,r,p,i,feature_number,label))
                 feature_number += 1
     return features
@@ -249,7 +249,7 @@ def hist_masks_as_tuple(hist_masks_array) ->  Union[MinimalHistMasks, ReducedHis
         return None
     raise NotImplementedError()
 
-def get_reduction_matrix(npoints_list: list[int], method='reduced', min_features_to_reduce=12):
+def get_reduction_matrix(nchannels: int, npoints_list: list[int], method='reduced', min_features_to_reduce=12):
     """
     Get a matrix for full multiradial LBP feature reduction.
 
@@ -258,7 +258,8 @@ def get_reduction_matrix(npoints_list: list[int], method='reduced', min_features
 
     See also `reduce_features`.
     """
-    return block_diag(*(get_reduced_hist_masks(P, method, min_features_to_reduce) for P in npoints_list))
+    diag_blocks = [get_reduced_hist_masks(P, method, min_features_to_reduce) for P in npoints_list] * nchannels
+    return block_diag(*diag_blocks)
 
 def reduce_features(features, hist_masks_array):
     """
@@ -277,3 +278,52 @@ def reduce_features(features, hist_masks_array):
 
     return np.tensordot(features, hist_masks_array, axes=(-1,-1))
 
+
+
+@dataclass
+class ReducedFeatureDetails(FeatureDetails): 
+    lbp_code_type: str
+    def __init__(self, channel, R, P, lbp_code_type, feature_number=-1, label=""):
+        self.channel=channel
+        self.R=R
+        self.P=P
+        self.lbp_code=None
+        self.lbp_code_type=lbp_code_type
+        self.feature_number=feature_number
+        self.label=label
+
+LBP_MINIMAL_CODE_TYPES = ( 'flat', 'corner', 'edge', 'nonuniform' )
+LBP_REDUCED_CODE_TYPES = ( 'flat_lo', 'corner_lo', 'edge', 'corner_hi', 'flat_hi', 'nonuniform' )
+
+def get_all_reduced_features_details(reduction_method:str, nchannels: int, radii_list: list[float], npoints_list: list[int], min_features_to_reduce=12) -> list[FeatureDetails]:
+    """
+    get_all_features_details for reduced features
+
+    ## Parameters
+    - reduction_method: str, 'redudced' or 'minimal', according to `get_reduced_hist_masks`
+    - nchannels: int
+    - radii_list: list[float]
+    - npoints_list: list[int]
+    - min_features_to_reduce: int
+
+    """
+    assert len(radii_list) == len(npoints_list)
+    features = []
+    feature_number = 0
+
+    n_reduced_feats = 4 if reduction_method=='minimal' else 6
+    reduced_feat_names = LBP_MINIMAL_CODE_TYPES if reduction_method=='minimal' else LBP_REDUCED_CODE_TYPES
+
+    for nc in range(nchannels):
+        for (r,p) in zip(radii_list, npoints_list):
+            if p+2 < min_features_to_reduce:
+                for i in range(p+2):
+                    label = f"{feature_number}_ch{nc}_r{r}_p{p}_lbp{i}"
+                    features.append(FeatureDetails(nc,r,p,i,feature_number,label))
+                    feature_number += 1
+            else:
+                for i in range(n_reduced_feats):
+                    label = f"{feature_number}_ch{nc}_r{r}_p{p}_lbp_{reduced_feat_names[i]}"
+                    features.append(ReducedFeatureDetails(nc,r,p,reduced_feat_names[i],feature_number,label))
+                    feature_number += 1
+    return features
