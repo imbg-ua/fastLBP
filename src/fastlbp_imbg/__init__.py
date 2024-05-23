@@ -30,4 +30,4 @@ __all__ = [
 # - main branch gets 1.2.3
 # - dev branch gets 1.2.3.dev1
 # - feature branch gets 1.2.3.dev0+feature.improve.logs
-__version__ = "0.1.2.dev0+grouped.features.2"  
+__version__ = "0.1.3"  
