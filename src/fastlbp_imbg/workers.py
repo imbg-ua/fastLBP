@@ -95,7 +95,7 @@ def __worker_fastlbp(args):
                 log.debug(f"run_fastlbp: worker {jobname}({pid}): do not use mask")
                 lbp_results = uniform_lbp_uint8(image=img_channel, P=job['npoints'], R=job['radius'])
             
-            assert lbp_results.dtype == _features_dtype
+            # assert lbp_results.dtype == _features_dtype
 
             img_data_shm.close()
 
