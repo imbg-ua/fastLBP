@@ -599,13 +599,18 @@ def _uniform_lbp_uint8_patch_masked(cnp.uint8_t[:, ::1] image, cnp.uint8_t[:, ::
             pci = -1
             pc = 0
 
-            for c in range(image.shape[1]):
+            while c < image.shape[1])
                 pci += 1
                 if pci == patchsize:
                     pci = 0
                     pc += 1
 
                 if patch_mask[pr, pc] == 0:
+                    # this can only happen at the beginning of a row
+                    assert pci == 0
+                    # skip an entire row of a patch
+                    c += patchsize
+                    pci = patchsize - 1
                     continue
 
                 for i in range(P):
@@ -633,5 +638,6 @@ def _uniform_lbp_uint8_patch_masked(cnp.uint8_t[:, ::1] image, cnp.uint8_t[:, ::
                     lbp = P + 1
 
                 output[r, c] = lbp
+                c += 1
 
     return np.asarray(output)
