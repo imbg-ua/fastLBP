@@ -585,10 +585,27 @@ def _uniform_lbp_uint8_patch_masked(cnp.uint8_t[:, ::1] image, cnp.uint8_t[:, ::
     cdef Py_ssize_t r, c, changes, i
     cdef Py_ssize_t rot_index, n_ones
 
+    # patch row and patch column 
+    cdef Py_ssize_t pr=0, pc=0
+    # row and column inside a patch
+    cdef Py_ssize_t pri=-1, pci=-1
+
     with nogil:
         for r in range(image.shape[0]):
+            pri += 1
+            if pri == patchsize:
+                pri = 0
+                pr += 1
+            pci = -1
+            pc = 0
+
             for c in range(image.shape[1]):
-                if patch_mask[r/patchsize, c/patchsize] == 0:
+                pci += 1
+                if pci == patchsize:
+                    pci = 0
+                    pc += 1
+
+                if patch_mask[pr, pc] == 0:
                     continue
 
                 for i in range(P):
