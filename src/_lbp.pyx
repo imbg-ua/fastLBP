@@ -585,50 +585,36 @@ def _uniform_lbp_uint8_patch_masked(cnp.uint8_t[:, ::1] image, cnp.uint8_t[:, ::
     cdef Py_ssize_t r, c, changes, i
     cdef Py_ssize_t rot_index, n_ones
 
-    # current patch row/col and an internal counter
-    cdef Py_ssize_t patch_rows = rows/patchsize
-    cdef Py_ssize_t patch_cols = cols/patchsize
-    cdef Py_ssize_t pr, pc
-    cdef Py_ssize_t pri=0, pci=0, r0=0, c0=0
-
     with nogil:
-        for pr in range(patch_rows):
-            for pc in range(patch_cols):
-                if patch_mask[pr,pc] == 0:
+        for r in range(image.shape[0]):
+            for c in range(image.shape[1]):
+                if patch_mask[r/patchsize, c/patchsize] == 0:
                     continue
 
-                r0 = pr*patchsize
-                c0 = pc*patchsize
+                for i in range(P):
+                    # types are [ image/cval, r/c, out ]
+                    bilinear_interpolation[cnp.uint8_t, cnp.float64_t, cnp.float64_t](
+                            &image[0, 0], rows, cols, r + rp[i], c + cp[i],
+                            b'C', 0, &texture[i])
+                # signed / thresholded texture
+                for i in range(P):
+                    if texture[i] - image[r, c] >= 0:
+                        signed_texture[i] = 1
+                    else:
+                        signed_texture[i] = 0
 
-                for pri in range(patchsize):
-                    for pci in range(patchsize):
-                        r = r0 + pri
-                        c = c0 + pci
-                        
-                        for i in range(P):
-                            # types are [ image/cval, r/c, out ]
-                            bilinear_interpolation[cnp.uint8_t, cnp.float64_t, cnp.float64_t](
-                                    &image[0, 0], rows, cols, r + rp[i], c + cp[i],
-                                    b'C', 0, &texture[i])
-                        # signed / thresholded texture
-                        for i in range(P):
-                            if texture[i] - image[r, c] >= 0:
-                                signed_texture[i] = 1
-                            else:
-                                signed_texture[i] = 0
+                lbp = 0
 
-                        lbp = 0
+                # determine number of 0 - 1 changes
+                changes = 0
+                for i in range(P - 1):
+                    changes += (signed_texture[i] - signed_texture[i + 1]) != 0
+                if changes <= 2:
+                    for i in range(P):
+                        lbp += signed_texture[i]
+                else:
+                    lbp = P + 1
 
-                        # determine number of 0 - 1 changes
-                        changes = 0
-                        for i in range(P - 1):
-                            changes += (signed_texture[i] - signed_texture[i + 1]) != 0
-                        if changes <= 2:
-                            for i in range(P):
-                                lbp += signed_texture[i]
-                        else:
-                            lbp = P + 1
-
-                        output[r, c] = lbp
+                output[r, c] = lbp
 
     return np.asarray(output)
