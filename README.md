@@ -44,7 +44,7 @@ TODO:
 
 ## Planned modules
 ### run_chunked_skimage
-Similar to [1. run_skimage](#1-run_skimage), but each subprocess should compute LBP for its image chunk, not the whole image.
+Similar to [1. run_fastlbp](#1-run_fastlbp), but each subprocess should compute LBP for its image chunk, not the whole image.
 
 ### run_dask and run_chunked_dask
-Similar to [1. run_skimage](#1-run_skimage), but use [Dask](https://docs.dask.org/en/stable/) and [`dask.array.map_overlap`](https://docs.dask.org/en/stable/generated/dask.array.map_overlap.html#dask.array.map_overlap) for parallelisation instead of `multiprocessing` and manual data wrangling
+Similar to [1. run_fastlbp](#1-run_fastlbp), but use [Dask](https://docs.dask.org/en/stable/) and [`dask.array.map_overlap`](https://docs.dask.org/en/stable/generated/dask.array.map_overlap.html#dask.array.map_overlap) for parallelisation instead of `multiprocessing` and manual data wrangling
