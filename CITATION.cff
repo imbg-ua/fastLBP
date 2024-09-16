@@ -1,0 +1,35 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: FastLBP
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Mykhailo
+    family-names: Koreshkov
+    email: m.koreshkov@kau.edu.ua
+    affiliation: >-
+      SysBio lab, Institute of molecular biology and
+      genetics, Kyiv, Ukraine
+  - name: >-
+      Systems Biology Group of Institute of molecular
+      biology and genetics
+    address: '150, Zabolotnoho str., Kyiv, Ukraine, 03143'
+    city: Kyiv
+    country: UA
+    post-code: '03143'
+repository-code: 'https://github.com/imbg-ua/fastLBP'
+abstract: >-
+  Parallel and memory-optimised LBP texture features for
+  large images
+keywords:
+  - LBP
+  - parallel
+  - multiradial
+license: GPL-3.0
+commit: c4fdfe53d18ff8971a9f5ec8174ac58d89453129
+version: 0.2.0
+date-released: '2024-09-11'
