@@ -1,6 +1,6 @@
 import numpy as np
 from numpy.typing import ArrayLike, NDArray
-from typing import Union, Literal
+from typing import Union, Literal, Iterable
 import os
 import psutil
 from collections import namedtuple
@@ -40,14 +40,20 @@ def get_radii(n: int=15) -> list[float]:
     radius_list = [round(1.499*1.327**(float(x))) for x in range(0, n)]
     return radius_list
 
-def get_p_for_r(r: Union[float, ArrayLike]) -> NDArray:
+def get_p_for_r(r: Union[float, int, Iterable[Union[float, int]]]) -> NDArray:
     """
     Get a standard value of npoints for a single radius or a list of npoints for a list of radii.
 
     The formula is `np.ceil(2*np.pi*r).astype('int')`
     """
-    if type(r) is list:
+    if isinstance(r, str):
+        raise TypeError()
+    if isinstance(r, Iterable):
         r = np.asarray(r)
+    elif isinstance(r, float) or isinstance(r, int):
+        r = np.array([r])
+    else: 
+        raise TypeError()
     return np.ceil(2*np.pi*r).astype('int')
 
 
@@ -185,14 +191,14 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
     try:
         if os.path.exists(output_fpath) and not overwrite_output:
             log.error(f'run_fastlbp({pipeline_hash}): overwrite_output is False and output file {output_abspath} already exists. Aborting.')
-            return output_abspath
+            return FastlbpResult(output_abspath, None)
         os.makedirs(__get_output_dir(), exist_ok=True)
         if not os.access(__get_output_dir(), os.W_OK):
             log.error(f'run_fastlbp({pipeline_hash}): output dir {os.path.dirname(output_abspath)} is not writable. Aborting.')
-            return output_abspath
+            return FastlbpResult(output_abspath, None)
     except:
         log.error(f'run_fastlbp({pipeline_hash}): error accessing output dir {os.path.dirname(output_abspath)}. Aborting.')
-        return output_abspath
+        return FastlbpResult(output_abspath, None)
 
     log.info(f'run_fastlbp({pipeline_hash}): initial setup took {time.perf_counter()-t:.5g}s')
     log.info(f'run_fastlbp({pipeline_hash}): creating a list of jobs...')

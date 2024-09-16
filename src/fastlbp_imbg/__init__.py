@@ -9,11 +9,13 @@ from .utils import (
 from .fastlbp import (
     run_fastlbp, 
     get_radii, 
-    get_p_for_r
+    get_p_for_r,
+    FastlbpResult
 )
 
 __all__ = [
     "run_fastlbp", 
+    "FastlbpResult",
     "get_radii", 
     "get_p_for_r", 
     "load_sample_image", 

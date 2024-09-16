@@ -11,7 +11,7 @@ from fastlbp_imbg.lbp import (
 )
 import unittest
 
-class TestFastlbpUtils(unittest.TestCase):
+class TestMaskUtils(unittest.TestCase):
     def test_pixel_mask_allones(self):
         image = load_sample_image(512,512,1,'tiff',create=True)[:,:,0]
 
