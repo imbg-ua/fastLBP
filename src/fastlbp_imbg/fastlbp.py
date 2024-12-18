@@ -164,7 +164,9 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
     # data_hash = hashlib.sha1(img_data.data).hexdigest()
 
     # this way pipelines with different ncpus/radii/npoints can reuse tmp files if patchsize, img name and version are the same 
-    pipeline_hash = __create_pipeline_hash("fastlbp", [str(img_data.shape), patchsize, img_name])
+    pipeline_hash = __create_pipeline_hash("fastlbp", [str(img_data.shape), patchsize, 
+                                                       'mask' if img_mask is not None else 'no_mask', 
+                                                       mask_method if img_mask is not None else ''])
     pipeline_name = f"{img_name}-fastlbp-{pipeline_hash}"
 
     log.info('run_fastlbp: params:')
