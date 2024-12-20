@@ -49,7 +49,7 @@ def __worker_fastlbp(args):
             log.debug(f"run_fastlbp: worker {jobname}({pid}): skipping cache")
         else:
             try:
-                cached_result_mm = np.memmap(tmp_fpath, dtype=_features_dtype, mode='r', shape=job_patch_histograms_shape)
+                cached_result_mm = np.load(tmp_fpath, mmap_mode='r')
             except:
                 cached_result_mm = None
                 log.debug(f"run_fastlbp: worker {jobname}({pid}): no usable cache")
@@ -58,7 +58,7 @@ def __worker_fastlbp(args):
             # Use cache and return
             
             log.info(f"run_fastlbp: worker {jobname}({pid}): cache found! copying to output.")
-            job_patch_histograms = cached_result_mm
+            np.copyto(job_patch_histograms, cached_result_mm)
 
         else: 
              # Compute LBP
