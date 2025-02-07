@@ -67,6 +67,7 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
                 img_mask=None, mask_method='any',
                 max_ram=None, img_name='img', 
                 outfile_name='lbp_features.npy', save_intermediate_results=True, 
+                lbp_results_cache_indir: str | None = None,
                 overwrite_output=False) -> FastlbpResult:
     """
     Run multiradii multichannel FastLBP feature extraction.
@@ -222,7 +223,7 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
                      'img_pixel_dtype','img_shape_0','img_shape_1','img_shape_2', 'output_shm_name', 
                      'output_offset', 'tmp_fpath', 
                      #'img_mask_shm_name',
-                     'patch_mask_shm_name',
+                     'patch_mask_shm_name', 'tmp_fpath_pixel_in'
                     ]
         )
     jobs['img_name'] = img_name
@@ -238,6 +239,23 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
     jobs['label'] = jobs.apply(
         lambda row: f"{img_name}_c{row.name[0]}_r{row.name[1]}_p{row['npoints']}", axis='columns')
     jobs['patchsize'] = patchsize
+
+    if lbp_results_cache_indir:
+        jobs['tmp_fpath_pixel_in'] = jobs.apply(
+            lambda row: os.path.join(lbp_results_cache_indir, row['label']) + '.npy', 
+            axis='columns'
+        )
+    else:
+        jobs['tmp_fpath_pixel_in'] = ""
+
+    # if lbp_results_cache_outdir:
+    #     jobs['tmp_fpath_pixel_out'] = jobs.apply(
+    #         lambda row: os.path.join(lbp_results_cache_outdir, row['label']) + '.npy', 
+    #         axis='columns'
+    #     )
+    # else:
+    #     jobs['tmp_fpath_pixel_out'] = ""
+
 
     if save_intermediate_results:
         base_tmp_path = __get_tmp_dir(pipeline_name)
