@@ -18,8 +18,7 @@ from .lbp import (
 def __worker_fastlbp(args):
     row_id, job = args
     tmp_fpath = job['tmp_fpath']
-    tmp_fpath_pixel_in = job['tmp_fpath_pixel_in']
-    # tmp_fpath_pixel_out = job['tmp_fpath_pixel_out']
+    tmp_fpath_pixel = job['tmp_fpath_pixel']
 
     pid = os.getpid()
     jobname = job['label']
@@ -41,16 +40,10 @@ def __worker_fastlbp(args):
 
         # Obtain output memory
         output_shm = shared_memory.SharedMemory(name=job['output_shm_name'])
-        # pixel_output_shm = shared_memory.SharedMemory(name=job['output_shm_name'] + '_pixels')
 
         all_patch_histograms = np.ndarray(
             (nprows, npcols, total_nfeatures), dtype=_features_dtype, buffer=output_shm.buf)
-        job_patch_histograms = all_patch_histograms[:,:,output_offset:(output_offset+job_nfeatures)]
-
-        # all_pixel_histograms = np.ndarray((h, w, total_nfeatures), dtype=_features_dtype, 
-        #                                    buffer=pixel_output_shm.buf)
-        # job_pixel_histograms = all_pixel_histograms[:, :, output_offset:(output_offset + job_nfeatures)]
-        
+        job_patch_histograms = all_patch_histograms[:,:,output_offset:(output_offset+job_nfeatures)]        
 
 
         
@@ -64,43 +57,46 @@ def __worker_fastlbp(args):
             except:
                 cached_result_mm = None
                 log.debug(f"run_fastlbp: worker {jobname}({pid}): no usable cache")
-
-        # read pixel level cache if available
-        cached_result_mm_pixel = None
-        if not tmp_fpath_pixel_in:
-            log.debug(f'run_fastlbp: worker {jobname}({pid}): skipping pixel cache')
-        else:
-            try:
-                cached_result_mm_pixel = np.load(tmp_fpath_pixel_in, mmap_mode='r')
-            except:
-                cached_result_mm_pixel = None
-                log.debug(f"run_fastlbp: worker {jobname}({pid}): no usable pixel cache")
-
         
+        # use cached results if found
         if cached_result_mm is not None:
             # Use cache and return
             
             log.info(f"run_fastlbp: worker {jobname}({pid}): cache found! copying to output.")
             np.copyto(job_patch_histograms, cached_result_mm)
         
-        elif cached_result_mm_pixel is not None:
-            # use pixel level cache to group features into patches and return
-            log.info(f'run_fastlbp: worker {jobname}({pid}): pixel cache found! Grouping into patches and copying to output.')
-            using_patch_mask = 'patch_mask_shm_name' in job and job['patch_mask_shm_name']
+        # try to read pixel level cache
+        else:
 
-            for pr in range(nprows):
-                for pc in range(npcols):
-                    if using_patch_mask and patch_mask[pr, pc] == 0:
-                        job_patch_histograms[pr, pc, :] = 0
-                    else:
-                        hist = np.bincount(
-                            get_patch(cached_result_mm_pixel, patchsize, pr, pc).flat, 
-                            minlength=job_nfeatures
-                            )
-                        job_patch_histograms[pr, pc, :] = hist
+            # read pixel level cache if available
+            cached_result_mm_pixel = None
+            if not tmp_fpath_pixel:
+                log.debug(f'run_fastlbp: worker {jobname}({pid}): skipping pixel cache')
+            else:
+                try:
+                    cached_result_mm_pixel = np.load(tmp_fpath_pixel, mmap_mode='r')
+                except:
+                    cached_result_mm_pixel = None
+                    log.debug(f"run_fastlbp: worker {jobname}({pid}): no usable pixel cache")
 
+            if cached_result_mm_pixel is not None:
+                # use pixel level cache to group features into patches and return
+                log.info(f'run_fastlbp: worker {jobname}({pid}): pixel cache found! Grouping into patches and copying to output.')
+                using_patch_mask = 'patch_mask_shm_name' in job and job['patch_mask_shm_name']
 
-        else: 
+                for pr in range(nprows):
+                    for pc in range(npcols):
+                        if using_patch_mask and patch_mask[pr, pc] == 0:
+                            job_patch_histograms[pr, pc, :] = 0
+                        else:
+                            hist = np.bincount(
+                                get_patch(cached_result_mm_pixel, patchsize, pr, pc).flat, 
+                                minlength=job_nfeatures
+                                )
+                            job_patch_histograms[pr, pc, :] = hist
+
+        
+        if cached_result_mm is None and cached_result_mm_pixel is None: 
              # Compute full LBP and save different types of cache for now
              # TODO: FIXME: use different flags to save different types of cache
              # (patch level and/or pixel level) 
@@ -164,15 +160,14 @@ def __worker_fastlbp(args):
                     log.warning(f"run_fastlbp: worker {jobname}({pid}): computation successful, but cannot save tmp file")
 
             # save raw lbp features as reusable cache for subsequent runs
-            if tmp_fpath_pixel_in:
+            if tmp_fpath_pixel:
                 try:
-                    os.makedirs(os.path.dirname(tmp_fpath_pixel_in), exist_ok=True)
-                    np.save(tmp_fpath_pixel_in, lbp_results)
+                    os.makedirs(os.path.dirname(tmp_fpath_pixel), exist_ok=True)
+                    np.save(tmp_fpath_pixel, lbp_results)
                 except:
                     log.warning(f'run_fastlbp: worker {jobname}({pid}): computation successful, but cannot save pixel tmp file')
 
         output_shm.close()
-        # pixel_output_shm.close()
 
         log.info(f"run_fastlbp: worker {pid}: finished job {jobname} in {time.perf_counter()-t0:.5g}s")
     except Exception as e:

@@ -22,8 +22,8 @@ def __sanitize_img_name(img_name):
 def __sanitize_outfile_name(outfile_name):
     if outfile_name.endswith(".npy"): return outfile_name
     return outfile_name + ".npy"
-def __get_output_dir():
-    return os.path.join("data/out")
+def __get_output_dir(path: str | None = None):
+    return 'data/out' if path is None else path
 def __get_tmp_dir(pipeline_name):
     return os.path.join("data/tmp/", pipeline_name)
 
@@ -66,8 +66,10 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
                 patchsize: int, ncpus: int, 
                 img_mask=None, mask_method='any',
                 max_ram=None, img_name='img', 
-                outfile_name='lbp_features.npy', save_intermediate_results=True, 
-                lbp_results_cache_indir: str | None = None,
+                outfile_name='lbp_features.npy', 
+                outdir: str | None = None, 
+                save_intermediate_results: bool | str = True, 
+                lbp_results_cache_dir: str | None = None,
                 overwrite_output=False) -> FastlbpResult:
     """
     Run multiradii multichannel FastLBP feature extraction.
@@ -117,7 +119,7 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
     `outfile_name`: default 'lbp_features.npy'. Name of an output file. The final path is `'./data/out/{outfile_name}.npy'`.
     You cannot change the path yet, I am sorry :(
     
-    `save_intermediate_results`: default True. Wether to use cache. This is espetially useful if computation
+    `save_intermediate_results`: bool | str, default True. Path to the cached results folder. `True` will save the cache in the working dir. This is espetially useful if computation
     got interrupted; cache allows to continue the process from the latest successful job. 
     Another usecase is when you need more radii and want to compute only the new ones.
 
@@ -189,14 +191,14 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
 
     # check if output file is writable
 
-    output_fpath = os.path.join(__get_output_dir(), outfile_name)
+    output_fpath = os.path.join(__get_output_dir(outdir), outfile_name)
     output_abspath = os.path.abspath(output_fpath)
     try:
         if os.path.exists(output_fpath) and not overwrite_output:
             log.error(f'run_fastlbp({pipeline_hash}): overwrite_output is False and output file {output_abspath} already exists. Aborting.')
             return FastlbpResult(output_abspath, None)
-        os.makedirs(__get_output_dir(), exist_ok=True)
-        if not os.access(__get_output_dir(), os.W_OK):
+        os.makedirs(__get_output_dir(outdir), exist_ok=True)
+        if not os.access(__get_output_dir(outdir), os.W_OK):
             log.error(f'run_fastlbp({pipeline_hash}): output dir {os.path.dirname(output_abspath)} is not writable. Aborting.')
             return FastlbpResult(output_abspath, None)
     except:
@@ -219,11 +221,11 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
     jobs = DataFrame(
         index=pd.MultiIndex.from_product(
             [channel_list, radii_list], names=['channel', 'radius']), 
-            columns=['channel','radius','img_name','label','npoints','patchsize','img_shm_name',
+            columns=['channel','radius','img_name','label', 'npoints','patchsize','img_shm_name',
                      'img_pixel_dtype','img_shape_0','img_shape_1','img_shape_2', 'output_shm_name', 
                      'output_offset', 'tmp_fpath', 
                      #'img_mask_shm_name',
-                     'patch_mask_shm_name', 'tmp_fpath_pixel_in'
+                     'patch_mask_shm_name', 'tmp_fpath_pixel'
                     ]
         )
     jobs['img_name'] = img_name
@@ -240,29 +242,28 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
         lambda row: f"{img_name}_c{row.name[0]}_r{row.name[1]}_p{row['npoints']}", axis='columns')
     jobs['patchsize'] = patchsize
 
-    if lbp_results_cache_indir:
-        jobs['tmp_fpath_pixel_in'] = jobs.apply(
-            lambda row: os.path.join(lbp_results_cache_indir, row['label']) + '.npy', 
+    if lbp_results_cache_dir:
+        jobs['tmp_fpath_pixel'] = jobs.apply(
+            lambda row: os.path.join(lbp_results_cache_dir, row['label']) + '.npy', 
             axis='columns'
         )
     else:
-        jobs['tmp_fpath_pixel_in'] = ""
+        jobs['tmp_fpath_pixel'] = ""
 
-    # if lbp_results_cache_outdir:
-    #     jobs['tmp_fpath_pixel_out'] = jobs.apply(
-    #         lambda row: os.path.join(lbp_results_cache_outdir, row['label']) + '.npy', 
-    #         axis='columns'
-    #     )
-    # else:
-    #     jobs['tmp_fpath_pixel_out'] = ""
+    # TODO: refactor this conditional
+    base_tmp_path = ''
+    if isinstance(save_intermediate_results, bool):
+        if save_intermediate_results:
+            base_tmp_path = __get_tmp_dir(pipeline_name)
+    else:
+        base_tmp_path = save_intermediate_results
 
-
-    if save_intermediate_results:
-        base_tmp_path = __get_tmp_dir(pipeline_name)
+    if base_tmp_path:
         jobs['tmp_fpath'] = jobs.apply(
             lambda row: f"{base_tmp_path}/{row['label']}.npy", axis='columns')
     else: 
         jobs['tmp_fpath'] = ""
+
 
     total_nfeatures = nfeatures_per_channel * len(channel_list)
     patch_features_shape = (nprows, npcols, total_nfeatures)
@@ -327,7 +328,7 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
     jobs['output_shm_name'] = patch_features_shm.name
 
     # Log jobs before sorting
-    jobs.to_csv(__get_output_dir() + f"/jobs_{img_name}.csv")
+    jobs.to_csv(__get_output_dir(outdir) + f"/jobs_{img_name}.csv")
     
     # Sort jobs starting from the longest ones, i.e. from larger radii to smaller ones.
     # `level=1` values are radii
