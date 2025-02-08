@@ -66,6 +66,7 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
                 patchsize: int, ncpus: int, 
                 img_mask=None, mask_method='any',
                 max_ram=None, img_name='img', 
+                img_name_pixel_cache: str = 'img_pixel_cache',
                 outfile_name='lbp_features.npy', 
                 outdir: str | None = None, 
                 save_intermediate_results: bool | str = True, 
@@ -115,6 +116,9 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
     `max_ram`: ignored, not implemented. Will be implemented in the next version.
 
     `img_name`: default "img". Human-friendly name to use in cache and to show in logs
+
+    `img_name_pixel_cache`: default "img_pixel_cache". Name to use for LBP cache before grouping into patches. 
+    Thereby the name must not contain the patch size in for correct caching across multiple patch sizes. 
 
     `outfile_name`: default 'lbp_features.npy'. Name of an output file. The final path is `'./data/out/{outfile_name}.npy'`.
     You cannot change the path yet, I am sorry :(
@@ -240,11 +244,15 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
     
     jobs['label'] = jobs.apply(
         lambda row: f"{img_name}_c{row.name[0]}_r{row.name[1]}_p{row['npoints']}", axis='columns')
+
+    jobs['pixel_cache_label'] = jobs.apply(
+        lambda row: f"{img_name_pixel_cache}_c{row.name[0]}_r{row.name[1]}_p{row['npoints']}", axis='columns')
+
     jobs['patchsize'] = patchsize
 
     if lbp_results_cache_dir:
         jobs['tmp_fpath_pixel'] = jobs.apply(
-            lambda row: os.path.join(lbp_results_cache_dir, row['label']) + '.npy', 
+            lambda row: os.path.join(lbp_results_cache_dir, row['pixel_cache_label']) + '.npy', 
             axis='columns'
         )
     else:
