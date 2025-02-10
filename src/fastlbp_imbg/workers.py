@@ -44,7 +44,7 @@ def __worker_fastlbp(args):
 
         all_patch_histograms = np.ndarray(
             (nprows, npcols, total_nfeatures), dtype=_features_dtype, buffer=output_shm.buf)
-        job_patch_histograms = all_patch_histograms[:,:,output_offset:(output_offset+job_nfeatures)]        
+        job_patch_histograms = all_patch_histograms[:,:,output_offset:(output_offset+job_nfeatures)]
 
 
         
@@ -84,6 +84,11 @@ def __worker_fastlbp(args):
                 # use pixel level cache to group features into patches and return
                 log.info(f'run_fastlbp: worker {jobname}({pid}): pixel cache found! Grouping into patches and copying to output.')
                 using_patch_mask = 'patch_mask_shm_name' in job and job['patch_mask_shm_name']
+
+                # TODO: DEBUG: test this
+                if using_patch_mask:
+                    patch_mask_shm = shared_memory.SharedMemory(name=job['patch_mask_shm_name'])
+                    patch_mask = np.ndarray((nprows, npcols), dtype=np.uint8, buffer=patch_mask_shm.buf)
 
                 for pr in range(nprows):
                     for pc in range(npcols):
