@@ -2,8 +2,15 @@
 
 import numpy as np
 from typing import Literal, Any, Union
+from numpy.typing import ArrayLike
 from collections import namedtuple
 from scipy.linalg import block_diag
+
+import pickle
+
+def write_pickle(data, path: str) -> None:
+    with open(path, 'wb') as f:
+        pickle.dump(data, f)
 
 def create_sample_image(height: int, width: int, nchannels: Literal[1,3], type: Literal['png','jpg','tiff']='tiff', dir: str='tmp'):
     """
@@ -128,6 +135,59 @@ def get_patch(data, patchsize, pr, pc):
     a shorthand for `data[(pr*patchsize):((pr+1)*patchsize), (pc*patchsize):((pc+1)*patchsize)]`
     """
     return data[(pr*patchsize):((pr+1)*patchsize), (pc*patchsize):((pc+1)*patchsize)]
+
+
+# TODO: refactor and generalize to any number of axes
+def get_chunk(data: ArrayLike, patchsize: int, pr: int, pc: int, max_radius: int, chunksize: int = 1) -> np.array:
+    """
+    Get a chunk that surrounds a given number of patches with the padding of `max_radius`.
+
+    `chunksize` is similar to patchsize, but operates on patches. For instance, the value of 2 will group 4 patches (2x2 square)
+    into a single chunk to process by a worker process.
+    """
+
+    height, width = data.shape[:2]
+
+    data_left, data_right = pc * patchsize, (pc + chunksize) * patchsize
+    data_top, data_bottom = pr * patchsize, (pr + chunksize) * patchsize
+
+
+    left_padded = data_left - max_radius
+    right_padded = data_right + max_radius
+
+    top_padded = data_top - max_radius
+    bottom_padded = data_bottom + max_radius
+
+    left_padded_bounded = max(0, left_padded)
+    right_padded_bounded = min(width, right_padded)
+
+    top_padded_bounded = max(0, top_padded)
+    bottom_padded_bounded = min(height, bottom_padded)
+
+
+    padded_chunk_and_start_indices = tuple(data[top_padded_bounded:bottom_padded_bounded, 
+                              left_padded_bounded:right_padded_bounded, ...], 
+                              data_top, data_bottom, 
+                              data_left, data_right)
+    
+    return padded_chunk_and_start_indices
+
+
+    
+def get_padded_region(data: ArrayLike, origin_0: int, origin_1: int, 
+                      dim_0: int, dim_1: int, 
+                     padding_top: int, padding_bottom: int,
+                     padding_left: int, 
+                     padding_right: int) -> np.array:
+    """
+    Get a region with padding to correctly calculate LBP for border pixels 
+
+    Doesn't check the validity of the padded range
+    """
+
+    return data[(origin_0 - padding_top):(origin_0 + dim_0 + padding_bottom), 
+                (origin_1 - padding_left):(origin_1 + dim_1 + padding_right)]
+
 
 def patchify_image_mask(img_mask, patchsize, edit_img_mask=False, method='any'):
     """

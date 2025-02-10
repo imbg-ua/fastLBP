@@ -507,6 +507,69 @@ def _uniform_lbp_uint8(cnp.uint8_t[:, ::1] image, int P, cnp.float64_t R):
 
     return np.asarray(output)
 
+def _uniform_lbp_uint8_padded(cnp.uint8_t[:, ::1] image, int P, cnp.float64_t R, 
+                              np_uints top, np_uints bottom, np_uints left, np_uints right):
+
+    # all the same as in _uniform_lbp_uint8 except for the image range used for computation
+
+    # local position of texture elements
+    rr = - R * np.sin(2 * np.pi * np.arange(P, dtype=np.float64) / P)
+    cc = R * np.cos(2 * np.pi * np.arange(P, dtype=np.float64) / P)
+    cdef cnp.float64_t[::1] rp = np.round(rr, 5)
+    cdef cnp.float64_t[::1] cp = np.round(cc, 5)
+
+    # pre-allocate arrays for computation
+    cdef cnp.float64_t[::1] texture = np.zeros(P, dtype=np.float64)
+    cdef signed char[::1] signed_texture = np.zeros(P, dtype=np.int8)
+
+    # the shape doesn't include padding
+    output_shape = (image.shape[0] - top - bottom, image.shape[1] - left - right)
+    cdef cnp.uint16_t[:, ::1] output = np.zeros(output_shape, dtype=np.uint16)
+
+    cdef Py_ssize_t rows = image.shape[0]
+    cdef Py_ssize_t cols = image.shape[1]
+
+    print(f'cython {image.shape = } {output_shape = }')
+    print(f'{top = } {bottom = } {left = } {right = }')
+    print(f'{list(range(top, image.shape[0] - bottom)) = } {list(range(left, image.shape[1] - right)) = }')
+
+    cdef cnp.uint16_t lbp
+    cdef Py_ssize_t r, c, changes, i
+    cdef Py_ssize_t rot_index, n_ones
+
+    with nogil:
+        for r in range(top, image.shape[0] - bottom):
+            for c in range(left, image.shape[1] - right):
+                for i in range(P):
+                    # types are [ image/cval, r/c, out ]
+                    bilinear_interpolation[cnp.uint8_t, cnp.float64_t, cnp.float64_t](
+                            &image[0, 0], rows, cols, r + rp[i], c + cp[i],
+                            b'C', 0, &texture[i])
+                # signed / thresholded texture
+                for i in range(P):
+                    if texture[i] - image[r, c] >= 0:
+                        signed_texture[i] = 1
+                    else:
+                        signed_texture[i] = 0
+
+                lbp = 0
+
+                # determine number of 0 - 1 changes
+                changes = 0
+                for i in range(P - 1):
+                    changes += (signed_texture[i] - signed_texture[i + 1]) != 0
+                if changes <= 2:
+                    for i in range(P):
+                        lbp += signed_texture[i]
+                else:
+                    lbp = P + 1
+
+                output[r - top, c - left] = lbp
+
+    return np.asarray(output)
+
+
+
 
 def _uniform_lbp_uint8_masked(cnp.uint8_t[:, ::1] image, cnp.uint8_t[:, ::1] mask, int P, cnp.float64_t R):
     # local position of texture elements
