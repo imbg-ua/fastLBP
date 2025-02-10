@@ -508,7 +508,7 @@ def _uniform_lbp_uint8(cnp.uint8_t[:, ::1] image, int P, cnp.float64_t R):
     return np.asarray(output)
 
 def _uniform_lbp_uint8_padded(cnp.uint8_t[:, ::1] image, int P, cnp.float64_t R, 
-                              np_uints top, np_uints bottom, np_uints left, np_uints right):
+                              cnp.uint32_t top, cnp.uint32_t bottom, cnp.uint32_t left, cnp.uint32_t right):
 
     # all the same as in _uniform_lbp_uint8 except for the image range used for computation
 
@@ -529,9 +529,9 @@ def _uniform_lbp_uint8_padded(cnp.uint8_t[:, ::1] image, int P, cnp.float64_t R,
     cdef Py_ssize_t rows = image.shape[0]
     cdef Py_ssize_t cols = image.shape[1]
 
-    print(f'cython {image.shape = } {output_shape = }')
-    print(f'{top = } {bottom = } {left = } {right = }')
-    print(f'{list(range(top, image.shape[0] - bottom)) = } {list(range(left, image.shape[1] - right)) = }')
+    # print(f'cython {image.shape = } {output_shape = }')
+    # print(f'{top = } {bottom = } {left = } {right = }')
+    # print(f'{list(range(top, image.shape[0] - bottom)) = } {list(range(left, image.shape[1] - right)) = }')
 
     cdef cnp.uint16_t lbp
     cdef Py_ssize_t r, c, changes, i

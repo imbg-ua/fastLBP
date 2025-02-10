@@ -5,6 +5,8 @@ import os
 import psutil
 from collections import namedtuple
 import logging
+
+
 logging.basicConfig()
 log = logging.getLogger('fastlbp_imbg')
 log.setLevel('DEBUG')
@@ -500,7 +502,7 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
         col_chunk_indices = np.append(col_chunk_indices, [n_chunk_cols])
         col_chunk_dims = np.append(col_chunk_dims, [remaining_pixels_cols])
 
-    print(f'{row_chunk_dims = } {col_chunk_dims = }')
+    # print(f'{row_chunk_dims = } {col_chunk_dims = }')
     
     assert len(row_chunk_indices) == len(row_chunk_dims)
     assert len(col_chunk_indices) == len(col_chunk_dims)
@@ -523,12 +525,12 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
 
     jobs['img_name'] = img_name
 
-    print(f'{nfeatures_cumsum = } DEBUG')
+    # print(f'{nfeatures_cumsum = } DEBUG')
     
 
     channel_output_offset = 0
     # print(f'{jobs = } {channel_output_offset = } {nfeatures_per_channel = } DEBUG \n {107 + np.hstack([[0],nfeatures_cumsum[:-1]]) = }')
-    print(f'{row_chunk_indices = } {col_chunk_indices = } DBEUG')
+    # print(f'{row_chunk_indices = } {col_chunk_indices = } DBEUG')
     for c in channel_list: 
         jobs.loc[jobs_idx[c, :, :, :], 'channel'] = c
 
@@ -539,7 +541,7 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
 
     for idx_rr, rr in enumerate(radii_list):
             jobs.loc[jobs_idx[:, rr, :, :], 'radius'] = rr
-            jobs.loc[jobs_idx[:, rr, :, :], 'npoints'] = npoints_list[idx_rr][0]
+            jobs.loc[jobs_idx[:, rr, :, :], 'npoints'] = npoints_list[idx_rr]
 
     for row_chunk_idx in row_chunk_indices:
         jobs.loc[jobs_idx[:, :, row_chunk_idx, :], 'chunk_origin_0'] = row_chunk_idx
