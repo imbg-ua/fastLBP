@@ -549,18 +549,6 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
         jobs.loc[jobs_idx[:, :, :, col_chunk_idx], 'chunk_origin_1'] = col_chunk_idx
 
 
-    # for r_idx, radd in enumerate(radii_list):
-    #     for chunk_i in row_chunk_indices:
-    #         for chunk_j in col_chunk_dims:
-    #             jobs.loc[jobs_idx[:, radd, chunk_i, chunk_j], 'radius'] = radii_list
-    #             jobs.loc[jobs_idx[:, radd, chunk_i, chunk_j], 'npoints'] = npoints_list[r_idx]
-        
-    
-
-        
-
-
-
     # fill chunk dimensions column
     for idx_i, chunk_i in enumerate(row_chunk_indices):
         jobs.loc[jobs_idx[:, :, chunk_i, :], 'chunk_dim_0'] = row_chunk_dims[idx_i]

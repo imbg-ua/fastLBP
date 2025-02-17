@@ -255,6 +255,66 @@ cdef inline void bilinear_interpolation(
 #
 #
 
+
+cdef inline void bilinear_interpolation_absolute(
+        np_real_numeric* image, Py_ssize_t rows, Py_ssize_t cols,
+        np_floats r, np_floats c, np_floats abs_r, np_floats abs_c, char mode, np_real_numeric cval,
+        np_real_numeric_out* out) noexcept nogil:
+    """Bilinear interpolation at a given position in the image using global pixel coordinates
+    to eliminate numerical errors from floating-point arithmetic. 
+
+    This function is particularly needed for chunked image processing. Using relative pixel coordinates
+    for each chunk results in discrepancies in interpolated values compared to the LBP features
+    of the same region obtained from processing the whole image.  
+
+    Parameters
+    ----------
+    image : numeric array
+        Input image.
+    rows, cols : int
+        Shape of image.
+    r, c : np_float
+        Position at which to interpolate.
+    abs_r, abs_c : np_float
+        Absolute position of the pixel at which to interpolate in the full image.
+    mode : {'C', 'W', 'S', 'E', 'R'}
+        Wrapping mode. Constant, Wrap, Symmetric, Edge or Reflect.
+    cval : numeric
+        Constant value to use for constant mode.
+
+    Returns
+    -------
+    value : numeric
+        Interpolated value.
+
+    """
+    cdef np_floats dr, dc
+    cdef long minr, minc, maxr, maxc, abs_minr, abs_minc
+
+    minr = <long>floor(r)
+    minc = <long>floor(c)
+    maxr = <long>ceil(r)
+    maxc = <long>ceil(c)
+
+    abs_minr = <long>floor(abs_r)
+    abs_minc = <long>floor(abs_c)
+    
+    dr = abs_r - abs_minr
+    dc = abs_c - abs_minc
+
+    cdef cnp.float64_t top
+    cdef cnp.float64_t bottom
+
+    cdef np_real_numeric top_left = get_pixel2d(image, rows, cols, minr, minc, mode, cval)
+    cdef np_real_numeric top_right = get_pixel2d(image, rows, cols, minr, maxc, mode, cval)
+    cdef np_real_numeric bottom_left = get_pixel2d(image, rows, cols, maxr, minc, mode, cval)
+    cdef np_real_numeric bottom_right = get_pixel2d(image, rows, cols, maxr, maxc, mode, cval)
+
+    top = (1 - dc) * top_left + dc * top_right
+    bottom = (1 - dc) * bottom_left + dc * bottom_right
+    out[0] = <np_real_numeric_out> ((1 - dr) * top + dr * bottom)
+
+
 cdef inline int _bit_rotate_right(int value, int length) nogil:
     """Cyclic bit shift to the right.
 
@@ -507,10 +567,12 @@ def _uniform_lbp_uint8(cnp.uint8_t[:, ::1] image, int P, cnp.float64_t R):
 
     return np.asarray(output)
 
-def _uniform_lbp_uint8_padded(cnp.uint8_t[:, ::1] image, int P, cnp.float64_t R, 
-                              cnp.uint32_t top, cnp.uint32_t bottom, cnp.uint32_t left, cnp.uint32_t right):
+def _uniform_lbp_uint8_padded_absolute(cnp.uint8_t[:, ::1] image, int P, cnp.float64_t R, 
+                                       Py_ssize_t abs_r, Py_ssize_t abs_c,
+                                       Py_ssize_t top, Py_ssize_t bottom, Py_ssize_t left, Py_ssize_t right):
 
-    # all the same as in _uniform_lbp_uint8 except for the image range used for computation
+    # all the same as in _uniform_lbp_uint8 except for the image range used for computation and the 
+    # use of the absolute coordinates representing the origin of the image
 
     # local position of texture elements
     rr = - R * np.sin(2 * np.pi * np.arange(P, dtype=np.float64) / P)
@@ -529,10 +591,6 @@ def _uniform_lbp_uint8_padded(cnp.uint8_t[:, ::1] image, int P, cnp.float64_t R,
     cdef Py_ssize_t rows = image.shape[0]
     cdef Py_ssize_t cols = image.shape[1]
 
-    # print(f'cython {image.shape = } {output_shape = }')
-    # print(f'{top = } {bottom = } {left = } {right = }')
-    # print(f'{list(range(top, image.shape[0] - bottom)) = } {list(range(left, image.shape[1] - right)) = }')
-
     cdef cnp.uint16_t lbp
     cdef Py_ssize_t r, c, changes, i
     cdef Py_ssize_t rot_index, n_ones
@@ -542,8 +600,8 @@ def _uniform_lbp_uint8_padded(cnp.uint8_t[:, ::1] image, int P, cnp.float64_t R,
             for c in range(left, image.shape[1] - right):
                 for i in range(P):
                     # types are [ image/cval, r/c, out ]
-                    bilinear_interpolation[cnp.uint8_t, cnp.float64_t, cnp.float64_t](
-                            &image[0, 0], rows, cols, r + rp[i], c + cp[i],
+                    bilinear_interpolation_absolute[cnp.uint8_t, cnp.float64_t, cnp.float64_t](
+                            &image[0, 0], rows, cols, r + rp[i], c + cp[i], r + abs_r - top + rp[i], c + abs_c - left + cp[i],
                             b'C', 0, &texture[i])
                 # signed / thresholded texture
                 for i in range(P):

@@ -3,7 +3,7 @@ from ._lbp import (
     _uniform_lbp_uint8, 
     _uniform_lbp_uint8_masked,
     _uniform_lbp_uint8_patch_masked, 
-    _uniform_lbp_uint8_padded
+    _uniform_lbp_uint8_padded_absolute
 )
 import numpy as np
 from numpy.typing import ArrayLike
@@ -47,7 +47,9 @@ def uniform_lbp_uint8(image: np.ndarray, P: int, R: float):
     assert P < 65530
     return _uniform_lbp_uint8(image, P, R)
 
-def uniform_lbp_uint8_padded(image: np.ndarray, P: int, R: float, paddings_top_bottom_left_right: ArrayLike):
+def uniform_lbp_uint8_padded_absolute(image: np.ndarray, P: int, R: float, 
+                                      abs_r: int, abs_c: int, 
+                                      paddings_top_bottom_left_right: ArrayLike):
     """Compute the uniform LBPs for the image.
 
     This version is adjusted for low memory usage. Input is uint8, output is uint16.
@@ -62,6 +64,8 @@ def uniform_lbp_uint8_padded(image: np.ndarray, P: int, R: float, paddings_top_b
         the angular space).
     R : float
         Radius of circle (spatial resolution of the operator).
+    abs_r, abs_c : int
+        Absolute pixel coordinates of the image origin.
     
     Returns
     -------
@@ -76,7 +80,7 @@ def uniform_lbp_uint8_padded(image: np.ndarray, P: int, R: float, paddings_top_b
 
     top, bottom, left, right = paddings_top_bottom_left_right
 
-    return _uniform_lbp_uint8_padded(image, P, R, top, bottom, left, right)
+    return _uniform_lbp_uint8_padded_absolute(image, P, R, abs_r, abs_c, top, bottom, left, right)
 
 def uniform_lbp_uint8_masked(image: np.ndarray, mask: np.ndarray, P: int, R: float):
     """Compute the uniform LBPs for the image with mask.

@@ -13,7 +13,7 @@ from .lbp import (
     uniform_lbp_uint8, 
     uniform_lbp_uint8_masked, 
     uniform_lbp_uint8_patch_masked,
-    uniform_lbp_uint8_padded
+    uniform_lbp_uint8_padded_absolute
 )
 
 def __worker_fastlbp(args):
@@ -214,17 +214,17 @@ def __chunked_worker_fastlbp(df_row_args):
 
         # determine the chunk padding in pixels
         padding_top = chunk_row * chunksize * patchsize
-        padding_top = padding_radius if padding_radius < padding_top else 0
+        padding_top = padding_radius if padding_radius < padding_top else padding_top
 
         padding_bottom = h - (chunk_row * chunksize * patchsize + chunk_dim_0)
-        padding_bottom = padding_radius if padding_radius < padding_bottom else 0
+        padding_bottom = padding_radius if padding_radius < padding_bottom else padding_bottom
 
 
         padding_left = chunk_col * chunksize * patchsize
-        padding_left = padding_radius if padding_radius < padding_left else 0
+        padding_left = padding_radius if padding_radius < padding_left else padding_left
 
         padding_right = w - (chunk_col * chunksize * patchsize + chunk_dim_1)
-        padding_right = padding_radius if padding_radius < padding_right else 0
+        padding_right = padding_radius if padding_radius < padding_right else padding_right
 
         # get coordinates and dimensions of the current chunk in patches
         # print(f'{chunk_dim_0 = } DEBUG')
@@ -376,10 +376,11 @@ def __chunked_worker_fastlbp(df_row_args):
                 # )
             else:
                 # if no mask is provided
-                log.debug(f"run_chunked_fastlbp: worker {jobname}({pid}): do not use mask")
+                log.debug(f"run_chunked_fastlbp: worker {jobname}({pid}) absolute coordinates {chunk_row_in_pixels} {chunk_col_in_pixels}: do not use mask")
 
-                lbp_results = uniform_lbp_uint8_padded(image=img_channel_chunk, P=job['npoints'], R=job['radius'], 
-                        paddings_top_bottom_left_right=[padding_top, padding_bottom, padding_left, padding_right])
+                lbp_results = uniform_lbp_uint8_padded_absolute(image=img_channel_chunk, P=job['npoints'], R=job['radius'], 
+                                                                abs_r=chunk_row_in_pixels, abs_c=chunk_col_in_pixels, 
+                                                                paddings_top_bottom_left_right=[padding_top, padding_bottom, padding_left, padding_right])
                 
             
             # assert lbp_results.dtype == _features_dtype
