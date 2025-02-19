@@ -6,12 +6,6 @@ from numpy.typing import ArrayLike
 from collections import namedtuple
 from scipy.linalg import block_diag
 
-import pickle
-
-def write_pickle(data, path: str) -> None:
-    with open(path, 'wb') as f:
-        pickle.dump(data, f)
-
 def create_sample_image(height: int, width: int, nchannels: Literal[1,3], type: Literal['png','jpg','tiff']='tiff', dir: str='tmp'):
     """
     Create a white noise image of specified size and file type.

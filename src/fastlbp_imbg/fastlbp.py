@@ -11,8 +11,6 @@ logging.basicConfig()
 log = logging.getLogger('fastlbp_imbg')
 log.setLevel('DEBUG')
 
-from .utils import write_pickle
-
 #####
 # MISC ROUTINES FOR INTERNAL USAGE
 
@@ -524,8 +522,6 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     jobs_idx = pd.IndexSlice
 
     jobs['img_name'] = img_name
-
-    # print(f'{nfeatures_cumsum = } DEBUG')
     
 
     channel_output_offset = 0
@@ -661,7 +657,6 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     log.info(f"run_chunked_fastlbp({pipeline_hash}): jobs:")
     log.info(jobs)
 
-    write_pickle(jobs, 'debug_chunked_jobs_df.pkl')
     assert jobs.isna().sum().sum() == 0
 
 
