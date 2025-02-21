@@ -66,7 +66,7 @@ FastlbpResult = namedtuple('FastlbpResult', 'output_abspath, patch_mask')
 
 def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayLike, 
                 patchsize: int, ncpus: int, 
-                img_mask=None, mask_method='any',
+                img_mask=None, img_patch_mask=None, mask_method='any',
                 max_ram=None, img_name='img', 
                 img_name_pixel_cache: str = 'img_pixel_cache',
                 outfile_name='lbp_features.npy', 
@@ -321,6 +321,18 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
 
         log.info(f"run_fastlbp({pipeline_hash}): mask processed.")
 
+    elif img_patch_mask is not None:
+        log.info(f"run_fastlbp({pipeline_hash}): using provided patch mask.")
+        patch_mask = img_patch_mask
+        assert patch_mask.shape == patch_mask_shape, f'{patch_mask.shape = } {patch_mask_shape = }'
+    
+        patch_mask_shm = shared_memory.SharedMemory(create=True, size=patch_mask.nbytes)
+        patch_mask_np = np.ndarray(patch_mask_shape, dtype=np.uint8, buffer=patch_mask_shm.buf)
+        np.copyto(patch_mask_np, patch_mask, casting='no')
+
+        log.info(f"run_fastlbp({pipeline_hash}): mask processed.")
+
+
     # create and initialize shared memory for output
     patch_features_shm = shared_memory.SharedMemory(
         create=True, size=(int(np.prod(patch_features_shape)) * np.dtype(_features_dtype).itemsize))
@@ -346,7 +358,7 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
 
     log.info(f'run_fastlbp({pipeline_hash}): creating a list of jobs took {time.perf_counter()-t:.5g}s')
     log.info(f"run_fastlbp({pipeline_hash}): jobs:")
-    log.info(jobs)
+    log.info(jobs.head())
 
     assert jobs.isna().sum().sum() == 0
 
@@ -377,7 +389,7 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
     
 def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayLike, 
                 patchsize: int, ncpus: int, chunksize: int = 1,
-                img_mask=None, mask_method='any',
+                img_mask=None, img_patch_mask=None, mask_method='any',
                 max_ram=None, img_name='img_chunked', 
                 img_name_pixel_cache: str = 'img_pixel_cache_chunked',
                 outfile_name='lbp_features_chunked.npy', 
@@ -430,7 +442,7 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
 
     log.info('run_chunked_fastlbp: params:')
     log.info("img_shape, radii_list, npoints_list, patchsize, ncpus, max_ram, img_name")
-    log.info(f"{img_data.shape}, {radii_list}, {npoints_list}, {patchsize}, {ncpus}, {max_ram}, {img_name}")
+    log.info(f"{img_data.shape}, {radii_list}, {npoints_list}, {patchsize}, {chunksize}, {ncpus}, {max_ram}, {img_name}")
     log.info(f"outfile_name={outfile_name}, save_intermediate_results={save_intermediate_results}, overwrite_output={overwrite_output}")
     log.info(f"pipeline hash is {pipeline_hash}")
 
@@ -613,8 +625,10 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
 
     # img_mask_shm = None   # per pixel mask
     patch_mask_shm = None # per patch mask
+
     patch_mask_shape = (nprows, npcols)
     patch_mask = None
+
     if img_mask is not None:
         log.info(f"run_fastlbp({pipeline_hash}): using image mask.")
         patch_mask = patchify_image_mask(img_mask, patchsize, edit_img_mask=False, method=mask_method)
@@ -628,7 +642,21 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
         patch_mask_np = np.ndarray(patch_mask_shape, dtype=np.uint8, buffer=patch_mask_shm.buf)
         np.copyto(patch_mask_np, patch_mask, casting='no')
 
-        log.info(f"run_chunked_fastlbp({pipeline_hash}): mask processed.")
+        log.info(f"run_chunked_fastlbp({pipeline_hash}): pixel mask converted to patch mask. Created shared memory for patch mask.")
+    elif img_patch_mask is not None:
+        log.info(f"run_fastlbp({pipeline_hash}): using patch mask.")
+        patch_mask = img_patch_mask
+
+        assert patch_mask.shape == patch_mask_shape
+    
+        patch_mask_shm = shared_memory.SharedMemory(create=True, size=patch_mask.nbytes)
+        patch_mask_np = np.ndarray(patch_mask_shape, dtype=np.uint8, buffer=patch_mask_shm.buf)
+        np.copyto(patch_mask_np, patch_mask, casting='no')
+
+        log.info(f"run_chunked_fastlbp({pipeline_hash}): created shared memory for patch mask.")
+
+    # else:
+    #     patch_mask = None
 
     # create and initialize shared memory for output
     patch_features_shm = shared_memory.SharedMemory(
@@ -655,7 +683,7 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
 
     log.info(f'run_chunked_fastlbp({pipeline_hash}): creating a list of jobs took {time.perf_counter()-t:.5g}s')
     log.info(f"run_chunked_fastlbp({pipeline_hash}): jobs:")
-    log.info(jobs)
+    log.info(jobs.head())
 
     assert jobs.isna().sum().sum() == 0
 

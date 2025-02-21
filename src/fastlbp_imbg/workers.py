@@ -13,7 +13,9 @@ from .lbp import (
     uniform_lbp_uint8, 
     uniform_lbp_uint8_masked, 
     uniform_lbp_uint8_patch_masked,
-    uniform_lbp_uint8_padded_absolute
+    uniform_lbp_uint8_padded_absolute, 
+    uniform_lbp_uint8_padded_absolute_masked, 
+    uniform_lbp_uint8_padded_absolute_patch_masked
 )
 
 def __worker_fastlbp(args):
@@ -86,6 +88,8 @@ def __worker_fastlbp(args):
                 using_patch_mask = 'patch_mask_shm_name' in job and job['patch_mask_shm_name']
 
                 # TODO: DEBUG: test this
+                # add mask/no_mask in the cached result names to distinguish between
+                # different types of cache (masked vs not masked)  
                 if using_patch_mask:
                     patch_mask_shm = shared_memory.SharedMemory(name=job['patch_mask_shm_name'])
                     patch_mask = np.ndarray((nprows, npcols), dtype=np.uint8, buffer=patch_mask_shm.buf)
@@ -305,6 +309,7 @@ def __chunked_worker_fastlbp(df_row_args):
                 # TODO: add mask support
                 if using_patch_mask:
                     log.error(f'Mask is not supported yet in the chunked mode')
+                    raise AssertionError('Mask is not supported yet in chunk mode pixel cache')
                 else:
                     # compute histograms for patches inside the current chunk
                     for patch_i in range(chunk_dim_0_patches):
@@ -355,25 +360,46 @@ def __chunked_worker_fastlbp(df_row_args):
             using_patch_mask = 'patch_mask_shm_name' in job and job['patch_mask_shm_name']
 
             if using_image_mask:
-                log.error(f'Mask in not supported yet in the chunked mode')
-                # log.debug(f"run_fastlbp: worker {jobname}({pid}): using image mask")
-                # img_mask_shm = shared_memory.SharedMemory(name=job['img_mask_shm_name'])
-                # img_mask = np.ndarray((h,w), dtype=np.uint8, buffer=img_mask_shm.buf)
-                # img_mask_patch = get_patch(img_mask, patchsize, patch_i, patch_j)
-                # lbp_results = uniform_lbp_uint8_masked(
-                #     image=img_channel_patch, mask=img_mask_patch, 
-                #     P=job['npoints'], R=job['radius']
-                # )
-                # img_mask_shm.close()
+                log.debug(f"run_chunked_fastlbp: worker {jobname}({pid}): using image mask")
+                img_mask_shm = shared_memory.SharedMemory(name=job['img_mask_shm_name'])
+                img_mask = np.ndarray((h, w), dtype=np.uint8, buffer=img_mask_shm.buf)
+                
+                # we don't need to use padding for chunk mask as 
+                # the LBP codes are not computed for the padding region anyway
+                img_mask_chunk = get_padded_region(img_mask, chunk_row_in_pixels, chunk_col_in_pixels, 
+                                                   chunk_dim_0, chunk_dim_1, 0, 0, 0, 0)
+                
+                img_mask_chunk = np.ascontiguousarray(img_mask_chunk)
+                
+                lbp_results = uniform_lbp_uint8_padded_absolute_masked(image=img_channel_chunk, 
+                                                                       mask=img_mask_chunk, P=job['npoints'], R=job['radius'], 
+                                                                       abs_r=chunk_row_in_pixels, abs_c=chunk_col_in_pixels, 
+                                                                       paddings_top_bottom_left_right=[padding_top, padding_bottom, padding_left, padding_right])
+
+                img_mask_shm.close()
+
             elif using_patch_mask:
-                log.error(f'Mask in not supported yet in the chunked mode')
-                # log.debug(f"run_fastlbp: worker {jobname}({pid}): using patch mask")
-                # patch_mask_shm = shared_memory.SharedMemory(name=job['patch_mask_shm_name'])
-                # patch_mask = np.ndarray((nprows, npcols), dtype=np.uint8, buffer=patch_mask_shm.buf)
-                # lbp_results = uniform_lbp_uint8_patch_masked(
-                #     image=img_channel_patch, patch_mask=patch_mask, patchsize=patchsize, 
-                #     P=job['npoints'], R=job['radius']
-                # )
+                log.debug(f"run_chunked_fastlbp: worker {jobname}({pid}): using patch mask")
+
+                patch_mask_shm = shared_memory.SharedMemory(name=job['patch_mask_shm_name'])
+                patch_mask = np.ndarray((nprows, npcols), dtype=np.uint8, buffer=patch_mask_shm.buf)
+
+                # get region from the patch mask corresponding to the current chunk
+                # no padding is needed for that, I just use this func instead of explicit slices
+                # TODO: add get_region() function to utils
+                log.error(f'{patch_mask.shape = } Getting this region from patcheed mask {chunk_row_in_patches = } {chunk_col_in_patches = } {chunk_dim_0_patches = } {chunk_dim_1_patches = } ')
+                patch_mask_chunk = get_padded_region(patch_mask, chunk_row_in_patches, chunk_col_in_patches, 
+                                                     chunk_dim_0_patches, chunk_dim_1_patches, 
+                                                     0, 0, 0, 0)
+                
+                patch_mask_chunk = np.ascontiguousarray(patch_mask_chunk)
+
+                lbp_results = uniform_lbp_uint8_padded_absolute_patch_masked(image=img_channel_chunk, 
+                                                                             patch_mask=patch_mask_chunk, patchsize=patchsize, 
+                                                                             P=job['npoints'], R=job['radius'], 
+                                                                             abs_r=chunk_row_in_pixels, abs_c=chunk_col_in_pixels, 
+                                                                             paddings_top_bottom_left_right=[padding_top, padding_bottom, padding_left, padding_right])
+
             else:
                 # if no mask is provided
                 log.debug(f"run_chunked_fastlbp: worker {jobname}({pid}) absolute coordinates {chunk_row_in_pixels} {chunk_col_in_pixels}: do not use mask")
@@ -392,6 +418,11 @@ def __chunked_worker_fastlbp(df_row_args):
             # compute histograms for patches inside the current chunk
             for patch_i in range(chunk_dim_0_patches):
                 for patch_j in range(chunk_dim_1_patches):
+
+                    if using_patch_mask and patch_mask_chunk[patch_i, patch_j] == 0:
+                        job_chunk_histogram[patch_i, patch_j, :] = 0
+                        continue
+
                     curr_patch_lbp_results = get_patch(lbp_results, patchsize, patch_i, patch_j)
 
                     curr_patch_hist = np.bincount(
@@ -401,8 +432,7 @@ def __chunked_worker_fastlbp(df_row_args):
                     job_chunk_histogram[patch_i, patch_j, :] = curr_patch_hist
 
             if using_patch_mask:
-                log.error('No, we still dont support the mask')
-                # patch_mask_shm.close()
+                patch_mask_shm.close()
             if tmp_fpath:
                 try:
                     os.makedirs( os.path.dirname(tmp_fpath), exist_ok=True)
