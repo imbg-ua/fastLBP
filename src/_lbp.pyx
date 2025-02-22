@@ -746,26 +746,26 @@ def _uniform_lbp_uint8_padded_absolute_patch_masked(cnp.uint8_t[:, ::1] image, c
                                     &image[0, 0], rows, cols, r + rp[i], c + cp[i], r + abs_r - top + rp[i], c + abs_c - left + cp[i],
                                     b'C', 0, &texture[i])
 
-                            # signed / thresholded texture
-                            for i in range(P):
-                                if texture[i] - image[r, c] >= 0:
-                                    signed_texture[i] = 1
-                                else:
-                                    signed_texture[i] = 0
-
-                            lbp = 0
-
-                            # determine number of 0 - 1 changes
-                            changes = 0
-                            for i in range(P - 1):
-                                changes += (signed_texture[i] - signed_texture[i + 1]) != 0
-                            if changes <= 2:
-                                for i in range(P):
-                                    lbp += signed_texture[i]
+                        # signed / thresholded texture
+                        for i in range(P):
+                            if texture[i] - image[r, c] >= 0:
+                                signed_texture[i] = 1
                             else:
-                                lbp = P + 1
+                                signed_texture[i] = 0
 
-                            output[r - top, c - left] = lbp
+                        lbp = 0
+
+                        # determine number of 0 - 1 changes
+                        changes = 0
+                        for i in range(P - 1):
+                            changes += (signed_texture[i] - signed_texture[i + 1]) != 0
+                        if changes <= 2:
+                            for i in range(P):
+                                lbp += signed_texture[i]
+                        else:
+                            lbp = P + 1
+
+                        output[r - top, c - left] = lbp
 
     return np.asarray(output)
 

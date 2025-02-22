@@ -366,6 +366,8 @@ def __chunked_worker_fastlbp(df_row_args):
                 
                 # we don't need to use padding for chunk mask as 
                 # the LBP codes are not computed for the padding region anyway
+
+                # FIXME: reduce mask usage overhead in chunked version
                 img_mask_chunk = get_padded_region(img_mask, chunk_row_in_pixels, chunk_col_in_pixels, 
                                                    chunk_dim_0, chunk_dim_1, 0, 0, 0, 0)
                 

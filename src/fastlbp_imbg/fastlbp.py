@@ -319,7 +319,7 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
         patch_mask_np = np.ndarray(patch_mask_shape, dtype=np.uint8, buffer=patch_mask_shm.buf)
         np.copyto(patch_mask_np, patch_mask, casting='no')
 
-        log.info(f"run_fastlbp({pipeline_hash}): mask processed.")
+        log.info(f"run_fastlbp({pipeline_hash}): mask copied into shared memory region.")
 
     elif img_patch_mask is not None:
         log.info(f"run_fastlbp({pipeline_hash}): using provided patch mask.")
@@ -330,7 +330,7 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
         patch_mask_np = np.ndarray(patch_mask_shape, dtype=np.uint8, buffer=patch_mask_shm.buf)
         np.copyto(patch_mask_np, patch_mask, casting='no')
 
-        log.info(f"run_fastlbp({pipeline_hash}): mask processed.")
+        log.info(f"run_fastlbp({pipeline_hash}): patch mask copied into shared memory region.")
 
 
     # create and initialize shared memory for output
