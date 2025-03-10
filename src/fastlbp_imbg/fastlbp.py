@@ -26,8 +26,11 @@ def __sanitize_outfile_name(outfile_name):
     return outfile_name + ".npy"
 def __get_output_dir(path: str | None = None):
     return 'data/out' if path is None else path
-def __get_tmp_dir(pipeline_name):
-    return os.path.join("data/tmp/", pipeline_name)
+def __get_tmp_dir(pipeline_name, path: str | None = None):
+    tmp_savedir = 'data/tmp/' if path is None else path
+    return os.path.join(tmp_savedir, pipeline_name)
+def __get_tmp_dir_explicit(pipeline_name, path: str):
+    return os.path.join(path, pipeline_name)
 
 #####
 # PUBLIC UTILS
@@ -388,14 +391,14 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
     return FastlbpResult(output_abspath, patch_mask)
     
 def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayLike, 
-                patchsize: int, ncpus: int, chunksize: int = 1,
+                patchsize: int, ncpus: int, chunksize: int = 20,
                 img_mask=None, img_patch_mask=None, mask_method='any',
                 max_ram=None, img_name='img_chunked', 
                 img_name_pixel_cache: str = 'img_pixel_cache_chunked',
                 outfile_name='lbp_features_chunked.npy', 
-                outdir: str | None = None, 
-                save_intermediate_results: bool | str = True, 
-                lbp_results_cache_dir: str | None = None,
+                outdir: str | None = None,
+                histograms_cache_dir: str | None = None,
+                lbp_codes_cache_dir: str | None = None,
                 overwrite_output=False) -> FastlbpResult:
     
     """
@@ -436,15 +439,31 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     # this way pipelines with different ncpus/radii/npoints can reuse tmp files if patchsize, img name and version are the same 
     pipeline_hash = __create_pipeline_hash("fastlbp-chunked", [str(img_data.shape), patchsize, chunksize, 
                                                        'mask' if img_mask is not None else 'no_mask', 
-                                                       mask_method if img_mask is not None else ''])
+                                                        mask_method if img_mask is not None else ''])
+
+    # pixel cache consists of LBP codes before they are grouped into histograms
+    # therefore it is invariant to the patch size parameter and 
+    # requires a separate hash that does not depend on patch size
+
+    # UPDATE: the statement above is not correct for the chunked version
+    # the chunks consist of a whole number of patches
+    # meaning that changing the patch size will alter the splitting pattern
+    # and the shape of the cached results
+    # TODO: add separate pipeline hash for pixel cache in the regular function (not chunked)
+    pipeline_hash_lbp_codes = __create_pipeline_hash("fastlbp-chunked", [str(img_data.shape), patchsize, chunksize, 
+                                                       'mask' if img_mask is not None else 'no_mask', 
+                                                        mask_method if img_mask is not None else ''])
+
     pipeline_name = f"{img_name}-fastlbp-chunked-{pipeline_hash}"
+    pipeline_name_lbp_codes = f"{img_name}-fastlbp-chunked-{pipeline_hash_lbp_codes}"
 
 
     log.info('run_chunked_fastlbp: params:')
     log.info("img_shape, radii_list, npoints_list, patchsize, ncpus, max_ram, img_name")
     log.info(f"{img_data.shape}, {radii_list}, {npoints_list}, {patchsize}, {chunksize}, {ncpus}, {max_ram}, {img_name}")
-    log.info(f"outfile_name={outfile_name}, save_intermediate_results={save_intermediate_results}, overwrite_output={overwrite_output}")
+    log.info(f"{outfile_name=}, {histograms_cache_dir=}, {lbp_codes_cache_dir=}, {overwrite_output=}")
     log.info(f"pipeline hash is {pipeline_hash}")
+    log.info(f"pipeline LBP codes hash is {pipeline_hash_lbp_codes}")
 
 
     assert ncpus >= -1
@@ -577,28 +596,28 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     jobs['chunksize'] = chunksize
 
 
-    if lbp_results_cache_dir:
-        jobs['tmp_fpath_pixel'] = jobs.apply(
-            lambda row: os.path.join(lbp_results_cache_dir, row['pixel_cache_label']) + '.npy', 
+    # get the tmp path to read cached results from (if None then default is 'data/tmp')
+    # the cache will be saved/ovewritten only if the corresponding flags are set to True
+    # `save_results_cache`, `save_lbp_codes_cache`,
+
+    # if histograms_cache_dir is set, save cached lbp results
+    if histograms_cache_dir is not None:
+        base_tmp_path = __get_tmp_dir_explicit(pipeline_name, histograms_cache_dir)
+        jobs['tmp_fpath'] = jobs.apply(
+            lambda row: os.path.join(base_tmp_path, row['label']) + '.npy',
             axis='columns'
         )
     else:
-        jobs['tmp_fpath_pixel'] = ""
-
-
-    # TODO: refactor this conditional (boolean option left for backward compatibility)
-    base_tmp_path = ''
-    if isinstance(save_intermediate_results, bool):
-        if save_intermediate_results:
-            base_tmp_path = __get_tmp_dir(pipeline_name)
-    else:
-        base_tmp_path = save_intermediate_results
-
-    if base_tmp_path:
-        jobs['tmp_fpath'] = jobs.apply(
-            lambda row: f"{base_tmp_path}/{row['label']}.npy", axis='columns')
-    else: 
         jobs['tmp_fpath'] = ""
+
+    # if lbp codes cache dir is set save raw LBP results
+    if lbp_codes_cache_dir is not None:
+        base_tmp_path_lbp_codes = __get_tmp_dir_explicit(pipeline_name_lbp_codes, lbp_codes_cache_dir)
+        jobs['tmp_fpath_pixel'] = jobs.apply(
+            lambda row: os.path.join(base_tmp_path_lbp_codes, row['pixel_cache_label']) + '.npy', 
+            axis='columns')
+    else:
+        jobs['tmp_fpath_pixel'] = ""
 
 
     total_nfeatures = nfeatures_per_channel * len(channel_list)
