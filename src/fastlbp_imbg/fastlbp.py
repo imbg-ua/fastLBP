@@ -393,13 +393,10 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
 def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayLike, 
                 patchsize: int, ncpus: int, chunksize: int = 20,
                 img_mask=None, img_patch_mask=None, mask_method='any',
-                max_ram=None, img_name='img_chunked', 
-                img_name_pixel_cache: str = 'img_pixel_cache_chunked',
-                outfile_name='lbp_features_chunked.npy', 
-                outdir: str | None = None,
+                max_ram=None, img_name='img_chunked',
+                jobs_csv_savefile: str | None = None,
                 histograms_cache_dir: str | None = None,
-                lbp_codes_cache_dir: str | None = None,
-                overwrite_output=False) -> FastlbpResult:
+                lbp_codes_cache_dir: str | None = None) -> np.array:
     
     """
     The main idea is to split the image into overlapping chunks that enclose
@@ -433,7 +430,6 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
 
 
     img_name = __sanitize_img_name(img_name)
-    outfile_name = __sanitize_outfile_name(outfile_name)
 
 
     # this way pipelines with different ncpus/radii/npoints can reuse tmp files if patchsize, img name and version are the same 
@@ -461,7 +457,7 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     log.info('run_chunked_fastlbp: params:')
     log.info("img_shape, radii_list, npoints_list, patchsize, ncpus, max_ram, img_name")
     log.info(f"{img_data.shape}, {radii_list}, {npoints_list}, {patchsize}, {chunksize}, {ncpus}, {max_ram}, {img_name}")
-    log.info(f"{outfile_name=}, {histograms_cache_dir=}, {lbp_codes_cache_dir=}, {overwrite_output=}")
+    log.info(f"{histograms_cache_dir=}, {lbp_codes_cache_dir=}")
     log.info(f"pipeline hash is {pipeline_hash}")
     log.info(f"pipeline LBP codes hash is {pipeline_hash_lbp_codes}")
 
@@ -477,23 +473,6 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
 
     if max_ram is not None:
         log.warning("max_ram parameter is currently ignored!")
-
-    
-    # check if output file is writable
-
-    output_fpath = os.path.join(__get_output_dir(outdir), outfile_name)
-    output_abspath = os.path.abspath(output_fpath)
-    try:
-        if os.path.exists(output_fpath) and not overwrite_output:
-            log.error(f'run_chunked_fastlbp({pipeline_hash}): overwrite_output is False and output file {output_abspath} already exists. Aborting.')
-            return FastlbpResult(output_abspath, None)
-        os.makedirs(__get_output_dir(outdir), exist_ok=True)
-        if not os.access(__get_output_dir(outdir), os.W_OK):
-            log.error(f'run_chunked_fastlbp({pipeline_hash}): output dir {os.path.dirname(output_abspath)} is not writable. Aborting.')
-            return FastlbpResult(output_abspath, None)
-    except:
-        log.error(f'run_chunked_fastlbp({pipeline_hash}): error accessing output dir {os.path.dirname(output_abspath)}. Aborting.')
-        return FastlbpResult(output_abspath, None)
 
     log.info(f'run_chunked_fastlbp({pipeline_hash}): initial setup took {time.perf_counter()-t:.5g}s')
     log.info(f'run_chunked_fastlbp({pipeline_hash}): creating a list of jobs...')
@@ -531,8 +510,7 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
         col_chunk_indices = np.append(col_chunk_indices, [n_chunk_cols])
         col_chunk_dims = np.append(col_chunk_dims, [remaining_pixels_cols])
 
-    # print(f'{row_chunk_dims = } {col_chunk_dims = }')
-    
+
     assert len(row_chunk_indices) == len(row_chunk_dims)
     assert len(col_chunk_indices) == len(col_chunk_dims)
     
@@ -588,6 +566,7 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     jobs['label'] = jobs.apply(
         lambda row: f"{img_name}_chunk_origin{row['chunk_origin_0']}-{row['chunk_origin_1']}_chunk_dim{row['chunk_dim_0']}-{row['chunk_dim_1']}_c{row.name[0]}_r{row.name[1]}_p{row['npoints']}", axis='columns')
 
+    img_name_pixel_cache = img_name + '_lbp_codes'
     jobs['pixel_cache_label'] = jobs.apply(
         lambda row: f"{img_name_pixel_cache}_chunk_origin{row['chunk_origin_0']}-{row['chunk_origin_1']}_chunk_dim{row['chunk_dim_0']}-{row['chunk_dim_1']}_c{row.name[0]}_r{row.name[1]}_p{row['npoints']}", axis='columns')
     
@@ -693,12 +672,16 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     jobs['img_shape_2'] = input_img_np.shape[2] # w
     jobs['output_shm_name'] = patch_features_shm.name
 
-    # Log jobs before sorting
-    jobs.to_csv(__get_output_dir(outdir) + f"/jobs_{img_name}.csv")
     
     # Sort jobs starting from the longest ones, i.e. from larger radii to smaller ones.
     # `level=1` values are radii
     jobs.sort_index(level=1, ascending=False, inplace=True)
+
+    if jobs_csv_savefile is not None:
+        jobs_csv_savedir = os.path.dirname(jobs_csv_savefile)
+        if jobs_csv_savedir:
+            os.makedirs(jobs_csv_savedir, exist_ok=True)
+        jobs.to_csv(jobs_csv_savefile)
 
     log.info(f'run_chunked_fastlbp({pipeline_hash}): creating a list of jobs took {time.perf_counter()-t:.5g}s')
     log.info(f"run_chunked_fastlbp({pipeline_hash}): jobs:")
@@ -716,18 +699,19 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     t_elapsed = time.perf_counter() - t0
     log.info(f'run_chunked_fastlbp({pipeline_hash}): computation finished in {t_elapsed:.5g}s. Start saving')
 
-    # save results
-
-    np.save(output_fpath, patch_features)
-    log.info(f'run_chunked_fastlbp({pipeline_hash}): saving finished to {output_fpath}')
+    lbp_result = patch_features.copy()
     
     input_img_shm.unlink()
+    input_img_shm.close()
     patch_features_shm.unlink()
+    patch_features_shm.close()
+
     # if img_mask_shm is not None:
     #     img_mask_shm.unlink()
     if patch_mask_shm is not None:
         patch_mask_shm.unlink()
+        patch_mask_shm.close()
 
     log.info(f"run_chunked_fastlbp({pipeline_hash}): shared memory unlinked. Goodbye")
     
-    return FastlbpResult(output_abspath, patch_mask)
+    return lbp_result
