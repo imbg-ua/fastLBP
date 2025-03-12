@@ -310,22 +310,32 @@ def __chunked_worker_fastlbp(df_row_args):
 
                 using_patch_mask = 'patch_mask_shm_name' in job and job['patch_mask_shm_name']
 
-                # TODO: add mask support
                 if using_patch_mask:
-                    log.error(f'Mask is not supported yet in the chunked mode')
-                    raise AssertionError('Mask is not supported yet in chunk mode pixel cache')
-                else:
-                    # compute histograms for patches inside the current chunk
-                    for patch_i in range(chunk_dim_0_patches):
-                        for patch_j in range(chunk_dim_1_patches):
-                            chunk_patch_hist = get_patch(cached_result_mm_pixel, 
-                                                         patchsize, 
-                                                         patch_i, patch_j)
-                            hist = np.bincount(
-                                chunk_patch_hist.flat, 
-                                minlength=job_nfeatures)
+                    patch_mask_shm = shared_memory.SharedMemory(name=job['patch_mask_shm_name'])
+                    patch_mask = np.ndarray((nprows, npcols), dtype=np.uint8, buffer=patch_mask_shm.buf)
+                    patch_mask_chunk = get_padded_region(patch_mask, 
+                                                         chunk_row_in_patches, 
+                                                         chunk_col_in_patches, 
+                                                         chunk_dim_0_patches, 
+                                                         chunk_dim_1_patches, 
+                                                         0, 0, 0, 0)
 
-                            job_chunk_histogram[patch_i, patch_j, :] = hist
+
+                # compute histograms for patches inside the current chunk
+                for patch_i in range(chunk_dim_0_patches):
+                    for patch_j in range(chunk_dim_1_patches):
+                        if using_patch_mask and patch_mask_chunk[patch_i, patch_j] == 0:
+                            job_chunk_histogram[patch_i, patch_j, :] = 0
+                            continue
+
+                        chunk_patch_hist = get_patch(cached_result_mm_pixel, 
+                                                     patchsize, 
+                                                     patch_i, patch_j)
+                        hist = np.bincount(
+                            chunk_patch_hist.flat, 
+                            minlength=job_nfeatures)
+
+                        job_chunk_histogram[patch_i, patch_j, :] = hist
 
                     # save grouped cache if it doesn't exists but was requested
                     if tmp_fpath:
