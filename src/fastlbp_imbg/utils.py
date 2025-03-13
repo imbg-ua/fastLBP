@@ -1,6 +1,7 @@
 # This file does not depend on fastlbp_imbg lib and fastlbp.py file.
 
 import numpy as np
+import logging
 from typing import Literal, Any, Union
 from numpy.typing import ArrayLike
 from collections import namedtuple
@@ -230,6 +231,15 @@ def patchify_image_mask(img_mask, patchsize, edit_img_mask=False, method='any'):
                 
     return patch_mask
 
+def int_verbosity_to_logger_level(level: int) -> int:
+    max_level = 4
+    
+    level = int(max(level, 1))
+    level = min(level, max_level)
+
+    assert 1 <= level <= max_level
+
+    return (max_level + 1 - level) * 10
 
 """
 Reduced features utils.

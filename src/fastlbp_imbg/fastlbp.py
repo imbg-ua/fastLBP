@@ -9,7 +9,10 @@ import logging
 
 logging.basicConfig()
 log = logging.getLogger('fastlbp_imbg')
-log.setLevel('DEBUG')
+
+DEFAULT_LEVEL = logging.WARNING
+
+log.setLevel(DEFAULT_LEVEL)
 
 #####
 # MISC ROUTINES FOR INTERNAL USAGE
@@ -389,18 +392,22 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
     log.info(f"run_fastlbp({pipeline_hash}): shared memory unlinked. Goodbye")
     
     return FastlbpResult(output_abspath, patch_mask)
-    
+
 def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayLike, 
                 patchsize: int, ncpus: int, chunksize: int = 20,
                 img_mask=None, img_patch_mask=None, mask_method='any',
                 max_ram=None, img_name='img_chunked',
                 jobs_csv_savefile: str | None = None,
                 histograms_cache_dir: str | None = None,
-                lbp_codes_cache_dir: str | None = None) -> np.array:
+                lbp_codes_cache_dir: str | None = None, 
+                verbosity: int = 1) -> np.array:
     
     """
     The main idea is to split the image into overlapping chunks that enclose
     patches with a surrounding padding of the largest radius size.
+
+    verbosity: int, default 1. 
+        Choose between 1, 2, 3, 4.
     """
 
     import time
@@ -409,7 +416,10 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     from multiprocessing import Pool, shared_memory
     from .common import _features_dtype
     from .workers import __chunked_worker_fastlbp
-    from .utils import patchify_image_mask
+    from .utils import patchify_image_mask, int_verbosity_to_logger_level
+
+    logger_level = int_verbosity_to_logger_level(verbosity)
+    log.setLevel(logger_level)
 
 
     # validate params and prepare a pipeline
@@ -686,6 +696,7 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     log.info(f'run_chunked_fastlbp({pipeline_hash}): creating a list of jobs took {time.perf_counter()-t:.5g}s')
     log.info(f"run_chunked_fastlbp({pipeline_hash}): jobs:")
     log.info(jobs.head())
+    log.info(f'Jobs DataFrame shape: {jobs.shape}')
 
     assert jobs.isna().sum().sum() == 0
 
@@ -713,5 +724,8 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
         patch_mask_shm.close()
 
     log.info(f"run_chunked_fastlbp({pipeline_hash}): shared memory unlinked. Goodbye")
+
+    # reset logger to its original level
+    log.setLevel(DEFAULT_LEVEL)
     
     return lbp_result
