@@ -35,10 +35,10 @@ def __worker_fastlbp(args):
         output_offset = job['output_offset']
         
         patchsize = job['patchsize']
-        nchannels,h,w = shape
-        nprows, npcols = h//patchsize, w//patchsize
+        nchannels, h, w = shape
+        nprows, npcols = h // patchsize, w // patchsize
         
-        job_nfeatures = job['npoints']+2
+        job_nfeatures = job['npoints'] + 2
         job_patch_histograms_shape = (nprows, npcols, job_nfeatures)
 
         # Obtain output memory
@@ -46,12 +46,14 @@ def __worker_fastlbp(args):
 
         all_patch_histograms = np.ndarray(
             (nprows, npcols, total_nfeatures), dtype=_features_dtype, buffer=output_shm.buf)
-        job_patch_histograms = all_patch_histograms[:,:,output_offset:(output_offset+job_nfeatures)]
+        job_patch_histograms = all_patch_histograms[:, :, output_offset:(output_offset + job_nfeatures)]
 
 
         
         # Try to use cached data
         cached_result_mm = None
+        cached_result_mm_pixel = None
+
         if not tmp_fpath:
             log.debug(f"run_fastlbp: worker {jobname}({pid}): skipping cache")
         else:
@@ -60,6 +62,16 @@ def __worker_fastlbp(args):
             except:
                 cached_result_mm = None
                 log.debug(f"run_fastlbp: worker {jobname}({pid}): no usable cache")
+
+        # read pixel level cache if available
+        if not tmp_fpath_pixel:
+            log.debug(f'run_fastlbp: worker {jobname}({pid}): skipping pixel cache')
+        else:
+            try:
+                cached_result_mm_pixel = np.load(tmp_fpath_pixel, mmap_mode='r')
+            except:
+                cached_result_mm_pixel = None
+                log.debug(f"run_fastlbp: worker {jobname}({pid}): no usable pixel cache")
         
         # use cached results if found
         if cached_result_mm is not None:
@@ -69,20 +81,7 @@ def __worker_fastlbp(args):
             np.copyto(job_patch_histograms, cached_result_mm)
         
         # try to read pixel level cache
-        else:
-
-            # read pixel level cache if available
-            cached_result_mm_pixel = None
-            if not tmp_fpath_pixel:
-                log.debug(f'run_fastlbp: worker {jobname}({pid}): skipping pixel cache')
-            else:
-                try:
-                    cached_result_mm_pixel = np.load(tmp_fpath_pixel, mmap_mode='r')
-                except:
-                    cached_result_mm_pixel = None
-                    log.debug(f"run_fastlbp: worker {jobname}({pid}): no usable pixel cache")
-
-            if cached_result_mm_pixel is not None:
+        elif cached_result_mm_pixel is not None:
                 # use pixel level cache to group features into patches and return
                 log.info(f'run_fastlbp: worker {jobname}({pid}): pixel cache found! Grouping into patches and copying to output.')
                 using_patch_mask = 'patch_mask_shm_name' in job and job['patch_mask_shm_name']
@@ -104,9 +103,22 @@ def __worker_fastlbp(args):
                                 minlength=job_nfeatures
                                 )
                             job_patch_histograms[pr, pc, :] = hist
+                            
+                # save grouped cache if it doesn't exists but was requested
+                if tmp_fpath:
+                    log.debug(f"run_chunked_fastlbp: worker {jobname}({pid}): saving cached histograms from the pixel cache")
+                    try:
+                        os.makedirs( os.path.dirname(tmp_fpath), exist_ok=True)
+                        np.save(tmp_fpath, job_patch_histograms)
+                    except:
+                        log.warning(f"run_chunked_fastlbp: worker {jobname}({pid}): computation successful, but cannot save grouped tmp file from lbp codes")
 
-        
-        if cached_result_mm is None and cached_result_mm_pixel is None: 
+        # calculate LBP in two cases
+        # 1. No cached results were found
+        # 2. Pixel cache was requested but not found, which means it must be created from scratch. 
+        # (As it is not possible to ungroup the patch cache even if it exists)
+
+        if (cached_result_mm is None and cached_result_mm_pixel is None) or (cached_result_mm_pixel is None and tmp_fpath_pixel): 
              # Compute full LBP and save different types of cache for now
              # TODO: FIXME: use different flags to save different types of cache
              # (patch level and/or pixel level) 
@@ -149,20 +161,23 @@ def __worker_fastlbp(args):
 
             for pr in range(nprows):
                 for pc in range(npcols):
-                    if using_patch_mask and patch_mask[pr,pc] == 0:
-                        job_patch_histograms[pr,pc,:] = 0
+                    if using_patch_mask and patch_mask[pr, pc] == 0:
+                        job_patch_histograms[pr, pc, :] = 0
                     else:
                         hist = np.bincount(
                             get_patch(lbp_results, patchsize, pr, pc).flat, 
                             minlength=job_nfeatures
                             )
-                        job_patch_histograms[pr,pc,:] = hist
+                        job_patch_histograms[pr, pc, :] = hist
 
             if using_patch_mask:
                 patch_mask_shm.close()
-            if tmp_fpath:
+
+            # don't overwrite the grouped cache if it exists and
+            # we just recalculated LBP to save raw codes cache
+            if tmp_fpath and cached_result_mm is None:
                 try:
-                    os.makedirs( os.path.dirname(tmp_fpath), exist_ok=True)
+                    os.makedirs(os.path.dirname(tmp_fpath), exist_ok=True)
                     np.save(tmp_fpath, job_patch_histograms)
                 except:
                     log.warning(f"run_fastlbp: worker {jobname}({pid}): computation successful, but cannot save tmp file")
@@ -282,6 +297,16 @@ def __chunked_worker_fastlbp(df_row_args):
             except:
                 cached_result_mm = None
                 log.debug(f"run_chunked_fastlbp: worker {jobname}({pid}): no usable cache")
+
+        # read pixel level cache if available
+        if not tmp_fpath_pixel:
+            log.debug(f'run_chunked_fastlbp: worker {jobname}({pid}): skipping pixel cache')
+        else:
+            try:
+                cached_result_mm_pixel = np.load(tmp_fpath_pixel, mmap_mode='r')
+            except:
+                cached_result_mm_pixel = None
+                log.debug(f"run_chunked_fastlbp: worker {jobname}({pid}): no usable pixel cache")
         
         # use cached results if found
         if cached_result_mm is not None:
@@ -291,20 +316,7 @@ def __chunked_worker_fastlbp(df_row_args):
             np.copyto(job_chunk_histogram, cached_result_mm)
         
         # else try to read pixel level cache
-        else:
-
-            # read pixel level cache if available
-            cached_result_mm_pixel = None
-            if not tmp_fpath_pixel:
-                log.debug(f'run_chunked_fastlbp: worker {jobname}({pid}): skipping pixel cache')
-            else:
-                try:
-                    cached_result_mm_pixel = np.load(tmp_fpath_pixel, mmap_mode='r')
-                except:
-                    cached_result_mm_pixel = None
-                    log.debug(f"run_chunked_fastlbp: worker {jobname}({pid}): no usable pixel cache")
-
-            if cached_result_mm_pixel is not None:
+        elif cached_result_mm_pixel is not None:
                 # use pixel level cache to group features into patches and return
                 log.info(f'run_chunked_fastlbp: worker {jobname}({pid}): pixel cache found! Grouping into patches and copying to output.')
 
@@ -337,14 +349,14 @@ def __chunked_worker_fastlbp(df_row_args):
 
                         job_chunk_histogram[patch_i, patch_j, :] = hist
 
-                    # save grouped cache if it doesn't exists but was requested
-                    if tmp_fpath:
-                        log.debug(f"run_chunked_fastlbp: worker {jobname}({pid}): saving cached histograms from the pixel cache")
-                        try:
-                            os.makedirs( os.path.dirname(tmp_fpath), exist_ok=True)
-                            np.save(tmp_fpath, job_chunk_histogram)
-                        except:
-                            log.warning(f"run_chunked_fastlbp: worker {jobname}({pid}): computation successful, but cannot save tmp file")
+                # save grouped cache if it doesn't exists but was requested
+                if tmp_fpath:
+                    log.debug(f"run_chunked_fastlbp: worker {jobname}({pid}): saving cached histograms from the pixel cache")
+                    try:
+                        os.makedirs( os.path.dirname(tmp_fpath), exist_ok=True)
+                        np.save(tmp_fpath, job_chunk_histogram)
+                    except:
+                        log.warning(f"run_chunked_fastlbp: worker {jobname}({pid}): computation successful, but cannot save grouped tmp file from lbp codes")
 
         
         # calculate LBP in two cases
@@ -467,7 +479,7 @@ def __chunked_worker_fastlbp(df_row_args):
             # we just recalculated LBP to save raw codes cache
             if tmp_fpath and cached_result_mm is None:
                 try:
-                    os.makedirs( os.path.dirname(tmp_fpath), exist_ok=True)
+                    os.makedirs(os.path.dirname(tmp_fpath), exist_ok=True)
                     np.save(tmp_fpath, job_chunk_histogram)
                 except:
                     log.warning(f"run_chunked_fastlbp: worker {jobname}({pid}): computation successful, but cannot save tmp file")
