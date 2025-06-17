@@ -9,6 +9,7 @@ from .utils import (
 from .fastlbp import (
     run_fastlbp, 
     run_chunked_fastlbp,
+    run_patch_fastlbp,
     get_radii, 
     get_p_for_r,
     FastlbpResult
@@ -17,6 +18,7 @@ from .fastlbp import (
 __all__ = [
     "run_fastlbp", 
     "run_chunked_fastlbp",
+    "run_patch_fastlbp",
     "FastlbpResult",
     "get_radii", 
     "get_p_for_r", 

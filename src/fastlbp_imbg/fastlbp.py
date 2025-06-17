@@ -786,3 +786,189 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
         return FastlbpResult(output_abspath, patch_mask)
     else:
         return lbp_result
+    
+
+def run_patch_fastlbp(img_data: ArrayLike, patch_coordinates_list: list[tuple[int, int]], 
+                      radii_list: ArrayLike, npoints_list: ArrayLike, 
+                      patchsize: int, ncpus: int = 1, img_name: str = 'img_patch_lbp', 
+                      jobs_csv_savefile: str | None = None, verbosity: int = 1) -> np.ndarray:
+
+    import time
+    import pandas as pd
+    from multiprocessing import Pool, shared_memory
+    from .common import _features_dtype
+    from .workers import __single_patch_fastlbp_worker
+    from .utils import int_verbosity_to_logger_level
+
+    logger_level = int_verbosity_to_logger_level(verbosity)
+    log.setLevel(logger_level)
+
+    # validate params and prepare a pipeline
+    assert len(radii_list) == len(npoints_list)
+    assert len(img_data.shape) in [2,3]
+    assert img_data.dtype == np.uint8
+
+    if len(img_data.shape) == 2:
+        img_data = img_data[:, :, None]
+
+    t = time.perf_counter()
+
+    log.info('run_patched_fastlbp: initial setup...')
+
+    assert ncpus >= -1
+    max_ncpus = psutil.cpu_count(logical=False)
+    if ncpus > max_ncpus:
+        log.warning(f"ncpus ({ncpus}) greater than number of physical cpus ({max_ncpus})! Beware the performance issues.")
+    if ncpus == -1: 
+        log.info(f"ncpus == -1 so using all available physical cpus. That is, {max_ncpus} processes")
+        ncpus = max_ncpus
+
+
+    log.info(f'run_fastlbp: initial setup took {time.perf_counter()-t:.5g}s')
+    log.info(f'run_fastlbp: creating a list of jobs...')
+
+    t = time.perf_counter()
+    
+    h, w, nchannels = img_data.shape
+    nfeatures_cumsum = np.cumsum(np.array(npoints_list) + 2)
+    nfeatures_per_channel = nfeatures_cumsum[-1]
+    channel_list = range(nchannels)
+
+    patch_features_result = [] # patch feature vectors in the same order as they passed as inputs
+    
+    # create a list of jobs
+    jobs_index = pd.MultiIndex.from_product(
+            [channel_list, radii_list, patch_coordinates_list], 
+            names=['channel', 'radius', 'patch_center_coords']
+    )
+    jobs = pd.DataFrame(
+        index=jobs_index,
+        columns=['channel', 'radius', 'patch_center_coords',
+                 'img_name', 'label', 'npoints', 'patchsize', 'img_shm_name',
+                 'img_pixel_dtype', 'img_shape_0', 'img_shape_1', 'img_shape_2', 
+                 'output_shm_name', 'output_offset']
+    )
+
+    jobs_idx = pd.IndexSlice
+
+    jobs['img_name'] = img_name
+
+    channel_output_offset = 0
+    for c in channel_list: 
+        jobs.loc[jobs_idx[c, :, :, :], 'channel'] = c
+
+        for patch_center_coord_0, patch_center_coord_1 in patch_coordinates_list:
+                jobs.loc[jobs_idx[c, :, [(patch_center_coord_0, patch_center_coord_1)]], 
+                         'output_offset'] = channel_output_offset + np.hstack([[0], nfeatures_cumsum[:-1]])
+
+        channel_output_offset += nfeatures_per_channel
+
+    for idx_rr, rr in enumerate(radii_list):
+            jobs.loc[jobs_idx[:, rr, :, :], 'radius'] = rr
+            jobs.loc[jobs_idx[:, rr, :, :], 'npoints'] = npoints_list[idx_rr]
+
+    for patch_center_coord_0, patch_center_coord_1 in patch_coordinates_list:
+        jobs.loc[jobs_idx[:, :, [(patch_center_coord_0, patch_center_coord_1)]], 
+                 'patch_center_coords'] = f'{patch_center_coord_0} {patch_center_coord_1}'
+        
+        str_coords_to_tuples = jobs.loc[jobs_idx[:, :, [(patch_center_coord_0, patch_center_coord_1)]], 
+                 'patch_center_coords'].apply(lambda x: tuple(map(int, x.split(' '))))
+        
+        jobs.loc[jobs_idx[:, :, [(patch_center_coord_0, patch_center_coord_1)]], 
+                 'patch_center_coords'] = str_coords_to_tuples
+        
+
+    jobs['label'] = jobs.apply(
+        lambda row: f"{img_name}_patch_center_coords{'_'.join(list(map(str, row['patch_center_coords'])))}_c{row.name[0]}_r{row.name[1]}_p{row['npoints']}", axis='columns')
+    
+    jobs['patchsize'] = patchsize
+
+    total_nfeatures = nfeatures_per_channel * len(channel_list)
+    jobs['total_nfeatures'] = total_nfeatures
+
+
+    # Prepare contiguous array.
+    # Channels will go first. Then h and w.
+    img_data = np.ascontiguousarray(np.moveaxis(img_data, (0, 1, 2), (1, 2, 0)))
+
+
+    log.info(f"run_chunked_fastlbp: creating shared memory")
+    # create shared memory for input image
+    input_img_shm = shared_memory.SharedMemory(create=True, size=img_data.nbytes)
+
+    # copy image to shared memory 
+    input_img_np = np.ndarray(img_data.shape, img_data.dtype, input_img_shm.buf)
+    np.copyto(input_img_np, img_data, casting='no')
+
+    # create and initialize shared memory for output
+
+    patch_result_shared_memory_list = []
+
+    for patch_center_coord_0, patch_center_coord_1 in patch_coordinates_list:
+        patch_features_shm = shared_memory.SharedMemory(
+            create=True, size=(int(total_nfeatures) * np.dtype(_features_dtype).itemsize))
+    
+        patch_features = np.ndarray((int(total_nfeatures),), _features_dtype, buffer=patch_features_shm.buf)
+        patch_features.fill(0)
+
+        jobs.loc[jobs_idx[:, :, [(patch_center_coord_0, patch_center_coord_1)]], 
+                 'output_shm_name'] = patch_features_shm.name
+
+        patch_result_shared_memory_list.append(patch_features_shm)
+        patch_features_result.append(patch_features)
+
+        log.info(f"run_single_patch_fastlbp: shared memory created")
+
+    jobs['img_shm_name'] = input_img_shm.name
+    jobs['img_pixel_dtype'] = input_img_np.dtype # note: always uint8
+    jobs['img_shape_0'] = input_img_np.shape[0] # nchannels
+    jobs['img_shape_1'] = input_img_np.shape[1] # h
+    jobs['img_shape_2'] = input_img_np.shape[2] # w
+    
+    # Sort jobs starting from the longest ones, i.e. from larger radii to smaller ones.
+    # `level=1` values are radii
+    jobs.sort_index(level=1, ascending=False, inplace=True)
+
+    if jobs_csv_savefile is not None:
+        jobs_csv_savedir = os.path.dirname(jobs_csv_savefile)
+        if jobs_csv_savedir:
+            os.makedirs(jobs_csv_savedir, exist_ok=True)
+        jobs.to_csv(jobs_csv_savefile)
+
+    log.info(f'run_chunked_fastlbp: creating a list of jobs took {time.perf_counter()-t:.5g}s')
+    log.info(f"run_chunked_fastlbp: jobs:")
+    log.info(jobs.head())
+    log.info(f'Jobs DataFrame shape: {jobs.shape}')
+
+    assert jobs.isna().sum().sum() == 0
+
+    # compute
+
+    log.info(f'run_chunked_fastlbp: start computation')
+    t0 = time.perf_counter()
+    with Pool(ncpus) as pool:
+        jobs_results = pool.map(func=__single_patch_fastlbp_worker, iterable=jobs.iterrows())
+    t_elapsed = time.perf_counter() - t0
+    log.info(f'run_chunked_fastlbp(): computation finished in {t_elapsed:.5g}s. Start saving')
+
+    # save results
+
+    result = []
+    for patch_feat_res in patch_features_result:
+        result.append(patch_feat_res.copy())
+    
+    input_img_shm.unlink()
+    input_img_shm.close()
+
+    for patch_features_shm_region in patch_result_shared_memory_list:
+        patch_features_shm_region.unlink()
+        patch_features_shm_region.close()
+
+    log.info(f"run_chunked_fastlbp: shared memory unlinked. Goodbye")
+
+    # reset logger to its original level
+    log.setLevel(DEFAULT_LEVEL)
+    
+    return result
+
+

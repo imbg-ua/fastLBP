@@ -503,6 +503,113 @@ def __chunked_worker_fastlbp(df_row_args):
 
 
 
+def __single_patch_fastlbp_worker(df_row_args):
+
+    row_id, job = df_row_args
+
+    pid = os.getpid()
+    jobname = job['label']
+    log.info(f"run_patched_fastlbp: worker {pid}: starting job {jobname}")
+
+    try:
+        t0 = time.perf_counter()
+
+        # TODO: add support for arbitrary number of axes
+        shape = job['img_shape_0'], job['img_shape_1'], job['img_shape_2']
+        total_nfeatures = job['total_nfeatures']
+        output_offset = job['output_offset']
+        
+        patchsize = job['patchsize']
+
+        left_dist = (patchsize - 1) // 2
+        if patchsize % 2 == 0:
+            right_dist = patchsize // 2
+        else:
+            right_dist = left_dist
+
+        top_dist = left_dist
+        bottom_dist = right_dist
+
+        padding_radius = job['radius'] + 1
+
+        padding_left = left_dist + padding_radius
+        padding_right = right_dist + padding_radius
+        padding_top = top_dist + padding_radius
+        padding_bottom = bottom_dist + padding_radius
+
+        center_coord_0, center_coord_1 = job['patch_center_coords']
+
+        nchannels, h, w = shape
+        
+        job_nfeatures = job['npoints'] + 2
+
+        # Obtain output memory
+        output_shm = shared_memory.SharedMemory(name=job['output_shm_name'])
+
+        all_histograms = np.ndarray(total_nfeatures, 
+                                    dtype=_features_dtype, buffer=output_shm.buf)    
+
+        # get features for the job
+        job_histogram = all_histograms[output_offset:(output_offset + job_nfeatures)]
+        
+
+        img_data_shm = shared_memory.SharedMemory(name=job['img_shm_name'])
+        img_data = np.ndarray(shape, dtype=job['img_pixel_dtype'], buffer=img_data_shm.buf)
+            
+        img_channel_full = img_data[job['channel']]
+
+        assert img_channel_full.flags.c_contiguous
+        assert img_channel_full.dtype == np.uint8
+
+        # extract padded patch from the image to process by the worker
+        padded_bbox_left, padded_bbox_right = center_coord_0 - padding_left, center_coord_0 + padding_right + 1
+        padded_bbox_top, padded_bbox_bottom = center_coord_1 - padding_top, center_coord_1 + padding_bottom + 1
+
+        padded_bbox_left = max(padded_bbox_left, 0)
+        padded_bbox_right = min(padded_bbox_right, w)
+
+        padded_bbox_top = max(padded_bbox_top, 0)
+        padded_bbox_bottom = min(padded_bbox_bottom, h)
+
+
+        img_padded_patch = img_channel_full[padded_bbox_left:padded_bbox_right, 
+                                            padded_bbox_top:padded_bbox_bottom]
+
+        
+        img_padded_patch_contiguous = np.ascontiguousarray(img_padded_patch)
+
+
+        assert img_padded_patch_contiguous.flags.c_contiguous
+        assert img_padded_patch_contiguous.dtype == np.uint8
+
+        # if no mask is provided
+        log.debug(f"run_patched_fastlbp: worker {jobname}({pid}) patch coordinates {center_coord_0} {center_coord_1}")
+
+        lbp_results = uniform_lbp_uint8_padded_absolute(image=img_padded_patch_contiguous, P=job['npoints'], R=job['radius'], 
+                                                        abs_r=center_coord_0 - padding_left, abs_c=center_coord_1 - padding_top, 
+                                                        paddings_top_bottom_left_right=[padding_radius, padding_radius, padding_radius, padding_radius])
+                
+        
+        # print(f'DEBUG {lbp_results.shape = } {patchsize = } {img_padded_patch.shape = } \
+        #       {center_coord_0 - padding_left = } {center_coord_0 + padding_right + 1 = } {center_coord_1 - padding_top = } \
+        #         {center_coord_1 + padding_bottom + 1 = } {padding_top = }')
+
+        assert lbp_results.shape == (patchsize, patchsize)
+
+        img_data_shm.close()
+
+        job_histogram[:] = np.bincount(lbp_results.flat, minlength=job_nfeatures)
+
+        output_shm.close()
+
+        log.info(f"run_patched_fastlbp: worker {pid}: finished job {jobname} in {time.perf_counter()-t0:.5g}s")
+
+    except Exception as e:
+        log.error(f"run_patched_fastlbp: worker {jobname}({pid}): exception! Aborting execution.")
+        log.error(e, exc_info=True)
+
+    return 0
+
 
 
 
