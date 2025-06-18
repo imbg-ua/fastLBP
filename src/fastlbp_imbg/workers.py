@@ -562,20 +562,30 @@ def __single_patch_fastlbp_worker(df_row_args):
         assert img_channel_full.dtype == np.uint8
 
         # extract padded patch from the image to process by the worker
-        padded_bbox_left, padded_bbox_right = center_coord_0 - padding_left, center_coord_0 + padding_right + 1
-        padded_bbox_top, padded_bbox_bottom = center_coord_1 - padding_top, center_coord_1 + padding_bottom + 1
+        padded_bbox_left, padded_bbox_right = center_coord_1 - padding_left, center_coord_1 + padding_right + 1
+        padded_bbox_top, padded_bbox_bottom = center_coord_0 - padding_top, center_coord_0 + padding_bottom + 1
 
-        padded_bbox_left = max(padded_bbox_left, 0)
-        padded_bbox_right = min(padded_bbox_right, w)
+        padded_bbox_left, delta_padding_left = max(padded_bbox_left, 0), 0 if padded_bbox_left >= 0 else abs(padded_bbox_left)
+        padded_bbox_right, delta_padding_right = min(padded_bbox_right, w), 0 if w - padded_bbox_right >= 0 else abs(w - padded_bbox_right)
 
-        padded_bbox_top = max(padded_bbox_top, 0)
-        padded_bbox_bottom = min(padded_bbox_bottom, h)
+        padded_bbox_top, delta_padding_top = max(padded_bbox_top, 0), 0 if padded_bbox_top >= 0 else abs(padded_bbox_top)
+        padded_bbox_bottom, delta_padding_bottom = min(padded_bbox_bottom, h), 0 if h - padded_bbox_bottom >= 0 else abs(h - padded_bbox_bottom)
 
 
-        img_padded_patch = img_channel_full[padded_bbox_left:padded_bbox_right, 
-                                            padded_bbox_top:padded_bbox_bottom]
+        img_padded_patch = img_channel_full[padded_bbox_top:padded_bbox_bottom, 
+                                            padded_bbox_left:padded_bbox_right]
 
         
+        print(f'DEBUG {img_padded_patch.shape = }')
+        print(f'DEBUGich {patchsize = } {img_padded_patch.shape = } {center_coord_0 = } {center_coord_1 = } \n \
+{padding_top = } {padding_bottom = } \n {padding_left = } {padding_right = } \n \
+{center_coord_1 - padding_left = } {center_coord_1 + padding_right + 1 = } \n {center_coord_0 - padding_top = } \
+{center_coord_0 + padding_bottom + 1 = } \n \
+{delta_padding_top = } {delta_padding_bottom = } {delta_padding_right = } {delta_padding_left = } \n \
+{[padding_radius - delta_padding_top, 
+padding_radius - delta_padding_bottom, 
+padding_radius - delta_padding_left, 
+padding_radius - delta_padding_right] = } \n\n')
         img_padded_patch_contiguous = np.ascontiguousarray(img_padded_patch)
 
 
@@ -585,18 +595,26 @@ def __single_patch_fastlbp_worker(df_row_args):
         # if no mask is provided
         log.debug(f"run_patched_fastlbp: worker {jobname}({pid}) patch coordinates {center_coord_0} {center_coord_1}")
 
+        print(f'DEBUG {img_padded_patch_contiguous.shape = } {[padding_radius, padding_radius, padding_radius, padding_radius] = }')
         lbp_results = uniform_lbp_uint8_padded_absolute(image=img_padded_patch_contiguous, P=job['npoints'], R=job['radius'], 
-                                                        abs_r=center_coord_0 - padding_left, abs_c=center_coord_1 - padding_top, 
-                                                        paddings_top_bottom_left_right=[padding_radius, padding_radius, padding_radius, padding_radius])
+                                                        abs_r=max(center_coord_1 - padding_top, 0), abs_c=max(center_coord_0 - padding_left, 0), 
+                                                        paddings_top_bottom_left_right=[padding_radius - delta_padding_top, 
+padding_radius - delta_padding_bottom, 
+padding_radius - delta_padding_left, 
+padding_radius - delta_padding_right])
                 
         
-        # print(f'DEBUG {lbp_results.shape = } {patchsize = } {img_padded_patch.shape = } \
-        #       {center_coord_0 - padding_left = } {center_coord_0 + padding_right + 1 = } {center_coord_1 - padding_top = } \
-        #         {center_coord_1 + padding_bottom + 1 = } {padding_top = }')
+        print(f'DEBUG {lbp_results.shape = } {patchsize = } {img_padded_patch.shape = } \
+              {center_coord_0 - padding_left = } {center_coord_0 + padding_right + 1 = } {center_coord_1 - padding_top = } \
+                {center_coord_1 + padding_bottom + 1 = } {padding_top = } {delta_padding_bottom = } {delta_padding_top = } {delta_padding_right = } {delta_padding_left = }')
 
         assert lbp_results.shape == (patchsize, patchsize)
 
         img_data_shm.close()
+
+        print(f'DEBUG {lbp_results.shape = }')
+
+        np.save(f'{jobname}_debug_lbp_codes.npy', lbp_results)
 
         job_histogram[:] = np.bincount(lbp_results.flat, minlength=job_nfeatures)
 
