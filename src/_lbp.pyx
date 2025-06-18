@@ -586,7 +586,7 @@ def _uniform_lbp_uint8_padded_absolute(cnp.uint8_t[:, ::1] image, int P, cnp.flo
 
     # the shape doesn't include padding
     output_shape = (image.shape[0] - top - bottom, image.shape[1] - left - right)
-    print(f'DEBUG PYX {output_shape = }')
+
     cdef cnp.uint16_t[:, ::1] output = np.zeros(output_shape, dtype=np.uint16)
 
     cdef Py_ssize_t rows = image.shape[0]
