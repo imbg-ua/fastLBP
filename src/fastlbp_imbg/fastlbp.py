@@ -6,6 +6,14 @@ import psutil
 from collections import namedtuple
 import logging
 
+import time
+import pandas as pd
+from pandas import DataFrame
+from multiprocessing import Pool, shared_memory
+from .common import _features_dtype
+from .workers import __worker_fastlbp
+from .utils import patchify_image_mask, int_verbosity_to_logger_level
+
 
 logging.basicConfig()
 log = logging.getLogger('fastlbp_imbg')
@@ -35,6 +43,183 @@ def __get_tmp_dir(pipeline_name, path: str | None = None):
 def __get_tmp_dir_explicit(pipeline_name, path: str):
     return os.path.join(path, pipeline_name)
 
+def __check_existing_result_on_disk(outdir: str, outfile_name: str, caller: str = 'run_fastlbp', 
+                                    pipeline_hash: str = '', overwrite_output: bool = False):
+    res_outdir = outdir if outdir else os.getcwd()
+    output_fpath = os.path.join(res_outdir, outfile_name)
+    output_abspath = os.path.abspath(output_fpath)
+    try:
+        if os.path.exists(output_fpath) and not overwrite_output:
+            log.error(f'{caller}({pipeline_hash}): overwrite_output is False and output file {output_abspath} already exists. Aborting.')
+            return FastlbpResult(output_abspath, None)
+        
+        os.makedirs(res_outdir, exist_ok=True)
+        if not os.access(res_outdir, os.W_OK):
+            log.error(f'{caller}({pipeline_hash}): output dir {os.path.dirname(output_abspath)} is not writable. Aborting.')
+            return FastlbpResult(output_abspath, None)
+    except:
+        log.error(f'{caller}({pipeline_hash}): error accessing output dir {os.path.dirname(output_abspath)}. Aborting.')
+        return FastlbpResult(output_abspath, None)
+    
+    return None
+
+def __create_patch_mask_shm(nprows: int, npcols: int, patchsize: int, mask_method: str, 
+                            pipeline_hash: str, img_mask: np.ndarray = None,
+                            img_patch_mask: np.ndarray = None, 
+                            caller: str = 'run_fastlbp'):
+
+    """
+    We won't compute a patch if it has at least one pixel is ignored in img_mask.
+    EVERY feature for this patch will be zero.
+    Thus it is sensible to store a patch-wise mask, not the whole image mask. 
+    This behavior might change in the future.
+
+    e.g. 'exclude whole patch if at least 1 zero' vs 'include whole patch if at least 1 non-zero'
+    """
+
+    patch_mask_shm = None # per patch mask
+    patch_mask_shape = (nprows, npcols)
+
+    if img_mask is not None:
+        log.info(f"{caller}({pipeline_hash}): using image mask.")
+        patch_mask = patchify_image_mask(img_mask, patchsize, edit_img_mask=False, method=mask_method)
+        assert patch_mask.shape == patch_mask_shape
+    
+        patch_mask_shm = shared_memory.SharedMemory(create=True, size=patch_mask.nbytes)
+        patch_mask_np = np.ndarray(patch_mask_shape, dtype=np.uint8, buffer=patch_mask_shm.buf)
+        np.copyto(patch_mask_np, patch_mask, casting='no')
+
+        log.info(f"{caller}({pipeline_hash}): pixel mask converted to patch mask. Created shared memory for patch mask.")
+
+        return patch_mask, patch_mask_shm
+
+    elif img_patch_mask is not None:
+        log.info(f"{caller}({pipeline_hash}): using patch mask.")
+        patch_mask = img_patch_mask
+
+        assert patch_mask.shape == patch_mask_shape
+    
+        patch_mask_shm = shared_memory.SharedMemory(create=True, size=patch_mask.nbytes)
+        patch_mask_np = np.ndarray(patch_mask_shape, dtype=np.uint8, buffer=patch_mask_shm.buf)
+        np.copyto(patch_mask_np, patch_mask, casting='no')
+
+        log.info(f"{caller}({pipeline_hash}): patch mask copied into shared memory region.")
+
+        return patch_mask, patch_mask_shm
+
+    return None
+
+
+def __log_fastlbp_setup(**setup_kwargs):
+
+    passed_args_str = ' '.join([f'{k} = {v}' for k, v in setup_kwargs.items()])
+
+    log.info('{caller}: params:')
+    if 'savefile' in setup_kwargs.keys():
+        log.info('fastLBP is running in disk mode')
+    log.info(f'{passed_args_str}')
+
+
+def __get_optimal_ncpus(ncpus: int = -1) -> None:
+
+    assert ncpus >= -1
+    max_ncpus = psutil.cpu_count(logical=False)
+
+    if ncpus > max_ncpus:
+        log.warning(f"ncpus ({ncpus}) greater than number of physical cpus ({max_ncpus})! Beware the performance issues.")
+
+    if ncpus == -1: 
+        log.info(f"ncpus == -1 so using all available physical cpus. That is, {max_ncpus} processes")
+        ncpus = max_ncpus
+
+    return ncpus
+
+def __get_optimal_ram(max_ram = None) -> None:
+
+    if max_ram is not None:
+        log.warning("max_ram parameter is currently ignored!")
+
+    return max_ram
+
+
+# TODO: test if works as intended
+def __unlink_and_close_shms(*shms_to_cleanup) -> None:
+    for shm in shms_to_cleanup:
+        if shm is not None:
+            shm.unlink()
+            shm.close()
+
+
+def __generate_jobs_dataframe(index_params: list, index_names: list[str], fastlbp_method: str = 'standard') -> pd.DataFrame:
+
+    jobs_index = pd.MultiIndex.from_product(index_params, names=index_names)
+
+    # create a list of jobs
+    jobs = pd.DataFrame(
+        index=jobs_index,
+            columns=['channel', 'radius', 'img_name', 
+                     'label', 'npoints', 'patchsize', 
+                     'img_shm_name', 'img_pixel_dtype', 
+                     'img_shape_0', 'img_shape_1', 'img_shape_2', 
+                     'output_shm_name', 'output_offset']
+        )
+    
+    return jobs    
+
+def __fill_in_channel_features_offset_in_jobs_df(jobs: pd.DataFrame, channel_list: list, 
+                                                 columns_to_replicate_for_channels: dict, 
+                                                 nfeatures_cumsum: np.ndarray) -> None:
+    nfeatures_per_channel = nfeatures_cumsum[-1]
+    channel_output_offset = 0
+    for c in channel_list: 
+        jobs.loc[c,'channel'] = c
+
+        for col_name, col_val in columns_to_replicate_for_channels.items():
+            jobs.loc[c, col_name] = col_val
+
+        jobs.loc[c,'output_offset'] = channel_output_offset + np.hstack([[0], nfeatures_cumsum[:-1]])
+        channel_output_offset += nfeatures_per_channel
+
+
+def __fill_in_cache_dir_in_jobs_df(jobs: pd.DataFrame, pipeline_name: str, 
+                                   cache_dir: str, job_label_colname: str,
+                                   colname: str) -> None:
+    
+    assert job_label_colname in jobs.columns
+
+    # if cache_dir is set, save cached lbp results
+    if cache_dir is not None:
+        base_tmp_path = __get_tmp_dir_explicit(pipeline_name, cache_dir)
+        jobs[colname] = jobs.apply(
+            lambda row: os.path.join(base_tmp_path, row[job_label_colname]) + '.npy',
+            axis='columns'
+        )
+    else:
+        jobs[colname] = ""
+
+    
+def __fill_in_cache_dirs_in_jobs_df(jobs: pd.DataFrame, pipeline_name: str, 
+                                    cache_dirs: Iterable, jobs_label_colnames: Iterable, 
+                                    colnames: Iterable) -> None:
+    
+    assert len(cache_dirs) == len(jobs_label_colnames) == len(colnames)
+
+    for idx, cache_dir in enumerate(cache_dirs):
+        job_label_colname = jobs_label_colnames[idx]
+        colname = colnames[idx]
+        __fill_in_cache_dir_in_jobs_df(jobs, pipeline_name, cache_dir, job_label_colname, colname)
+
+def __dump_jobs_df_to_csv(jobs: pd.DataFrame, jobs_csv_savefile: str) -> None:
+    jobs_csv_savedir = os.path.dirname(jobs_csv_savefile)
+    if jobs_csv_savedir:
+        os.makedirs(jobs_csv_savedir, exist_ok=True)
+    jobs.to_csv(jobs_csv_savefile)
+
+
+
+    
+
+    
 #####
 # PUBLIC UTILS
 
@@ -149,13 +334,7 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
 
     """
     
-    import time
-    import pandas as pd
-    from pandas import DataFrame
-    from multiprocessing import Pool, shared_memory
-    from .common import _features_dtype
-    from .workers import __worker_fastlbp
-    from .utils import patchify_image_mask, int_verbosity_to_logger_level
+
 
     logger_level = int_verbosity_to_logger_level(verbosity)
     log.setLevel(logger_level)
@@ -199,44 +378,23 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
     pipeline_name = f"{img_name}-fastlbp-{pipeline_hash}"
     pipeline_name_lbp_codes = f"{img_name}-fastlbp-chunked-{pipeline_hash_lbp_codes}"
 
-
-    log.info('run_fastlbp: params:')
-    log.info("img_shape, radii_list, npoints_list, patchsize, ncpus, max_ram, img_name")
-    log.info(f"{img_data.shape}, {radii_list}, {npoints_list}, {patchsize}, {ncpus}, {max_ram}, {img_name}")
-    log.info(f"{histograms_cache_dir=}, {lbp_codes_cache_dir=}")
-    if savefile:
-        log.info(f"LBP is saved on disk in {savefile = }")
-    log.info(f"pipeline hash is {pipeline_hash}")
-    log.info(f"pipeline LBP codes hash is {pipeline_hash_lbp_codes}")
-
-    assert ncpus >= -1
-    max_ncpus = psutil.cpu_count(logical=False)
-    if ncpus > max_ncpus:
-        log.warning(f"ncpus ({ncpus}) greater than number of physical cpus ({max_ncpus})! Beware the performance issues.")
-    if ncpus == -1: 
-        log.info(f"ncpus == -1 so using all available physical cpus. That is, {max_ncpus} processes")
-        ncpus = max_ncpus
-        
-    if max_ram is not None:
-        log.warning("max_ram parameter is ignored!")
+    __log_fastlbp_setup(img_data_shape=img_data.shape, 
+                        radii_list=radii_list, npoints_list=npoints_list, 
+                        patchsize=patchsize, ncpus=ncpus, max_ram=max_ram, 
+                        img_name=img_name, histograms_cache_dir=histograms_cache_dir, 
+                        lbp_codes_cache_dir=lbp_codes_cache_dir, 
+                        savefile=savefile, pipeline_hash=pipeline_hash,
+                        pipeline_hash_lbp_codes=pipeline_hash_lbp_codes)
+    
+    ncpus = __get_optimal_ncpus(ncpus)
+    max_ram = __get_optimal_ram(max_ram)
 
     if savefile:
-        res_outdir = outdir if outdir else os.getcwd()
-        output_fpath = os.path.join(res_outdir, outfile_name)
-        output_abspath = os.path.abspath(output_fpath)
-        try:
-            if os.path.exists(output_fpath) and not overwrite_output:
-                log.error(f'run_fastlbp({pipeline_hash}): overwrite_output is False and output file {output_abspath} already exists. Aborting.')
-                return FastlbpResult(output_abspath, None)
-            
-            os.makedirs(res_outdir, exist_ok=True)
-            if not os.access(res_outdir, os.W_OK):
-                log.error(f'run_fastlbp({pipeline_hash}): output dir {os.path.dirname(output_abspath)} is not writable. Aborting.')
-                return FastlbpResult(output_abspath, None)
-        except:
-            log.error(f'run_fastlbp({pipeline_hash}): error accessing output dir {os.path.dirname(output_abspath)}. Aborting.')
-            return FastlbpResult(output_abspath, None)
-                
+        calculated_lbp = __check_existing_result_on_disk(outdir, outfile_name, caller='run_fastlbp', 
+                                                         pipeline_hash=pipeline_hash, 
+                                                         overwrite_output=overwrite_output)
+        if calculated_lbp is not None:
+            return calculated_lbp                
 
     log.info(f'run_fastlbp({pipeline_hash}): initial setup took {time.perf_counter()-t:.5g}s')
     log.info(f'run_fastlbp({pipeline_hash}): creating a list of jobs...')
@@ -252,56 +410,30 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
     channel_list = range(nchannels)
 
     # create a list of jobs
-    jobs = DataFrame(
-        index=pd.MultiIndex.from_product(
-            [channel_list, radii_list], names=['channel', 'radius']), 
-            columns=['channel', 'radius', 'img_name', 
-                     'label', 'npoints', 'patchsize', 
-                     'img_shm_name', 'img_pixel_dtype', 
-                     'img_shape_0', 'img_shape_1', 'img_shape_2', 
-                     'output_shm_name', 'output_offset', 'tmp_fpath', 
-                     'patch_mask_shm_name', 'tmp_fpath_pixel'
-                    ]
-        )
+    jobs = __generate_jobs_dataframe(index_params=[channel_list, radii_list], 
+                                     index_names=['channel', 'radius'])
 
     jobs['img_name'] = img_name
 
-    channel_output_offset = 0
-    for c in channel_list: 
-        jobs.loc[c,'channel'] = c
-        jobs.loc[c,'radius'] = radii_list
-        jobs.loc[c,'npoints'] = npoints_list
-        jobs.loc[c,'output_offset'] = channel_output_offset + np.hstack([[0], nfeatures_cumsum[:-1]])
-        channel_output_offset += nfeatures_per_channel
+    __fill_in_channel_features_offset_in_jobs_df(jobs, channel_list,
+                                                 {
+                                                     'radius': radii_list, 
+                                                     'npoints': npoints_list
+                                                 }, nfeatures_cumsum)
     
     jobs['label'] = jobs.apply(
-        lambda row: f"{img_name}_c{row.name[0]}_r{row.name[1]}_p{row['npoints']}", axis='columns')
+        lambda row: f"{img_name}_c{row.name[0]}_r{row.name[1]}_p{row['npoints']}", axis='columns') # channel and radius are in index
 
     img_name_pixel_cache = img_name + '_lbp_codes'
     jobs['pixel_cache_label'] = jobs.apply(
-        lambda row: f"{img_name_pixel_cache}_c{row.name[0]}_r{row.name[1]}_p{row['npoints']}", axis='columns')
-
+        lambda row: f"{img_name_pixel_cache}_c{row.name[0]}_r{row.name[1]}_p{row['npoints']}", axis='columns') # channel and radius are in index
+ 
     jobs['patchsize'] = patchsize
 
-    # if histograms_cache_dir is set, save cached lbp results
-    if histograms_cache_dir is not None:
-        base_tmp_path = __get_tmp_dir_explicit(pipeline_name, histograms_cache_dir)
-        jobs['tmp_fpath'] = jobs.apply(
-            lambda row: os.path.join(base_tmp_path, row['label']) + '.npy',
-            axis='columns'
-        )
-    else:
-        jobs['tmp_fpath'] = ""
-
-    # if lbp codes cache dir is set, save raw LBP results
-    if lbp_codes_cache_dir is not None:
-        base_tmp_path_lbp_codes = __get_tmp_dir_explicit(pipeline_name_lbp_codes, lbp_codes_cache_dir)
-        jobs['tmp_fpath_pixel'] = jobs.apply(
-            lambda row: os.path.join(base_tmp_path_lbp_codes, row['pixel_cache_label']) + '.npy', 
-            axis='columns')
-    else:
-        jobs['tmp_fpath_pixel'] = ""
-
+    __fill_in_cache_dirs_in_jobs_df(jobs, pipeline_name, 
+                                    [histograms_cache_dir, lbp_codes_cache_dir], 
+                                    ['label', 'pixel_cache_label'], 
+                                    ['tmp_fpath', 'tmp_fpath_pixel'])
 
     total_nfeatures = nfeatures_per_channel * len(channel_list)
     patch_features_shape = (nprows, npcols, total_nfeatures)
@@ -321,53 +453,28 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
 
     # copy mask to shared memory if provided.
 
-    """
-    We won't compute a patch if it has at least one pixel is ignored in img_mask.
-    EVERY feature for this patch will be zero.
-    Thus it is sensible to store a patch-wise mask, not the whole image mask. 
-    This behavior might change in the future.
-
-    e.g. 'exclude whole patch if at least 1 zero' vs 'include whole patch if at least 1 non-zero'
-    """
-
-    patch_mask_shm = None # per patch mask
-
-    patch_mask_shape = (nprows, npcols)
+    patch_mask_shm_result = __create_patch_mask_shm(nprows, npcols, patchsize, 
+                                             mask_method, pipeline_hash, 
+                                             img_mask, img_patch_mask, 
+                                             caller='run_fastlbp')
+    
     patch_mask = None
+    patch_mask_shm = None
 
-    if img_mask is not None:
-        log.info(f"run_fastlbp({pipeline_hash}): using image mask.")
-        patch_mask = patchify_image_mask(img_mask, patchsize, edit_img_mask=False, method=mask_method)
-        assert patch_mask.shape == patch_mask_shape
-    
-        patch_mask_shm = shared_memory.SharedMemory(create=True, size=patch_mask.nbytes)
-        patch_mask_np = np.ndarray(patch_mask_shape, dtype=np.uint8, buffer=patch_mask_shm.buf)
-        np.copyto(patch_mask_np, patch_mask, casting='no')
-
-        log.info(f"run_fastlbp({pipeline_hash}): pixel mask converted to patch mask. Created shared memory for patch mask.")
-
-    elif img_patch_mask is not None:
-        log.info(f"run_fastlbp({pipeline_hash}): using patch mask.")
-        patch_mask = img_patch_mask
-
-        assert patch_mask.shape == patch_mask_shape
-    
-        patch_mask_shm = shared_memory.SharedMemory(create=True, size=patch_mask.nbytes)
-        patch_mask_np = np.ndarray(patch_mask_shape, dtype=np.uint8, buffer=patch_mask_shm.buf)
-        np.copyto(patch_mask_np, patch_mask, casting='no')
-
-        log.info(f"run_fastlbp({pipeline_hash}): patch mask copied into shared memory region.")
+    if patch_mask_shm_result is not None:
+        patch_mask, patch_mask_shm = patch_mask_shm_result
+        
 
 
     # create and initialize shared memory for output
     patch_features_shm = shared_memory.SharedMemory(
         create=True, size=(int(np.prod(patch_features_shape)) * np.dtype(_features_dtype).itemsize))
     patch_features = np.ndarray(patch_features_shape, _features_dtype, buffer=patch_features_shm.buf)
+
     patch_features.fill(0)
     log.info(f"run_fastlbp({pipeline_hash}): shared memory created")
 
     jobs['img_shm_name'] = input_img_shm.name
-    # jobs['img_mask_shm_name'] = img_mask_shm.name if img_mask_shm is not None else ""
     jobs['patch_mask_shm_name'] = patch_mask_shm.name if patch_mask_shm is not None else ""
     jobs['img_pixel_dtype'] = input_img_np.dtype # note: always uint8
     jobs['img_shape_0'] = input_img_np.shape[0] # nchannels
@@ -380,10 +487,7 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
     jobs.sort_index(level=1, ascending=False, inplace=True)
 
     if jobs_csv_savefile is not None:
-        jobs_csv_savedir = os.path.dirname(jobs_csv_savefile)
-        if jobs_csv_savedir:
-            os.makedirs(jobs_csv_savedir, exist_ok=True)
-        jobs.to_csv(jobs_csv_savefile)
+        __dump_jobs_df_to_csv(jobs, jobs_csv_savefile)
 
     log.info(f'run_fastlbp({pipeline_hash}): creating a list of jobs took {time.perf_counter()-t:.5g}s')
     log.info(f"run_fastlbp({pipeline_hash}): jobs:")
@@ -403,20 +507,15 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
 
     # save results
     lbp_result = None
+    output_fpath = os.path.join(outdir, outfile_name)
+    output_abspath = os.path.abspath(output_fpath)
+
     if savefile:
         np.save(output_fpath, patch_features)
     else:
         lbp_result = patch_features.copy()
 
-    
-    input_img_shm.unlink()
-    input_img_shm.close()
-    patch_features_shm.unlink()
-    patch_features_shm.close()
-
-    if patch_mask_shm is not None:
-        patch_mask_shm.unlink()
-        patch_mask_shm.close()
+    __unlink_and_close_shms(input_img_shm, patch_features_shm, patch_mask_shm)
 
     log.info(f"run_fastlbp({pipeline_hash}): shared memory unlinked. Goodbye")
 
@@ -524,6 +623,14 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
 
     if max_ram is not None:
         log.warning("max_ram parameter is currently ignored!")
+
+
+    # if savefile:
+    #     calculated_lbp = __check_existing_result_on_disk(outdir, outfile_name, caller='run_chunked_fastlbp', 
+    #                                                      pipeline_hash=pipeline_hash, 
+    #                                                      overwrite_output=overwrite_output)
+    #     if calculated_lbp is not None:
+    #         return calculated_lbp
 
     if savefile:
         res_outdir = outdir if outdir else os.getcwd()
