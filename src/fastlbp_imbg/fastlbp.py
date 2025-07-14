@@ -11,7 +11,7 @@ import pandas as pd
 from pandas import DataFrame
 from multiprocessing import Pool, shared_memory
 from .common import _features_dtype
-from .workers import __worker_fastlbp, __chunked_worker_fastlbp
+from .workers import __worker_fastlbp, __chunked_worker_fastlbp, __single_patch_fastlbp_worker
 from .utils import patchify_image_mask, int_verbosity_to_logger_level
 
 
@@ -831,13 +831,6 @@ def run_patch_fastlbp(img_data: ArrayLike, patch_coordinates_list: list[tuple[in
                       patchsize: int, ncpus: int = 1, img_name: str = 'img_patch_lbp', 
                       jobs_csv_savefile: str | None = None, verbosity: int = 1) -> np.ndarray:
 
-    import time
-    import pandas as pd
-    from multiprocessing import Pool, shared_memory
-    from .common import _features_dtype
-    from .workers import __single_patch_fastlbp_worker
-    from .utils import int_verbosity_to_logger_level
-
     logger_level = int_verbosity_to_logger_level(verbosity)
     log.setLevel(logger_level)
 
@@ -853,13 +846,7 @@ def run_patch_fastlbp(img_data: ArrayLike, patch_coordinates_list: list[tuple[in
 
     log.info('run_patched_fastlbp: initial setup...')
 
-    assert ncpus >= -1
-    max_ncpus = psutil.cpu_count(logical=False)
-    if ncpus > max_ncpus:
-        log.warning(f"ncpus ({ncpus}) greater than number of physical cpus ({max_ncpus})! Beware the performance issues.")
-    if ncpus == -1: 
-        log.info(f"ncpus == -1 so using all available physical cpus. That is, {max_ncpus} processes")
-        ncpus = max_ncpus
+    ncpus = __get_optimal_ncpus(ncpus)
 
 
     log.info(f'run_fastlbp: initial setup took {time.perf_counter()-t:.5g}s')
@@ -873,19 +860,22 @@ def run_patch_fastlbp(img_data: ArrayLike, patch_coordinates_list: list[tuple[in
     channel_list = range(nchannels)
 
     patch_features_result = [] # patch feature vectors in the same order as they passed as inputs
+
+    jobs = __generate_jobs_dataframe(index_params=[channel_list, radii_list, patch_coordinates_list], 
+                                     index_names=['channel', 'radius', 'patch_center_coords'])
     
-    # create a list of jobs
-    jobs_index = pd.MultiIndex.from_product(
-            [channel_list, radii_list, patch_coordinates_list], 
-            names=['channel', 'radius', 'patch_center_coords']
-    )
-    jobs = pd.DataFrame(
-        index=jobs_index,
-        columns=['channel', 'radius', 'patch_center_coords',
-                 'img_name', 'label', 'npoints', 'patchsize', 'img_shm_name',
-                 'img_pixel_dtype', 'img_shape_0', 'img_shape_1', 'img_shape_2', 
-                 'output_shm_name', 'output_offset']
-    )
+    # # create a list of jobs
+    # jobs_index = pd.MultiIndex.from_product(
+    #         [channel_list, radii_list, patch_coordinates_list], 
+    #         names=['channel', 'radius', 'patch_center_coords']
+    # )
+    # jobs = pd.DataFrame(
+    #     index=jobs_index,
+    #     columns=['channel', 'radius', 'patch_center_coords',
+    #              'img_name', 'label', 'npoints', 'patchsize', 'img_shm_name',
+    #              'img_pixel_dtype', 'img_shape_0', 'img_shape_1', 'img_shape_2', 
+    #              'output_shm_name', 'output_offset']
+    # )
 
     jobs_idx = pd.IndexSlice
 
@@ -968,13 +958,10 @@ def run_patch_fastlbp(img_data: ArrayLike, patch_coordinates_list: list[tuple[in
     jobs.sort_index(level=1, ascending=False, inplace=True)
 
     if jobs_csv_savefile is not None:
-        jobs_csv_savedir = os.path.dirname(jobs_csv_savefile)
-        if jobs_csv_savedir:
-            os.makedirs(jobs_csv_savedir, exist_ok=True)
-        jobs.to_csv(jobs_csv_savefile)
+        __dump_jobs_df_to_csv(jobs, jobs_csv_savefile)
 
-    log.info(f'run_chunked_fastlbp: creating a list of jobs took {time.perf_counter()-t:.5g}s')
-    log.info(f"run_chunked_fastlbp: jobs:")
+    log.info(f'run_patch_fastlbp: creating a list of jobs took {time.perf_counter()-t:.5g}s')
+    log.info(f"run_patch_fastlbp: jobs:")
     log.info(jobs.head())
     log.info(f'Jobs DataFrame shape: {jobs.shape}')
 
@@ -982,27 +969,22 @@ def run_patch_fastlbp(img_data: ArrayLike, patch_coordinates_list: list[tuple[in
 
     # compute
 
-    log.info(f'run_chunked_fastlbp: start computation')
+    log.info(f'run_patch_fastlbp: start computation')
     t0 = time.perf_counter()
     with Pool(ncpus) as pool:
         jobs_results = pool.map(func=__single_patch_fastlbp_worker, iterable=jobs.iterrows())
     t_elapsed = time.perf_counter() - t0
-    log.info(f'run_chunked_fastlbp(): computation finished in {t_elapsed:.5g}s. Start saving')
+    log.info(f'run_patch_fastlbp(): computation finished in {t_elapsed:.5g}s. Start saving')
 
     # save results
 
     result = []
     for patch_feat_res in patch_features_result:
         result.append(patch_feat_res.copy())
-    
-    input_img_shm.unlink()
-    input_img_shm.close()
 
-    for patch_features_shm_region in patch_result_shared_memory_list:
-        patch_features_shm_region.unlink()
-        patch_features_shm_region.close()
+    __unlink_and_close_shms(input_img_shm, *patch_result_shared_memory_list)
 
-    log.info(f"run_chunked_fastlbp: shared memory unlinked. Goodbye")
+    log.info(f"run_patch_fastlbp: shared memory unlinked. Goodbye")
 
     # reset logger to its original level
     log.setLevel(DEFAULT_LEVEL)
