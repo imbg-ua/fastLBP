@@ -11,7 +11,7 @@ import pandas as pd
 from pandas import DataFrame
 from multiprocessing import Pool, shared_memory
 from .common import _features_dtype
-from .workers import __worker_fastlbp
+from .workers import __worker_fastlbp, __chunked_worker_fastlbp
 from .utils import patchify_image_mask, int_verbosity_to_logger_level
 
 
@@ -110,11 +110,11 @@ def __create_patch_mask_shm(nprows: int, npcols: int, patchsize: int, mask_metho
     return None
 
 
-def __log_fastlbp_setup(**setup_kwargs):
+def __log_fastlbp_setup(caller: str, **setup_kwargs):
 
-    passed_args_str = ' '.join([f'{k} = {v}' for k, v in setup_kwargs.items()])
+    passed_args_str = ' '.join([f'{k}={v} ' for k, v in setup_kwargs.items()])
 
-    log.info('{caller}: params:')
+    log.info(f'{caller}: params:')
     if 'savefile' in setup_kwargs.keys():
         log.info('fastLBP is running in disk mode')
     log.info(f'{passed_args_str}')
@@ -162,7 +162,7 @@ def __generate_jobs_dataframe(index_params: list, index_names: list[str], fastlb
                      'img_shm_name', 'img_pixel_dtype', 
                      'img_shape_0', 'img_shape_1', 'img_shape_2', 
                      'output_shm_name', 'output_offset']
-        )
+        ) # essential columns used in all fastlbp versions
     
     return jobs    
 
@@ -216,6 +216,29 @@ def __dump_jobs_df_to_csv(jobs: pd.DataFrame, jobs_csv_savefile: str) -> None:
     jobs.to_csv(jobs_csv_savefile)
 
 
+
+## chunked fastlbp helper functions
+
+def __get_chunk_origins_and_shapes(nprows: int, npcols: int, 
+                                   patchsize: int, chunksize: int) -> tuple[int, int, int, int]:
+    n_chunk_rows = nprows // chunksize
+    n_chunk_cols = npcols // chunksize
+    row_chunk_indices, col_chunk_indices = np.arange(n_chunk_rows), np.arange(n_chunk_cols)
+
+    row_chunk_dims = np.full(n_chunk_rows, patchsize * chunksize)
+    col_chunk_dims = np.full(n_chunk_cols, patchsize * chunksize)
+
+    remaining_pixels_rows = (nprows % chunksize) * patchsize
+    if remaining_pixels_rows > 0:
+        row_chunk_indices = np.append(row_chunk_indices, [n_chunk_rows])
+        row_chunk_dims = np.append(row_chunk_dims, [remaining_pixels_rows])
+
+    remaining_pixels_cols = (npcols % chunksize) * patchsize
+    if remaining_pixels_cols > 0:
+        col_chunk_indices = np.append(col_chunk_indices, [n_chunk_cols])
+        col_chunk_dims = np.append(col_chunk_dims, [remaining_pixels_cols])
+
+    return row_chunk_indices, col_chunk_indices, row_chunk_dims, col_chunk_dims
 
     
 
@@ -378,7 +401,7 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
     pipeline_name = f"{img_name}-fastlbp-{pipeline_hash}"
     pipeline_name_lbp_codes = f"{img_name}-fastlbp-chunked-{pipeline_hash_lbp_codes}"
 
-    __log_fastlbp_setup(img_data_shape=img_data.shape, 
+    __log_fastlbp_setup(caller='run_fastlbp', img_data_shape=img_data.shape, 
                         radii_list=radii_list, npoints_list=npoints_list, 
                         patchsize=patchsize, ncpus=ncpus, max_ram=max_ram, 
                         img_name=img_name, histograms_cache_dir=histograms_cache_dir, 
@@ -545,14 +568,6 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
         Choose between 1, 2, 3, 4.
     """
 
-    import time
-    import pandas as pd
-    from pandas import DataFrame
-    from multiprocessing import Pool, shared_memory
-    from .common import _features_dtype
-    from .workers import __chunked_worker_fastlbp
-    from .utils import patchify_image_mask, int_verbosity_to_logger_level
-
     logger_level = int_verbosity_to_logger_level(verbosity)
     log.setLevel(logger_level)
 
@@ -602,52 +617,24 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     pipeline_name_lbp_codes = f"{img_name}-fastlbp-chunked-{pipeline_hash_lbp_codes}"
 
 
-    log.info('run_chunked_fastlbp: params:')
-    log.info("img_shape, radii_list, npoints_list, patchsize, ncpus, max_ram, img_name")
-    log.info(f"{img_data.shape}, {radii_list}, {npoints_list}, {patchsize}, {chunksize}, {ncpus}, {max_ram}, {img_name}")
-    log.info(f"{histograms_cache_dir=}, {lbp_codes_cache_dir=}")
-    if savefile:
-        log.info(f"LBP is saved on disk in {savefile = }")
-    log.info(f"pipeline hash is {pipeline_hash}")
-    log.info(f"pipeline LBP codes hash is {pipeline_hash_lbp_codes}")
+    __log_fastlbp_setup(caller='run_chunked_fastlbp', img_data_shape=img_data.shape, 
+                        radii_list=radii_list, npoints_list=npoints_list, 
+                        patchsize=patchsize, chunksize=chunksize, ncpus=ncpus, max_ram=max_ram, 
+                        img_name=img_name, histograms_cache_dir=histograms_cache_dir, 
+                        lbp_codes_cache_dir=lbp_codes_cache_dir, 
+                        savefile=savefile, pipeline_hash=pipeline_hash,
+                        pipeline_hash_lbp_codes=pipeline_hash_lbp_codes)
 
+    ncpus = __get_optimal_ncpus(ncpus)
+    max_ram = __get_optimal_ram(max_ram)
 
-    assert ncpus >= -1
-    max_ncpus = psutil.cpu_count(logical=False)
-    if ncpus > max_ncpus:
-        log.warning(f"ncpus ({ncpus}) greater than number of physical cpus ({max_ncpus})! Beware the performance issues.")
-    if ncpus == -1: 
-        log.info(f"ncpus == -1 so using all available physical cpus. That is, {max_ncpus} processes")
-        ncpus = max_ncpus
-
-
-    if max_ram is not None:
-        log.warning("max_ram parameter is currently ignored!")
-
-
-    # if savefile:
-    #     calculated_lbp = __check_existing_result_on_disk(outdir, outfile_name, caller='run_chunked_fastlbp', 
-    #                                                      pipeline_hash=pipeline_hash, 
-    #                                                      overwrite_output=overwrite_output)
-    #     if calculated_lbp is not None:
-    #         return calculated_lbp
 
     if savefile:
-        res_outdir = outdir if outdir else os.getcwd()
-        output_fpath = os.path.join(res_outdir, outfile_name)
-        output_abspath = os.path.abspath(output_fpath)
-        try:
-            if os.path.exists(output_fpath) and not overwrite_output:
-                log.error(f'run_chunked_fastlbp({pipeline_hash}): overwrite_output is False and output file {output_abspath} already exists. Aborting.')
-                return FastlbpResult(output_abspath, None)
-            
-            os.makedirs(res_outdir, exist_ok=True)
-            if not os.access(res_outdir, os.W_OK):
-                log.error(f'run_chunked_fastlbp({pipeline_hash}): output dir {os.path.dirname(output_abspath)} is not writable. Aborting.')
-                return FastlbpResult(output_abspath, None)
-        except:
-            log.error(f'run_chunked_fastlbp({pipeline_hash}): error accessing output dir {os.path.dirname(output_abspath)}. Aborting.')
-            return FastlbpResult(output_abspath, None)
+        calculated_lbp = __check_existing_result_on_disk(outdir, outfile_name, caller='run_chunked_fastlbp', 
+                                                         pipeline_hash=pipeline_hash, 
+                                                         overwrite_output=overwrite_output)
+        if calculated_lbp is not None:
+            return calculated_lbp
 
     log.info(f'run_chunked_fastlbp({pipeline_hash}): initial setup took {time.perf_counter()-t:.5g}s')
     log.info(f'run_chunked_fastlbp({pipeline_hash}): creating a list of jobs...')
@@ -655,53 +642,43 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     t = time.perf_counter()
 
     # method-specific params
+
     h, w, nchannels = img_data.shape
     nprows, npcols = h // patchsize, w // patchsize
     nfeatures_cumsum = np.cumsum(np.array(npoints_list) + 2)
     nfeatures_per_channel = nfeatures_cumsum[-1]
     channel_list = range(nchannels)
 
-    max_radius = sorted(radii_list)[-1]
-
-    row_patch_indices, col_patch_indices = np.arange(nprows), np.arange(npcols)
 
     # get chunk origins and shapes
-    n_chunk_rows = nprows // chunksize
-    n_chunk_cols = npcols // chunksize
-    row_chunk_indices, col_chunk_indices = np.arange(n_chunk_rows), np.arange(n_chunk_cols)
 
-    row_chunk_dims = np.full(n_chunk_rows, patchsize * chunksize)
-    col_chunk_dims = np.full(n_chunk_cols, patchsize * chunksize)
-
-    
-
-    remaining_pixels_rows = (nprows % chunksize) * patchsize
-    if remaining_pixels_rows > 0:
-        row_chunk_indices = np.append(row_chunk_indices, [n_chunk_rows])
-        row_chunk_dims = np.append(row_chunk_dims, [remaining_pixels_rows])
-
-    remaining_pixels_cols = (npcols % chunksize) * patchsize
-    if remaining_pixels_cols > 0:
-        col_chunk_indices = np.append(col_chunk_indices, [n_chunk_cols])
-        col_chunk_dims = np.append(col_chunk_dims, [remaining_pixels_cols])
+    row_chunk_indices, \
+    col_chunk_indices, \
+    row_chunk_dims, \
+    col_chunk_dims = __get_chunk_origins_and_shapes(nprows, npcols, patchsize, chunksize)
 
 
     assert len(row_chunk_indices) == len(row_chunk_dims)
     assert len(col_chunk_indices) == len(col_chunk_dims)
     
     # create a list of jobs
-    jobs_index = pd.MultiIndex.from_product(
-            [channel_list, radii_list, row_chunk_indices, col_chunk_indices], 
-            names=['channel', 'radius', 'chunk_origin_0', 'chunk_origin_1']
-    )
-    jobs = DataFrame(
-        index=jobs_index,
-        columns=['channel', 'radius', 'chunk_origin_0', 'chunk_origin_1', 'chunk_dim_0', 'chunk_dim_1',
-                 'img_name', 'label', 'npoints', 'patchsize', 'chunksize', 'img_shm_name',
-                 'img_pixel_dtype', 'img_shape_0', 'img_shape_1', 'img_shape_2', 
-                 'output_shm_name', 'output_offset', 'tmp_fpath',
-                 'patch_mask_shm_name', 'tmp_fpath_pixel']
-    )
+
+    jobs = __generate_jobs_dataframe(index_params=[channel_list, radii_list, row_chunk_indices, col_chunk_indices], 
+                                     index_names=['channel', 'radius', 'chunk_origin_0', 'chunk_origin_1'])
+
+
+    # jobs_index = pd.MultiIndex.from_product(
+    #         [channel_list, radii_list, row_chunk_indices, col_chunk_indices], 
+    #         names=['channel', 'radius', 'chunk_origin_0', 'chunk_origin_1']
+    # )
+    # jobs = DataFrame(
+    #     index=jobs_index,
+    #     columns=['channel', 'radius', 'chunk_origin_0', 'chunk_origin_1', 'chunk_dim_0', 'chunk_dim_1',
+    #              'img_name', 'label', 'npoints', 'patchsize', 'chunksize', 'img_shm_name',
+    #              'img_pixel_dtype', 'img_shape_0', 'img_shape_1', 'img_shape_2', 
+    #              'output_shm_name', 'output_offset', 'tmp_fpath',
+    #              'patch_mask_shm_name', 'tmp_fpath_pixel']
+    # )
 
     jobs_idx = pd.IndexSlice
 
@@ -750,32 +727,12 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     jobs['chunksize'] = chunksize
 
 
-    # get the tmp path to read cached results from (if None then default is 'data/tmp')
-    # the cache will be saved/ovewritten only if the corresponding flags are set to True
-    # `save_results_cache`, `save_lbp_codes_cache`,
-
-    # if histograms_cache_dir is set, save cached lbp results
-    if histograms_cache_dir is not None:
-        base_tmp_path = __get_tmp_dir_explicit(pipeline_name, histograms_cache_dir)
-        jobs['tmp_fpath'] = jobs.apply(
-            lambda row: os.path.join(base_tmp_path, row['label']) + '.npy',
-            axis='columns'
-        )
-    else:
-        jobs['tmp_fpath'] = ""
-
-    # if lbp codes cache dir is set save raw LBP results
-    if lbp_codes_cache_dir is not None:
-        base_tmp_path_lbp_codes = __get_tmp_dir_explicit(pipeline_name_lbp_codes, lbp_codes_cache_dir)
-        jobs['tmp_fpath_pixel'] = jobs.apply(
-            lambda row: os.path.join(base_tmp_path_lbp_codes, row['pixel_cache_label']) + '.npy', 
-            axis='columns')
-    else:
-        jobs['tmp_fpath_pixel'] = ""
-
+    __fill_in_cache_dirs_in_jobs_df(jobs, pipeline_name, 
+                                    [histograms_cache_dir, lbp_codes_cache_dir], 
+                                    ['label', 'pixel_cache_label'], 
+                                    ['tmp_fpath', 'tmp_fpath_pixel'])
 
     total_nfeatures = nfeatures_per_channel * len(channel_list)
-    chunk_features_shape = (n_chunk_rows, n_chunk_rows, total_nfeatures)
     patch_features_shape = (nprows, npcols, total_nfeatures)
     jobs['total_nfeatures'] = total_nfeatures
 
@@ -795,32 +752,16 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
 
     # copy mask to shared memory if provided.
 
-    patch_mask_shm = None # per patch mask
-
-    patch_mask_shape = (nprows, npcols)
+    patch_mask_shm_result = __create_patch_mask_shm(nprows, npcols, patchsize, 
+                                             mask_method, pipeline_hash, 
+                                             img_mask, img_patch_mask, 
+                                             caller='run_chunked_fastlbp')
+    
     patch_mask = None
+    patch_mask_shm = None
 
-    if img_mask is not None:
-        log.info(f"run_chunked_fastlbp({pipeline_hash}): using image mask.")
-        patch_mask = patchify_image_mask(img_mask, patchsize, edit_img_mask=False, method=mask_method)
-        assert patch_mask.shape == patch_mask_shape
-    
-        patch_mask_shm = shared_memory.SharedMemory(create=True, size=patch_mask.nbytes)
-        patch_mask_np = np.ndarray(patch_mask_shape, dtype=np.uint8, buffer=patch_mask_shm.buf)
-        np.copyto(patch_mask_np, patch_mask, casting='no')
-
-        log.info(f"run_chunked_fastlbp({pipeline_hash}): pixel mask converted to patch mask. Created shared memory for patch mask.")
-    elif img_patch_mask is not None:
-        log.info(f"run_chunked_fastlbp({pipeline_hash}): using patch mask.")
-        patch_mask = img_patch_mask
-
-        assert patch_mask.shape == patch_mask_shape
-    
-        patch_mask_shm = shared_memory.SharedMemory(create=True, size=patch_mask.nbytes)
-        patch_mask_np = np.ndarray(patch_mask_shape, dtype=np.uint8, buffer=patch_mask_shm.buf)
-        np.copyto(patch_mask_np, patch_mask, casting='no')
-
-        log.info(f"run_chunked_fastlbp({pipeline_hash}): created shared memory for patch mask.")
+    if patch_mask_shm_result is not None:
+        patch_mask, patch_mask_shm = patch_mask_shm_result
 
     # create and initialize shared memory for output
     patch_features_shm = shared_memory.SharedMemory(
@@ -844,10 +785,7 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     jobs.sort_index(level=1, ascending=False, inplace=True)
 
     if jobs_csv_savefile is not None:
-        jobs_csv_savedir = os.path.dirname(jobs_csv_savefile)
-        if jobs_csv_savedir:
-            os.makedirs(jobs_csv_savedir, exist_ok=True)
-        jobs.to_csv(jobs_csv_savefile)
+        __dump_jobs_df_to_csv(jobs, jobs_csv_savefile)
 
     log.info(f'run_chunked_fastlbp({pipeline_hash}): creating a list of jobs took {time.perf_counter()-t:.5g}s')
     log.info(f"run_chunked_fastlbp({pipeline_hash}): jobs:")
@@ -868,21 +806,15 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
 
     # save results
     lbp_result = None
+    output_fpath = os.path.join(outdir, outfile_name)
+    output_abspath = os.path.abspath(output_fpath)
+
     if savefile:
         np.save(output_fpath, patch_features)
     else:
         lbp_result = patch_features.copy()
-    
-    input_img_shm.unlink()
-    input_img_shm.close()
-    patch_features_shm.unlink()
-    patch_features_shm.close()
 
-    # if img_mask_shm is not None:
-    #     img_mask_shm.unlink()
-    if patch_mask_shm is not None:
-        patch_mask_shm.unlink()
-        patch_mask_shm.close()
+    __unlink_and_close_shms(input_img_shm, patch_features_shm, patch_mask_shm)
 
     log.info(f"run_chunked_fastlbp({pipeline_hash}): shared memory unlinked. Goodbye")
 
