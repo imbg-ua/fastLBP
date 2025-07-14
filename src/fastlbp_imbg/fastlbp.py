@@ -652,10 +652,7 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
 
     # get chunk origins and shapes
 
-    row_chunk_indices, \
-    col_chunk_indices, \
-    row_chunk_dims, \
-    col_chunk_dims = __get_chunk_origins_and_shapes(nprows, npcols, patchsize, chunksize)
+    row_chunk_indices, col_chunk_indices,row_chunk_dims, col_chunk_dims = __get_chunk_origins_and_shapes(nprows, npcols, patchsize, chunksize)
 
 
     assert len(row_chunk_indices) == len(row_chunk_dims)
@@ -686,8 +683,6 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     
 
     channel_output_offset = 0
-    # print(f'{jobs = } {channel_output_offset = } {nfeatures_per_channel = } DEBUG \n {107 + np.hstack([[0],nfeatures_cumsum[:-1]]) = }')
-    # print(f'{row_chunk_indices = } {col_chunk_indices = } DBEUG')
     for c in channel_list: 
         jobs.loc[jobs_idx[c, :, :, :], 'channel'] = c
 
@@ -702,16 +697,20 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
 
     for row_chunk_idx in row_chunk_indices:
         jobs.loc[jobs_idx[:, :, row_chunk_idx, :], 'chunk_origin_0'] = row_chunk_idx
+    jobs['chunk_origin_0'] = jobs['chunk_origin_0'].astype('uint32') # TODO: DEBUG: idk why this became necessary
     for col_chunk_idx in col_chunk_indices:
         jobs.loc[jobs_idx[:, :, :, col_chunk_idx], 'chunk_origin_1'] = col_chunk_idx
+    jobs['chunk_origin_1'] = jobs['chunk_origin_1'].astype('uint32')
 
 
     # fill chunk dimensions column
     for idx_i, chunk_i in enumerate(row_chunk_indices):
         jobs.loc[jobs_idx[:, :, chunk_i, :], 'chunk_dim_0'] = row_chunk_dims[idx_i]
+    jobs['chunk_dim_0'] = jobs['chunk_dim_0'].astype('uint32')
 
     for idx_j, chunk_j in enumerate(col_chunk_indices):
         jobs.loc[jobs_idx[:, :, :, chunk_j], 'chunk_dim_1'] = col_chunk_dims[idx_j]
+    jobs['chunk_dim_1'] = jobs['chunk_dim_1'].astype('uint32')
 
 
     

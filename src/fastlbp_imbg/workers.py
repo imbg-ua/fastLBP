@@ -246,7 +246,6 @@ def __chunked_worker_fastlbp(df_row_args):
         padding_right = padding_radius if padding_radius < padding_right else padding_right
 
         # get coordinates and dimensions of the current chunk in patches
-        # print(f'{chunk_dim_0 = } DEBUG')
         assert chunk_dim_0 % patchsize == 0
         assert chunk_dim_1 % patchsize == 0
 
@@ -274,7 +273,6 @@ def __chunked_worker_fastlbp(df_row_args):
         # each job processes only one chunk
 
         # get current chunk patches
-        # print(f'{chunk_row_in_patches = } {chunk_dim_0_patches = } worker debug')
         chunk_histograms = all_histograms[chunk_row_in_patches:(chunk_row_in_patches + chunk_dim_0_patches), 
                                           chunk_col_in_patches:(chunk_col_in_patches + chunk_dim_1_patches), :]
     
@@ -387,10 +385,6 @@ def __chunked_worker_fastlbp(df_row_args):
             # not sure if this is true for the chunk only
             
             img_channel_chunk = np.ascontiguousarray(img_channel_chunk_not_contiguous)
-
-            # print(f'{chunk_row_in_pixels = } {chunk_col_in_pixels} {chunk_dim_0} {chunk_dim_1}')
-            # print(f'{padding_top = } {padding_bottom = } {padding_left = } {padding_right = }')
-            # print(f'{img_channel_chunk_not_contiguous.shape = } {img_channel_chunk.shape = }')
 
             assert img_channel_chunk.flags.c_contiguous
             assert img_channel_chunk.dtype == np.uint8
