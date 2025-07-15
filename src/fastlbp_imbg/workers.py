@@ -222,6 +222,7 @@ def __chunked_worker_fastlbp(df_row_args):
         patchsize = job['patchsize']
         chunksize = job['chunksize']
         padding_radius = job['radius'] + 1
+        lbp_method = job['method']
 
         # TODO: add support for arbitrary number of axes
         chunk_row, chunk_col = job['chunk_origin_0'], job['chunk_origin_1'] # chunk-wise
@@ -441,7 +442,8 @@ def __chunked_worker_fastlbp(df_row_args):
 
                 lbp_results = uniform_lbp_uint8_padded_absolute(image=img_channel_chunk, P=job['npoints'], R=job['radius'], 
                                                                 abs_r=chunk_row_in_pixels, abs_c=chunk_col_in_pixels, 
-                                                                paddings_top_bottom_left_right=[padding_top, padding_bottom, padding_left, padding_right])
+                                                                paddings_top_bottom_left_right=[padding_top, padding_bottom, padding_left, padding_right], 
+                                                                method=lbp_method)
                 
             
             # assert lbp_results.dtype == _features_dtype

@@ -551,7 +551,7 @@ def run_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayL
         return lbp_result
 
 def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayLike, 
-                patchsize: int, ncpus: int, chunksize: int = 20,
+                patchsize: int, ncpus: int, chunksize: int = 20, lbp_method: str = 'uniform',
                 img_mask=None, img_patch_mask=None, mask_method='any',
                 max_ram=None, img_name='img_chunked',
                 savefile: str = '', overwrite_output: bool = False,
@@ -680,6 +680,7 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     jobs_idx = pd.IndexSlice
 
     jobs['img_name'] = img_name
+    jobs['method'] = lbp_method
     
 
     channel_output_offset = 0

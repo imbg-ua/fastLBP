@@ -569,7 +569,8 @@ def _uniform_lbp_uint8(cnp.uint8_t[:, ::1] image, int P, cnp.float64_t R):
 
 def _uniform_lbp_uint8_padded_absolute(cnp.uint8_t[:, ::1] image, int P, cnp.float64_t R, 
                                        Py_ssize_t abs_r, Py_ssize_t abs_c,
-                                       Py_ssize_t top, Py_ssize_t bottom, Py_ssize_t left, Py_ssize_t right):
+                                       Py_ssize_t top, Py_ssize_t bottom, Py_ssize_t left, Py_ssize_t right, 
+                                       char method=b'U'):
 
     # all the same as in _uniform_lbp_uint8 except for the image range used for computation and the 
     # use of the absolute coordinates representing the origin of the image
@@ -583,6 +584,7 @@ def _uniform_lbp_uint8_padded_absolute(cnp.uint8_t[:, ::1] image, int P, cnp.flo
     # pre-allocate arrays for computation
     cdef cnp.float64_t[::1] texture = np.zeros(P, dtype=np.float64)
     cdef signed char[::1] signed_texture = np.zeros(P, dtype=np.int8)
+    cdef cnp.uint16_t[::1] rotation_chain = np.zeros(P, dtype=np.uint16)
 
     # the shape doesn't include padding
     output_shape = (image.shape[0] - top - bottom, image.shape[1] - left - right)
@@ -620,6 +622,17 @@ def _uniform_lbp_uint8_padded_absolute(cnp.uint8_t[:, ::1] image, int P, cnp.flo
                 if changes <= 2:
                     for i in range(P):
                         lbp += signed_texture[i]
+
+                    if method == b'R':
+                        # shift LBP P times to the right and get minimum value
+                        rotation_chain[0] = lbp
+                        for i in range(1, P):
+                            rotation_chain[i] = \
+                                _bit_rotate_right(rotation_chain[i - 1], P)
+                        lbp = rotation_chain[0]
+                        for i in range(1, P):
+                            lbp = min(lbp, rotation_chain[i])
+                        # print(f'{np.array(rotation_chain) = } {lbp = }')
                 else:
                     lbp = P + 1
 
