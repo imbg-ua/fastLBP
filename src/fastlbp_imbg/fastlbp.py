@@ -829,7 +829,7 @@ def run_chunked_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
 
 def run_patch_fastlbp(img_data: ArrayLike, patch_coordinates_list: list[tuple[int, int]], 
                       radii_list: ArrayLike, npoints_list: ArrayLike, 
-                      patchsize: int, ncpus: int = 1, img_name: str = 'img_patch_lbp', 
+                      patchsize: int, lbp_method: str = 'uniform', ncpus: int = 1, img_name: str = 'img_patch_lbp', 
                       jobs_csv_savefile: str | None = None, verbosity: int = 1) -> np.ndarray:
 
     logger_level = int_verbosity_to_logger_level(verbosity)
@@ -881,6 +881,7 @@ def run_patch_fastlbp(img_data: ArrayLike, patch_coordinates_list: list[tuple[in
     jobs_idx = pd.IndexSlice
 
     jobs['img_name'] = img_name
+    jobs['method'] = lbp_method
 
     channel_output_offset = 0
     for c in channel_list: 

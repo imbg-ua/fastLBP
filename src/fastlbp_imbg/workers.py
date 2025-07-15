@@ -527,6 +527,7 @@ def __single_patch_fastlbp_worker(df_row_args):
         bottom_dist = right_dist
 
         padding_radius = job['radius'] + 1
+        lbp_method = job['method']
 
         padding_left = left_dist + padding_radius
         padding_right = right_dist + padding_radius
@@ -585,7 +586,8 @@ def __single_patch_fastlbp_worker(df_row_args):
                                                         paddings_top_bottom_left_right=[padding_radius - delta_padding_top, 
                                                                                         padding_radius - delta_padding_bottom, 
                                                                                         padding_radius - delta_padding_left, 
-                                                                                        padding_radius - delta_padding_right])
+                                                                                        padding_radius - delta_padding_right], 
+                                                        method=lbp_method)
 
         assert lbp_results.shape == (patchsize, patchsize)
 
