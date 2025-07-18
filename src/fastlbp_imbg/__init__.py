@@ -36,4 +36,4 @@ __all__ = [
 # - main branch gets 1.2.3
 # - dev branch gets 1.2.3.dev1
 # - feature branch gets 1.2.3.dev0+feature.improve.logs
-__version__ = "0.2.1.dev0+test.test.pypi.publish.github.worklfow"  
+__version__ = "0.2.3.dev0"  
