@@ -1,7 +1,7 @@
 #include <cstdio>
 #include "helpers.h"
 
-__global__ void lbpKernel(int* img_data, int* out_feature_map, int width, int height, int radius, int npoints, char mode, int cval) {
+__global__ void lbpKernel(unsigned int* img_data, unsigned int* out_feature_map, int width, int height, int radius, int npoints, char mode, int cval) {
     int center_col = blockIdx.x * blockDim.x + threadIdx.x;
     int center_row = blockIdx.y * blockDim.y + threadIdx.y;
 
@@ -43,10 +43,13 @@ __global__ void lbpKernel(int* img_data, int* out_feature_map, int width, int he
             lbp = npoints + 1;
 
         out_feature_map[center_row * width + center_col] = lbp;
+
+        sampled_points_delete(sampled_points);
     }
 
 }
 
-int* process_channel_with_lbp(int* img_data, int* out_feature_map, ) {
+void* process_channel_with_lbp(unsigned int* img_data, unsigned int* out_feature_map, 
+    int width, int height, int radius, int npoints, char mode, int cval) {
 
 }

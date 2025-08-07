@@ -3,7 +3,7 @@
 #include <math.h>
 
 
-int get_pixel2d(int* img, size_t rows, size_t cols, size_t r, size_t c, char mode, float cval) {
+int get_pixel2d(unsigned int* img, size_t rows, size_t cols, size_t r, size_t c, char mode, float cval) {
 
     // only constant mode is implemented
     if (mode == 'C') {
@@ -21,7 +21,7 @@ int get_pixel2d(int* img, size_t rows, size_t cols, size_t r, size_t c, char mod
     
 }
 
-inline void bilinear_interpolation(int* image, size_t rows, size_t cols, float r, float c, char mode, float cval, float* out) {
+inline void bilinear_interpolation(unsigned int* image, size_t rows, size_t cols, float r, float c, char mode, float cval, float* out) {
     float dr, dc;
     long minr, minc, maxr, maxc;
 
