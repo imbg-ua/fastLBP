@@ -1,15 +1,18 @@
 cimport cython
+cimport numpy as cnp
 
-from cython.parallel import prange
+cdef extern from "stdint.h":
+    ctypedef unsigned char uint8_t
+    ctypedef unsigned int uint32_t
 
 cdef extern from "cuda/main.h":
-    void process_channel_with_lbp(unsigned int* img_data, unsigned int* out_feature_map, int width, int height, int radius, int npoints, char mode, int cval)
+    void process_channel_with_lbp(uint8_t* img_data, uint32_t* out_feature_map, int width, int height, int radius, int npoints, char mode, int cval)
 
-def cuda_lbp(cnp.uint8_t[:, ::1] image, cnp.uint8_t[:, ::1] out, int P, cnp.float64_t R):
+def cuda_lbp(cnp.uint8_t[:, ::1] image, cnp.uint32_t[:, ::1] out, int P, int R):
     cdef:
-        Py_ssize_t image_width = image.shape[1]
-        Py_ssize_t image_height = image.shape[0]
+        int image_width = image.shape[1]
+        int image_height = image.shape[0]
 
-    process_channel_with_lbp(&image[0, 0], &out[0, 0], image_width, image_height, R, P)
+    process_channel_with_lbp(&image[0, 0], &out[0, 0], image_width, image_height, R, P, 'C', 0)
 
 
