@@ -77,7 +77,7 @@ class custom_build_ext(build_ext):
 
 ext = Extension('lbp_cuda',
                 sources=['_lbp_gpu.pyx'],
-                libraries=['lib/main', 'cudart'],  # , os.path.join(CUDA['lib64'], 'cudart')],
+                libraries=['cudart'],  # , os.path.join(CUDA['lib64'], 'cudart')],
                 language='c++',
                 include_dirs=[CUDA['include'], np.get_include()],
                 library_dirs=[CUDA['lib64']]

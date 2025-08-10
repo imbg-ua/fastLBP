@@ -1,10 +1,17 @@
 #include <cstdio>
+#include <cstdint>
+#include <cmath>
+#include <iostream>
 #include <stdint.h>
 // #include "helpers.h"
 #include "common.h"
 
-const unsigned int THREADS_PER_BLOCK = 1;
-#define TILE_WIDTH 32
+// const unsigned int THREADS_PER_BLOCK = 1;
+
+#define TILE_WIDTH 16   // 16x16 = 256 threads per block (safe)
+#ifndef M_PI
+#define M_PI 3.14159265358979323846
+#endif
 
 // static void CudaCheck(cudaError_t error, const char *file, int line) {
 //     if (error != cudaSuccess)
@@ -101,52 +108,54 @@ __device__ void sampled_points_delete(SampledCirclePoints* sampled_points) {
     }
 }
 
-__global__ void lbpKernel(uint8_t* img_data, uint32_t* out_feature_map, int width, int height, int radius, int npoints, char mode, int cval) {
+__global__ void lbpKernel(const uint8_t* img_data, uint32_t* out_feature_map, int width, int height, int radius, int npoints, char mode, int cval) {
     int center_col = blockIdx.x * blockDim.x + threadIdx.x;
     int center_row = blockIdx.y * blockDim.y + threadIdx.y;
 
-    // Ensure that threads do not attempt illegal memory access (this can happen because there could be more threads than elements in an array)
-    // from https://github.com/matpetrone/LBP_Descriptor_CUDA/blob/master/src/main.cu
-    if (center_col < width && center_row < height) {
-        float *texture;
-        int *signed_texture;
-        texture = (float *) malloc(sizeof(float) * npoints);
+    if (center_col >= width || center_row >= height) return;
 
-        SampledCirclePoints* sampled_points;
-        sampled_points = sample_points_from_neighborhood(radius, npoints);
-        float *rr = sampled_points->rr;
-        float *cc = sampled_points->cc;
+    const int idx = center_row * width + center_col;
+    float center_val = (float) get_pixel2d((uint8_t*) img_data, height, width, center_row, center_col, mode, cval);
+
+    int prev_bit = -1;
+    int first_bit = -1;
+    unsigned int changes = 0;
+    unsigned int sum_bits = 0;
+
+    for (int i = 0; i < npoints; ++i){ 
+        float point_num = (float)i / (float)npoints;
+        float circle_pos_r = - (float)radius * sinf(2.0f * (float)M_PI * point_num);
+        float circle_pos_c = (float)radius * cosf(2.0f * (float)M_PI * point_num);
+
+        float sample_r = (float)center_row + circle_pos_r;
+        float sample_c = (float)center_col + circle_pos_c;
+
+        float sampled_value = 0.0f;
+
+        bilinear_interpolation((uint8_t*)img_data, height, width, sample_r, sample_c, mode, (float)cval, &sampled_value);
+
+        int bit = (sampled_value - center_val >= 0.0f) ? 1 : 0;
         
-        // get interpolated pixel values sampled on the circle
-        for (size_t i = 0; i < npoints; ++i)
-            bilinear_interpolation(img_data, (size_t) height, (size_t) width, center_row + rr[i], center_col + cc[i], 
-                mode, cval, &texture[i]);
+        if (i == 0) {
+            first_bit = bit;
+        } else {
+            if (bit != prev_bit) ++changes;
+        }
 
-        // threshold interpolated sampled values with the central pixel intensity
-        for (size_t i = 0; i < npoints; ++i)
-            if (texture[i] - img_data[center_row * width + center_col] >= 0)
-                signed_texture[i] = 1;
-            else
-                signed_texture[i] = 0;
-
-        // get uniform LBP code
-        uint32_t lbp = 0;
-        
-        uint32_t changes = 0;
-        for (size_t i = 0; i < npoints - 1; ++i)
-            changes += (uint32_t) ((signed_texture[i] - signed_texture[i + 1]) != 0);
-
-        if (changes <= 2)
-            for (size_t i = 0; i < npoints; ++i)
-                lbp += signed_texture[i];
-        else
-            lbp = npoints + 1;
-
-        out_feature_map[center_row * width + center_col] = lbp;
-
-        sampled_points_delete(sampled_points);
+        prev_bit = bit;
+        sum_bits += (unsigned int) bit;
     }
 
+    if (npoints > 1 && prev_bit != first_bit) ++changes;
+
+    uint32_t lbp = 0;
+    if (changes <= 2) {
+        lbp = sum_bits;
+    } else {
+        lbp = (uint32_t)(npoints + 1);
+    }
+
+    out_feature_map[idx] = lbp;
 }
 
 // 
@@ -167,22 +176,29 @@ extern "C" void process_channel_with_lbp(uint8_t* img_data, uint32_t* out_featur
 
         // Memory allocation
 
-        uint8_t *inDevice;
-        uint32_t *outDevice;
+        uint8_t *inDevice = nullptr;
+        uint32_t *outDevice = nullptr;
+
+        size_t inBytes = (size_t)width * (size_t)height * sizeof(uint8_t);
+        size_t outBytes = (size_t)width * (size_t)height * sizeof(uint32_t);
 
 
-        CUDA_CHECK(cudaMalloc((void **) &inDevice, width * height * sizeof(uint8_t)));
-        CUDA_CHECK(cudaMalloc((void **) &outDevice, width * height * sizeof(uint32_t)));
+        CUDA_CHECK(cudaMalloc((void **) &inDevice, inBytes));
+        CUDA_CHECK(cudaMalloc((void **) &outDevice, outBytes));
 
-        cudaMemcpy(inDevice, img_data, width * height * sizeof(uint8_t), cudaMemcpyHostToDevice);
+        cudaMemcpy(inDevice, img_data, inBytes, cudaMemcpyHostToDevice);
 
-        dim3 dimGrid(ceil((float) (width + TILE_WIDTH - 1) / TILE_WIDTH), ceil((float) (height + TILE_WIDTH - 1) / TILE_WIDTH));
         dim3 dimBlock(TILE_WIDTH, TILE_WIDTH);
+        dim3 dimGrid((width + TILE_WIDTH - 1) / TILE_WIDTH, (height + TILE_WIDTH - 1) / TILE_WIDTH);
+
 
         lbpKernel<<< dimGrid, dimBlock >>>(inDevice, outDevice, width, height, radius, npoints, mode, cval);
         CUDA_CHECK(cudaGetLastError());
         CUDA_CHECK(cudaDeviceSynchronize());
 
         // copy output back to host
-        CUDA_CHECK(cudaMemcpy(out_feature_map, outDevice, width * height * sizeof(uint32_t), cudaMemcpyDeviceToHost));
+        CUDA_CHECK(cudaMemcpy(out_feature_map, outDevice, outBytes, cudaMemcpyDeviceToHost));
+
+        CUDA_CHECK(cudaFree(inDevice));
+        CUDA_CHECK(cudaFree(outDevice));
 }
