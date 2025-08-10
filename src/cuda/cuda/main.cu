@@ -16,8 +16,8 @@
 // static void CudaCheck(cudaError_t error, const char *file, int line) {
 //     if (error != cudaSuccess)
 //     {
-//         fprintf(stderr, "Error: %s:%d, ", file, line);
-//         fprintf(stderr, "code: %d, reason: %s\n", error,
+//         f// printf(stderr, "Error: %s:%d, ", file, line);
+//         f// printf(stderr, "code: %d, reason: %s\n", error,
 //                 cudaGetErrorString(error));
 //         exit( EXIT_FAILURE );
 //     }
@@ -134,7 +134,11 @@ __global__ void lbpKernel(const uint8_t* img_data, uint32_t* out_feature_map, in
 
         bilinear_interpolation((uint8_t*)img_data, height, width, sample_r, sample_c, mode, (float)cval, &sampled_value);
 
+        // printf("DEBUG %d %d %f %f %f \n", center_row, center_col, sample_r,  sample_c, sampled_value);
+
         int bit = (sampled_value - center_val >= 0.0f) ? 1 : 0;
+
+        // printf("bit %d (%d, %d) \n", bit, center_row, center_col);
         
         if (i == 0) {
             first_bit = bit;
@@ -142,11 +146,21 @@ __global__ void lbpKernel(const uint8_t* img_data, uint32_t* out_feature_map, in
             if (bit != prev_bit) ++changes;
         }
 
+        // printf("prev_bit %d (%d, %d) \n", prev_bit, center_row, center_col);
+
         prev_bit = bit;
+
+        // printf("prev_bit %d (%d, %d) \n", prev_bit, center_row, center_col);
+
         sum_bits += (unsigned int) bit;
+
+        // printf("prev_bit %d (%d, %d) \n", sum_bits, center_row, center_col);
     }
 
     if (npoints > 1 && prev_bit != first_bit) ++changes;
+
+
+    // printf("changes %d (%d, %d), \n", changes, center_row, center_col);
 
     uint32_t lbp = 0;
     if (changes <= 2) {
@@ -154,6 +168,10 @@ __global__ void lbpKernel(const uint8_t* img_data, uint32_t* out_feature_map, in
     } else {
         lbp = (uint32_t)(npoints + 1);
     }
+
+    // printf("lbp %d (%d, %d) %d \n", lbp, center_row, center_col, idx);
+
+    // printf("\n\n");
 
     out_feature_map[idx] = lbp;
 }
