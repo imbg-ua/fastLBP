@@ -610,7 +610,7 @@ def __single_patch_fastlbp_worker(df_row_args):
     return 0
 
 
-def __mystery_worker_fastlbp(df_row_args):
+def __cuda_worker_fastlbp(df_row_args):
 
     row_id, job = df_row_args
     tmp_fpath = job['tmp_fpath']
@@ -618,7 +618,7 @@ def __mystery_worker_fastlbp(df_row_args):
 
     pid = os.getpid()
     jobname = job['label']
-    log.info(f"run_mystery_fastlbp: worker {pid}: starting job {jobname}")
+    log.info(f"run_cuda_fastlbp: worker {pid}: starting job {jobname}")
 
     try:
         t0 = time.perf_counter()
@@ -698,36 +698,36 @@ def __mystery_worker_fastlbp(df_row_args):
 
         if not tmp_fpath:
             # don't use cache at all
-            log.debug(f"run_mystery_fastlbp: worker {jobname}({pid}): skipping cache")
+            log.debug(f"run_cuda_fastlbp: worker {jobname}({pid}): skipping cache")
         else:
             # try to find existing cached result for the current job
             try:
                 cached_result_mm = np.load(tmp_fpath, mmap_mode='r')
             except:
                 cached_result_mm = None
-                log.debug(f"run_mystery_fastlbp: worker {jobname}({pid}): no usable cache")
+                log.debug(f"run_cuda_fastlbp: worker {jobname}({pid}): no usable cache")
 
         # read pixel level cache if available
         if not tmp_fpath_pixel:
-            log.debug(f'run_mystery_fastlbp: worker {jobname}({pid}): skipping pixel cache')
+            log.debug(f'run_cuda_fastlbp: worker {jobname}({pid}): skipping pixel cache')
         else:
             try:
                 cached_result_mm_pixel = np.load(tmp_fpath_pixel, mmap_mode='r')
             except:
                 cached_result_mm_pixel = None
-                log.debug(f"run_mystery_fastlbp: worker {jobname}({pid}): no usable pixel cache")
+                log.debug(f"run_cuda_fastlbp: worker {jobname}({pid}): no usable pixel cache")
         
         # use cached results if found
         if cached_result_mm is not None:
             # Use cache and return
             
-            log.info(f"run_mystery_fastlbp: worker {jobname}({pid}): cache found! copying to output.")
+            log.info(f"run_cuda_fastlbp: worker {jobname}({pid}): cache found! copying to output.")
             np.copyto(job_chunk_histogram, cached_result_mm)
         
         # else try to read pixel level cache
         elif cached_result_mm_pixel is not None:
                 # use pixel level cache to group features into patches and return
-                log.info(f'run_mystery_fastlbp: worker {jobname}({pid}): pixel cache found! Grouping into patches and copying to output.')
+                log.info(f'run_cuda_fastlbp: worker {jobname}({pid}): pixel cache found! Grouping into patches and copying to output.')
 
                 using_patch_mask = 'patch_mask_shm_name' in job and job['patch_mask_shm_name']
 
@@ -760,12 +760,12 @@ def __mystery_worker_fastlbp(df_row_args):
 
                 # save grouped cache if it doesn't exists but was requested
                 if tmp_fpath:
-                    log.debug(f"run_mystery_fastlbp: worker {jobname}({pid}): saving cached histograms from the pixel cache")
+                    log.debug(f"run_cuda_fastlbp: worker {jobname}({pid}): saving cached histograms from the pixel cache")
                     try:
                         os.makedirs( os.path.dirname(tmp_fpath), exist_ok=True)
                         np.save(tmp_fpath, job_chunk_histogram)
                     except:
-                        log.warning(f"run_mystery_fastlbp: worker {jobname}({pid}): computation successful, but cannot save grouped tmp file from lbp codes")
+                        log.warning(f"run_cuda_fastlbp: worker {jobname}({pid}): computation successful, but cannot save grouped tmp file from lbp codes")
 
         
         # calculate LBP in two cases
@@ -818,7 +818,7 @@ def __mystery_worker_fastlbp(df_row_args):
 
             else:
                 # if no mask is provided
-                log.debug(f"run_mystery_fastlbp: worker {jobname}({pid}) absolute coordinates {chunk_row_in_pixels} {chunk_col_in_pixels}: do not use mask")
+                log.debug(f"run_cuda_fastlbp: worker {jobname}({pid}) absolute coordinates {chunk_row_in_pixels} {chunk_col_in_pixels}: do not use mask")
 
                 lbp_results = np.zeros(shape=img_channel_chunk.shape, dtype=np.uint32)
 
@@ -858,7 +858,7 @@ def __mystery_worker_fastlbp(df_row_args):
                     os.makedirs(os.path.dirname(tmp_fpath), exist_ok=True)
                     np.save(tmp_fpath, job_chunk_histogram)
                 except:
-                    log.warning(f"run_mystery_fastlbp: worker {jobname}({pid}): computation successful, but cannot save tmp file")
+                    log.warning(f"run_cuda_fastlbp: worker {jobname}({pid}): computation successful, but cannot save tmp file")
 
             # save raw lbp features as reusable cache for subsequent runs
             if tmp_fpath_pixel:
@@ -866,13 +866,13 @@ def __mystery_worker_fastlbp(df_row_args):
                     os.makedirs(os.path.dirname(tmp_fpath_pixel), exist_ok=True)
                     np.save(tmp_fpath_pixel, lbp_results)
                 except:
-                    log.warning(f'run_mystery_fastlbp: worker {jobname}({pid}): computation successful, but cannot save pixel tmp file')
+                    log.warning(f'run_cuda_fastlbp: worker {jobname}({pid}): computation successful, but cannot save pixel tmp file')
 
         output_shm.close()
 
-        log.info(f"run_mystery_fastlbp: worker {pid}: finished job {jobname} in {time.perf_counter()-t0:.5g}s")
+        log.info(f"run_cuda_fastlbp: worker {pid}: finished job {jobname} in {time.perf_counter()-t0:.5g}s")
     except Exception as e:
-        log.error(f"run_mystery_fastlbp: worker {jobname}({pid}): exception! Aborting execution.")
+        log.error(f"run_cuda_fastlbp: worker {jobname}({pid}): exception! Aborting execution.")
         log.error(e, exc_info=True)
 
     return 0

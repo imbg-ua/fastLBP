@@ -971,7 +971,7 @@ def run_patch_fastlbp(img_data: ArrayLike, patch_coordinates_list: list[tuple[in
     
     return result
 
-def run_mystery_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayLike, 
+def run_cuda_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayLike, 
                 patchsize: int, chunksize: int | None = None,
                 img_mask=None, img_patch_mask=None, mask_method='any',
                 max_ram=None, img_name='img_chunked',
@@ -986,7 +986,7 @@ def run_mystery_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     from pandas import DataFrame
     from multiprocessing import Pool, shared_memory
     from .common import _features_dtype
-    from .workers import __mystery_worker_fastlbp
+    from .workers import __cuda_worker_fastlbp
     from .utils import patchify_image_mask, int_verbosity_to_logger_level
 
     logger_level = int_verbosity_to_logger_level(verbosity)
@@ -1007,7 +1007,7 @@ def run_mystery_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
 
     t = time.perf_counter()
 
-    log.info('run_mystery_fastlbp: initial setup...')
+    log.info('run_cuda_fastlbp: initial setup...')
 
     img_name = __sanitize_img_name(img_name)
     outdir, outfile_name = os.path.dirname(savefile), os.path.basename(savefile)
@@ -1017,7 +1017,7 @@ def run_mystery_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
 
 
     # this way pipelines with different ncpus/radii/npoints can reuse tmp files if patchsize, img name and version are the same 
-    pipeline_hash = __create_pipeline_hash("fastlbp-mystery", [str(img_data.shape), patchsize, chunksize, 
+    pipeline_hash = __create_pipeline_hash("fastlbp-cuda", [str(img_data.shape), patchsize, chunksize, 
                                                        'mask' if img_mask is not None else 'no_mask', 
                                                         mask_method if img_mask is not None else ''])
 
@@ -1030,15 +1030,15 @@ def run_mystery_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     # meaning that changing the patch size will alter the splitting pattern
     # and the shape of the cached results
     # TODO: add separate pipeline hash for pixel cache in the regular function (not chunked)
-    pipeline_hash_lbp_codes = __create_pipeline_hash("fastlbp-mystery", [str(img_data.shape), patchsize, chunksize, 
+    pipeline_hash_lbp_codes = __create_pipeline_hash("fastlbp-cuda", [str(img_data.shape), patchsize, chunksize, 
                                                        'mask' if img_mask is not None else 'no_mask', 
                                                         mask_method if img_mask is not None else ''])
 
-    pipeline_name = f"{img_name}-fastlbp-mystery-{pipeline_hash}"
-    pipeline_name_lbp_codes = f"{img_name}-fastlbp-mystery-{pipeline_hash_lbp_codes}"
+    pipeline_name = f"{img_name}-fastlbp-cuda-{pipeline_hash}"
+    pipeline_name_lbp_codes = f"{img_name}-fastlbp-cuda-{pipeline_hash_lbp_codes}"
 
 
-    log.info('run_mystery_fastlbp: params:')
+    log.info('run_cuda_fastlbp: params:')
     log.info("img_shape, radii_list, npoints_list, patchsize, max_ram, img_name")
     log.info(f"{img_data.shape}, {radii_list}, {npoints_list}, {patchsize}, {chunksize}, {max_ram}, {img_name}")
     log.info(f"{histograms_cache_dir=}, {lbp_codes_cache_dir=}")
@@ -1056,19 +1056,19 @@ def run_mystery_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
         output_abspath = os.path.abspath(output_fpath)
         try:
             if os.path.exists(output_fpath) and not overwrite_output:
-                log.error(f'run_mystery_fastlbp({pipeline_hash}): overwrite_output is False and output file {output_abspath} already exists. Aborting.')
+                log.error(f'run_cuda_fastlbp({pipeline_hash}): overwrite_output is False and output file {output_abspath} already exists. Aborting.')
                 return FastlbpResult(output_abspath, None)
             
             os.makedirs(res_outdir, exist_ok=True)
             if not os.access(res_outdir, os.W_OK):
-                log.error(f'run_mystery_fastlbp({pipeline_hash}): output dir {os.path.dirname(output_abspath)} is not writable. Aborting.')
+                log.error(f'run_cuda_fastlbp({pipeline_hash}): output dir {os.path.dirname(output_abspath)} is not writable. Aborting.')
                 return FastlbpResult(output_abspath, None)
         except:
-            log.error(f'run_mystery_fastlbp({pipeline_hash}): error accessing output dir {os.path.dirname(output_abspath)}. Aborting.')
+            log.error(f'run_cuda_fastlbp({pipeline_hash}): error accessing output dir {os.path.dirname(output_abspath)}. Aborting.')
             return FastlbpResult(output_abspath, None)
 
-    log.info(f'run_mystery_fastlbp({pipeline_hash}): initial setup took {time.perf_counter()-t:.5g}s')
-    log.info(f'run_mystery_fastlbp({pipeline_hash}): creating a list of jobs...')
+    log.info(f'run_cuda_fastlbp({pipeline_hash}): initial setup took {time.perf_counter()-t:.5g}s')
+    log.info(f'run_cuda_fastlbp({pipeline_hash}): creating a list of jobs...')
 
     t = time.perf_counter()
 
@@ -1200,7 +1200,7 @@ def run_mystery_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     img_data = np.ascontiguousarray(np.moveaxis(img_data, (0, 1, 2), (1, 2, 0)))
 
 
-    log.info(f"run_mystery_fastlbp({pipeline_hash}): creating shared memory")
+    log.info(f"run_cuda_fastlbp({pipeline_hash}): creating shared memory")
     # create shared memory for input image
     input_img_shm = shared_memory.SharedMemory(create=True, size=img_data.nbytes)
 
@@ -1216,7 +1216,7 @@ def run_mystery_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
     patch_mask = None
 
     if img_mask is not None:
-        log.info(f"run_mystery_fastlbp({pipeline_hash}): using image mask.")
+        log.info(f"run_cuda_fastlbp({pipeline_hash}): using image mask.")
         patch_mask = patchify_image_mask(img_mask, patchsize, edit_img_mask=False, method=mask_method)
         assert patch_mask.shape == patch_mask_shape
     
@@ -1224,9 +1224,9 @@ def run_mystery_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
         patch_mask_np = np.ndarray(patch_mask_shape, dtype=np.uint8, buffer=patch_mask_shm.buf)
         np.copyto(patch_mask_np, patch_mask, casting='no')
 
-        log.info(f"run_mystery_fastlbp({pipeline_hash}): pixel mask converted to patch mask. Created shared memory for patch mask.")
+        log.info(f"run_cuda_fastlbp({pipeline_hash}): pixel mask converted to patch mask. Created shared memory for patch mask.")
     elif img_patch_mask is not None:
-        log.info(f"run_mystery_fastlbp({pipeline_hash}): using patch mask.")
+        log.info(f"run_cuda_fastlbp({pipeline_hash}): using patch mask.")
         patch_mask = img_patch_mask
 
         assert patch_mask.shape == patch_mask_shape
@@ -1235,14 +1235,14 @@ def run_mystery_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
         patch_mask_np = np.ndarray(patch_mask_shape, dtype=np.uint8, buffer=patch_mask_shm.buf)
         np.copyto(patch_mask_np, patch_mask, casting='no')
 
-        log.info(f"run_mystery_fastlbp({pipeline_hash}): created shared memory for patch mask.")
+        log.info(f"run_cuda_fastlbp({pipeline_hash}): created shared memory for patch mask.")
 
     # create and initialize shared memory for output
     patch_features_shm = shared_memory.SharedMemory(
         create=True, size=(int(np.prod(patch_features_shape)) * np.dtype(_features_dtype).itemsize))
     patch_features = np.ndarray(patch_features_shape, _features_dtype, buffer=patch_features_shm.buf)
     patch_features.fill(0)
-    log.info(f"run_mystery_fastlbp({pipeline_hash}): shared memory created")
+    log.info(f"run_cuda_fastlbp({pipeline_hash}): shared memory created")
 
     jobs['img_shm_name'] = input_img_shm.name
     # jobs['img_mask_shm_name'] = img_mask_shm.name if img_mask_shm is not None else ""
@@ -1264,8 +1264,8 @@ def run_mystery_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
             os.makedirs(jobs_csv_savedir, exist_ok=True)
         jobs.to_csv(jobs_csv_savefile)
 
-    log.info(f'run_mystery_fastlbp({pipeline_hash}): creating a list of jobs took {time.perf_counter()-t:.5g}s')
-    log.info(f"run_mystery_fastlbp({pipeline_hash}): jobs:")
+    log.info(f'run_cuda_fastlbp({pipeline_hash}): creating a list of jobs took {time.perf_counter()-t:.5g}s')
+    log.info(f"run_cuda_fastlbp({pipeline_hash}): jobs:")
     log.info(jobs.head())
     log.info(f'Jobs DataFrame shape: {jobs.shape}')
 
@@ -1274,14 +1274,14 @@ def run_mystery_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
 
     # compute
 
-    log.info(f'run_mystery_fastlbp({pipeline_hash}): start computation')
+    log.info(f'run_cuda_fastlbp({pipeline_hash}): start computation')
     t0 = time.perf_counter()
 
     for rrow in jobs.iterrows():
-        __mystery_worker_fastlbp(rrow)
+        __cuda_worker_fastlbp(rrow)
 
     t_elapsed = time.perf_counter() - t0
-    log.info(f'run_mystery_fastlbp({pipeline_hash}): computation finished in {t_elapsed:.5g}s. Start saving')
+    log.info(f'run_cuda_fastlbp({pipeline_hash}): computation finished in {t_elapsed:.5g}s. Start saving')
 
     # save results
     lbp_result = None
@@ -1301,7 +1301,7 @@ def run_mystery_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list
         patch_mask_shm.unlink()
         patch_mask_shm.close()
 
-    log.info(f"run_mystery_fastlbp({pipeline_hash}): shared memory unlinked. Goodbye")
+    log.info(f"run_cuda_fastlbp({pipeline_hash}): shared memory unlinked. Goodbye")
 
     # reset logger to its original level
     log.setLevel(DEFAULT_LEVEL)
