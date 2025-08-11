@@ -10,6 +10,7 @@ from .fastlbp import (
     run_fastlbp, 
     run_chunked_fastlbp,
     run_patch_fastlbp,
+    run_mystery_fastlbp,
     get_radii, 
     get_p_for_r,
     FastlbpResult
@@ -19,6 +20,7 @@ __all__ = [
     "run_fastlbp", 
     "run_chunked_fastlbp",
     "run_patch_fastlbp",
+    "run_mystery_fastlbp",
     "FastlbpResult",
     "get_radii", 
     "get_p_for_r", 
@@ -36,4 +38,4 @@ __all__ = [
 # - main branch gets 1.2.3
 # - dev branch gets 1.2.3.dev1
 # - feature branch gets 1.2.3.dev0+feature.improve.logs
-__version__ = "0.2.3.dev0"  
+__version__ = "0.2.4"  

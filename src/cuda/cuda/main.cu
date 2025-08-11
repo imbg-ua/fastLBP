@@ -187,10 +187,10 @@ unsigned int* allocate_uint_img_channel_device(int n, int m) {
 extern "C" void process_channel_with_lbp(uint8_t* img_data, uint32_t* out_feature_map, 
     int width, int height, int radius, int npoints, char mode, int cval) {
 
-        cudaDeviceProp deviceProp;
-        cudaGetDeviceProperties(&deviceProp, 0); // 0-th device
-        std::cout << "Num SM: " << deviceProp.multiProcessorCount << std::endl;
-        std::cout << "Max threads per block: " << deviceProp.maxThreadsPerBlock << std::endl;
+        // cudaDeviceProp deviceProp;
+        // cudaGetDeviceProperties(&deviceProp, 0); // 0-th device
+        // std::cout << "Num SM: " << deviceProp.multiProcessorCount << std::endl;
+        // std::cout << "Max threads per block: " << deviceProp.maxThreadsPerBlock << std::endl;
 
         // Memory allocation
 

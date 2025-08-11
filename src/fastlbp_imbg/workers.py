@@ -18,6 +18,8 @@ from .lbp import (
     uniform_lbp_uint8_padded_absolute_patch_masked
 )
 
+import lbp_cuda # import cuda worker from a separate package
+
 def __worker_fastlbp(args):
     row_id, job = args
     tmp_fpath = job['tmp_fpath']
@@ -603,6 +605,274 @@ def __single_patch_fastlbp_worker(df_row_args):
 
     except Exception as e:
         log.error(f"run_patched_fastlbp: worker {jobname}({pid}): exception! Aborting execution.")
+        log.error(e, exc_info=True)
+
+    return 0
+
+
+def __mystery_worker_fastlbp(df_row_args):
+
+    row_id, job = df_row_args
+    tmp_fpath = job['tmp_fpath']
+    tmp_fpath_pixel = job['tmp_fpath_pixel']
+
+    pid = os.getpid()
+    jobname = job['label']
+    log.info(f"run_mystery_fastlbp: worker {pid}: starting job {jobname}")
+
+    try:
+        t0 = time.perf_counter()
+
+        # TODO: add support for arbitrary number of axes
+        shape = job['img_shape_0'], job['img_shape_1'], job['img_shape_2']
+        total_nfeatures = job['total_nfeatures']
+        output_offset = job['output_offset']
+        
+        patchsize = job['patchsize']
+        chunksize = job['chunksize']
+        padding_radius = job['radius'] + 1
+
+        # TODO: add support for arbitrary number of axes
+        chunk_row, chunk_col = job['chunk_origin_0'], job['chunk_origin_1'] # chunk-wise
+        chunk_dim_0, chunk_dim_1 = job['chunk_dim_0'], job['chunk_dim_1'] # pixel-wise
+
+        nchannels, h, w = shape
+        nprows, npcols = h // patchsize, w // patchsize
+
+
+        # determine the chunk padding in pixels
+        padding_top = chunk_row * chunksize * patchsize
+        padding_top = padding_radius if padding_radius < padding_top else padding_top
+
+        padding_bottom = h - (chunk_row * chunksize * patchsize + chunk_dim_0)
+        padding_bottom = padding_radius if padding_radius < padding_bottom else padding_bottom
+
+
+        padding_left = chunk_col * chunksize * patchsize
+        padding_left = padding_radius if padding_radius < padding_left else padding_left
+
+        padding_right = w - (chunk_col * chunksize * patchsize + chunk_dim_1)
+        padding_right = padding_radius if padding_radius < padding_right else padding_right
+
+        # get coordinates and dimensions of the current chunk in patches
+        # print(f'{chunk_dim_0 = } DEBUG')
+        assert chunk_dim_0 % patchsize == 0
+        assert chunk_dim_1 % patchsize == 0
+
+        chunk_dim_0_patches = chunk_dim_0 // patchsize
+        chunk_dim_1_patches = chunk_dim_1 // patchsize
+
+        chunk_row_in_patches = chunk_row * chunksize
+        chunk_col_in_patches = chunk_col * chunksize
+
+        chunk_row_in_pixels = chunk_row_in_patches * patchsize
+        chunk_col_in_pixels = chunk_col_in_patches * patchsize
+
+
+
+        
+        job_nfeatures = job['npoints'] + 2
+        job_patch_histograms_shape = (nprows, npcols, job_nfeatures)
+
+        # Obtain output memory
+        output_shm = shared_memory.SharedMemory(name=job['output_shm_name'])
+
+        all_histograms = np.ndarray((nprows, npcols, total_nfeatures), 
+                                          dtype=_features_dtype, buffer=output_shm.buf)
+
+        # each job processes only one chunk
+
+        # get current chunk patches
+        # print(f'{chunk_row_in_patches = } {chunk_dim_0_patches = } worker debug')
+        chunk_histograms = all_histograms[chunk_row_in_patches:(chunk_row_in_patches + chunk_dim_0_patches), 
+                                          chunk_col_in_patches:(chunk_col_in_patches + chunk_dim_1_patches), :]
+    
+
+        # get features for the current chunk
+        job_chunk_histogram = chunk_histograms[..., output_offset:(output_offset + job_nfeatures)]
+
+        
+        # Try to use cached data
+        cached_result_mm = None
+        cached_result_mm_pixel = None
+
+        if not tmp_fpath:
+            # don't use cache at all
+            log.debug(f"run_mystery_fastlbp: worker {jobname}({pid}): skipping cache")
+        else:
+            # try to find existing cached result for the current job
+            try:
+                cached_result_mm = np.load(tmp_fpath, mmap_mode='r')
+            except:
+                cached_result_mm = None
+                log.debug(f"run_mystery_fastlbp: worker {jobname}({pid}): no usable cache")
+
+        # read pixel level cache if available
+        if not tmp_fpath_pixel:
+            log.debug(f'run_mystery_fastlbp: worker {jobname}({pid}): skipping pixel cache')
+        else:
+            try:
+                cached_result_mm_pixel = np.load(tmp_fpath_pixel, mmap_mode='r')
+            except:
+                cached_result_mm_pixel = None
+                log.debug(f"run_mystery_fastlbp: worker {jobname}({pid}): no usable pixel cache")
+        
+        # use cached results if found
+        if cached_result_mm is not None:
+            # Use cache and return
+            
+            log.info(f"run_mystery_fastlbp: worker {jobname}({pid}): cache found! copying to output.")
+            np.copyto(job_chunk_histogram, cached_result_mm)
+        
+        # else try to read pixel level cache
+        elif cached_result_mm_pixel is not None:
+                # use pixel level cache to group features into patches and return
+                log.info(f'run_mystery_fastlbp: worker {jobname}({pid}): pixel cache found! Grouping into patches and copying to output.')
+
+                using_patch_mask = 'patch_mask_shm_name' in job and job['patch_mask_shm_name']
+
+                if using_patch_mask:
+                    patch_mask_shm = shared_memory.SharedMemory(name=job['patch_mask_shm_name'])
+                    patch_mask = np.ndarray((nprows, npcols), dtype=np.uint8, buffer=patch_mask_shm.buf)
+                    patch_mask_chunk = get_padded_region(patch_mask, 
+                                                         chunk_row_in_patches, 
+                                                         chunk_col_in_patches, 
+                                                         chunk_dim_0_patches, 
+                                                         chunk_dim_1_patches, 
+                                                         0, 0, 0, 0)
+
+
+                # compute histograms for patches inside the current chunk
+                for patch_i in range(chunk_dim_0_patches):
+                    for patch_j in range(chunk_dim_1_patches):
+                        if using_patch_mask and patch_mask_chunk[patch_i, patch_j] == 0:
+                            job_chunk_histogram[patch_i, patch_j, :] = 0
+                            continue
+
+                        chunk_patch_hist = get_patch(cached_result_mm_pixel, 
+                                                     patchsize, 
+                                                     patch_i, patch_j)
+                        hist = np.bincount(
+                            chunk_patch_hist.flat, 
+                            minlength=job_nfeatures)
+
+                        job_chunk_histogram[patch_i, patch_j, :] = hist
+
+                # save grouped cache if it doesn't exists but was requested
+                if tmp_fpath:
+                    log.debug(f"run_mystery_fastlbp: worker {jobname}({pid}): saving cached histograms from the pixel cache")
+                    try:
+                        os.makedirs( os.path.dirname(tmp_fpath), exist_ok=True)
+                        np.save(tmp_fpath, job_chunk_histogram)
+                    except:
+                        log.warning(f"run_mystery_fastlbp: worker {jobname}({pid}): computation successful, but cannot save grouped tmp file from lbp codes")
+
+        
+        # calculate LBP in two cases
+        # 1. No cached results were found
+        # 2. Pixel cache was requested but not found, which means it must be created from scratch. 
+        # (As it is not possible to ungroup the patch cache even if it exists)
+        
+        if (cached_result_mm is None and cached_result_mm_pixel is None) or (cached_result_mm_pixel is None and tmp_fpath_pixel): 
+             # Compute full LBP **for the current chunk** and save both types of cache
+
+             # TODO: FIXME: use different flags to save different types of cache
+             # (patch level and/or pixel level) 
+
+            img_data_shm = shared_memory.SharedMemory(name=job['img_shm_name'])
+            img_data = np.ndarray(shape, dtype=job['img_pixel_dtype'], buffer=img_data_shm.buf)
+            
+            img_channel_full = img_data[job['channel']]
+            assert img_channel_full.flags.c_contiguous
+            assert img_channel_full.dtype == np.uint8
+
+            # extract padded chunk from the image to process by the worker
+            img_channel_chunk_not_contiguous = get_padded_region(img_channel_full, chunk_row_in_pixels, 
+                                                  chunk_col_in_pixels, chunk_dim_0, chunk_dim_1, 
+                                                  padding_top, padding_bottom, 
+                                                  padding_left, padding_right)
+
+            # TODO: DEBUG:
+            # not sure if this is true for the chunk only
+            
+            img_channel_chunk = np.ascontiguousarray(img_channel_chunk_not_contiguous)
+
+            # print(f'{chunk_row_in_pixels = } {chunk_col_in_pixels} {chunk_dim_0} {chunk_dim_1}')
+            # print(f'{padding_top = } {padding_bottom = } {padding_left = } {padding_right = }')
+            # print(f'{img_channel_chunk_not_contiguous.shape = } {img_channel_chunk.shape = }')
+
+            assert img_channel_chunk.flags.c_contiguous
+            assert img_channel_chunk.dtype == np.uint8
+            
+
+            using_image_mask = 'img_mask_shm_name' in job and job['img_mask_shm_name']
+            using_patch_mask = 'patch_mask_shm_name' in job and job['patch_mask_shm_name']
+
+            if using_image_mask:
+                # TODO:
+                return 
+
+            elif using_patch_mask:
+                # TODO:
+                return 
+
+            else:
+                # if no mask is provided
+                log.debug(f"run_mystery_fastlbp: worker {jobname}({pid}) absolute coordinates {chunk_row_in_pixels} {chunk_col_in_pixels}: do not use mask")
+
+                lbp_results = np.zeros(shape=img_channel_chunk.shape, dtype=np.uint32)
+
+                lbp_cuda.cuda_lbp(img_channel_chunk, lbp_results, P=job['npoints'], R=job['radius']) # FIXME TODO: use absolute coordinates as in the CPU chunked version!!
+                lbp_results = lbp_results.astype(np.uint16) # DEBUG TODO: remove this
+                
+            
+            # assert lbp_results.dtype == _features_dtype
+
+            img_data_shm.close()
+
+            # group lbp results in the chunk patch-wise
+            
+            # compute histograms for patches inside the current chunk
+            for patch_i in range(chunk_dim_0_patches):
+                for patch_j in range(chunk_dim_1_patches):
+
+                    if using_patch_mask and patch_mask_chunk[patch_i, patch_j] == 0:
+                        job_chunk_histogram[patch_i, patch_j, :] = 0
+                        continue
+
+                    curr_patch_lbp_results = get_patch(lbp_results, patchsize, patch_i, patch_j)
+
+                    curr_patch_hist = np.bincount(
+                        curr_patch_lbp_results.flat, 
+                        minlength=job_nfeatures)
+                    
+                    job_chunk_histogram[patch_i, patch_j, :] = curr_patch_hist
+
+            if using_patch_mask:
+                patch_mask_shm.close()
+
+            # don't overwrite the grouped cache if it exists and
+            # we just recalculated LBP to save raw codes cache
+            if tmp_fpath and cached_result_mm is None:
+                try:
+                    os.makedirs(os.path.dirname(tmp_fpath), exist_ok=True)
+                    np.save(tmp_fpath, job_chunk_histogram)
+                except:
+                    log.warning(f"run_mystery_fastlbp: worker {jobname}({pid}): computation successful, but cannot save tmp file")
+
+            # save raw lbp features as reusable cache for subsequent runs
+            if tmp_fpath_pixel:
+                try:
+                    os.makedirs(os.path.dirname(tmp_fpath_pixel), exist_ok=True)
+                    np.save(tmp_fpath_pixel, lbp_results)
+                except:
+                    log.warning(f'run_mystery_fastlbp: worker {jobname}({pid}): computation successful, but cannot save pixel tmp file')
+
+        output_shm.close()
+
+        log.info(f"run_mystery_fastlbp: worker {pid}: finished job {jobname} in {time.perf_counter()-t0:.5g}s")
+    except Exception as e:
+        log.error(f"run_mystery_fastlbp: worker {jobname}({pid}): exception! Aborting execution.")
         log.error(e, exc_info=True)
 
     return 0
