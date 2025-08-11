@@ -1,0 +1,27 @@
+[project]
+name = "cuda_fastlbp"
+authors = [
+  { name = "Dmytro Horyslavets", email = "nepotlet@gmail.com" }
+]
+maintainers = [
+  { name="Dmytro Horyslavets", email="nepotlet@gmail.com" }
+]
+dependencies = [
+  "wheel",
+  "scikit-image>=0.22.0",
+  "numpy>=1.26.0",
+  "Pillow>=10.0.1",
+  "pandas>=2.1.1",
+  "psutil", 
+  "icecream"
+]
+version = "0.0.1"
+
+[build-system]
+requires = ["setuptools>=61.0", "numpy", "cython", "icecream"]
+build-backend = "setuptools.build_meta"
+
+# In pyproject.toml
+[tool.setuptools.packages.find]
+where = ["."] # Or "src" if using src-layout
+include = ["lib*", "cuda*"] # Specify the packages to include
