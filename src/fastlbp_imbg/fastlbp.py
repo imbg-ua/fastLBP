@@ -835,6 +835,7 @@ def run_patch_fastlbp(img_data: ArrayLike, patch_coordinates_list: list[tuple[in
     channel_list = range(nchannels)
 
     patch_features_result = [] # patch feature vectors in the same order as they passed as inputs
+    raw_lbp_codes_result = [] # patch LBP codes before grouping into histograms in the same order as passed as inputs
     
     # create a list of jobs
     jobs_index = pd.MultiIndex.from_product(
@@ -947,7 +948,7 @@ def run_patch_fastlbp(img_data: ArrayLike, patch_coordinates_list: list[tuple[in
     log.info(f'run_chunked_fastlbp: start computation')
     t0 = time.perf_counter()
     with Pool(ncpus) as pool:
-        jobs_results = pool.map(func=__single_patch_fastlbp_worker, iterable=jobs.iterrows())
+        lbp_codes_jobs_results_and_patches = pool.map(func=__single_patch_fastlbp_worker, iterable=jobs.iterrows())
     t_elapsed = time.perf_counter() - t0
     log.info(f'run_chunked_fastlbp(): computation finished in {t_elapsed:.5g}s. Start saving')
 
@@ -969,7 +970,7 @@ def run_patch_fastlbp(img_data: ArrayLike, patch_coordinates_list: list[tuple[in
     # reset logger to its original level
     log.setLevel(DEFAULT_LEVEL)
     
-    return result
+    return result, lbp_codes_jobs_results_and_patches
 
 def run_cuda_fastlbp(img_data: ArrayLike, radii_list: ArrayLike, npoints_list: ArrayLike, 
                 patchsize: int, chunksize: int | None = None,

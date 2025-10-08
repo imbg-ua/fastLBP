@@ -18,7 +18,7 @@ from .lbp import (
     uniform_lbp_uint8_padded_absolute_patch_masked
 )
 
-import lbp_cuda # import cuda worker from a separate package
+# import lbp_cuda # import cuda worker from a separate package
 
 def __worker_fastlbp(args):
     row_id, job = args
@@ -595,6 +595,8 @@ def __single_patch_fastlbp_worker(df_row_args):
 
         assert lbp_results.shape == (patchsize, patchsize)
 
+        img_padded_patch_to_return = img_padded_patch.copy()
+
         img_data_shm.close()
 
         job_histogram[:] = np.bincount(lbp_results.flat, minlength=job_nfeatures)
@@ -607,7 +609,7 @@ def __single_patch_fastlbp_worker(df_row_args):
         log.error(f"run_patched_fastlbp: worker {jobname}({pid}): exception! Aborting execution.")
         log.error(e, exc_info=True)
 
-    return 0
+    return lbp_results, img_padded_patch_to_return
 
 
 def __cuda_worker_fastlbp(df_row_args):
@@ -822,8 +824,8 @@ def __cuda_worker_fastlbp(df_row_args):
 
                 lbp_results = np.zeros(shape=img_channel_chunk.shape, dtype=np.uint32)
 
-                lbp_cuda.cuda_lbp(img_channel_chunk, lbp_results, P=job['npoints'], R=job['radius']) # FIXME TODO: use absolute coordinates as in the CPU chunked version!!
-                lbp_results = lbp_results.astype(np.uint16) # DEBUG TODO: remove this
+                # lbp_cuda.cuda_lbp(img_channel_chunk, lbp_results, P=job['npoints'], R=job['radius']) # FIXME TODO: use absolute coordinates as in the CPU chunked version!!
+                # lbp_results = lbp_results.astype(np.uint16) # DEBUG TODO: remove this
                 
             
             # assert lbp_results.dtype == _features_dtype
