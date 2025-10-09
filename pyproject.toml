@@ -1,7 +1,10 @@
 [project]
-name = "fastlbp-imbg"
+name = "fastlbp"
 authors = [
-  { name="Mykhailo Koreshkov", email="koreshov.m@gmail.com" },
+  { name = "Dmytro Horyslavets", email = "nepotlet@gmail.com" }, 
+  { name = "Mykhailo Koreshkov", email = "koreshov.m@gmail.com" }
+]
+maintainers = [
   { name="Dmytro Horyslavets", email="nepotlet@gmail.com" }
 ]
 description = "Parallel multiradial LBP features"
