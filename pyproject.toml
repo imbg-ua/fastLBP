@@ -1,5 +1,5 @@
 [project]
-name = "fastlbp"
+name = "fastlbp-test"
 authors = [
   { name = "Dmytro Horyslavets", email = "nepotlet@gmail.com" }, 
   { name = "Mykhailo Koreshkov", email = "koreshov.m@gmail.com" }
