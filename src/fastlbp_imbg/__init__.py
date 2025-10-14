@@ -10,6 +10,7 @@ from .fastlbp import (
     run_fastlbp, 
     run_chunked_fastlbp,
     run_patch_fastlbp,
+    run_cuda_fastlbp,
     get_radii, 
     get_p_for_r,
     FastlbpResult
@@ -19,6 +20,7 @@ __all__ = [
     "run_fastlbp", 
     "run_chunked_fastlbp",
     "run_patch_fastlbp",
+    "run_cuda_fastlbp",
     "FastlbpResult",
     "get_radii", 
     "get_p_for_r", 
