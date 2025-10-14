@@ -18,7 +18,8 @@ from .lbp import (
     uniform_lbp_uint8_padded_absolute_patch_masked
 )
 
-import lbp_cuda # import cuda worker from a separate package
+# import lbp_cuda # import cuda worker from a separate package
+from .cuda.lbp_cuda import cuda_lbp
 
 def __worker_fastlbp(args):
     row_id, job = args
@@ -822,7 +823,7 @@ def __cuda_worker_fastlbp(df_row_args):
 
                 lbp_results = np.zeros(shape=img_channel_chunk.shape, dtype=np.uint32)
 
-                lbp_cuda.cuda_lbp(img_channel_chunk, lbp_results, P=job['npoints'], R=job['radius']) # FIXME TODO: use absolute coordinates as in the CPU chunked version!!
+                cuda_lbp(img_channel_chunk, lbp_results, P=job['npoints'], R=job['radius']) # FIXME TODO: use absolute coordinates as in the CPU chunked version!!
                 lbp_results = lbp_results.astype(np.uint16) # DEBUG TODO: remove this
                 
             
