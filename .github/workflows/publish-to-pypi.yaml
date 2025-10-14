@@ -23,6 +23,9 @@ jobs:
 
     - name: Install CUDA Toolkit
       uses: Jimver/cuda-toolkit@master
+      with:
+        method: 'network'
+        sub-packages: '["nvcc"]'
     
     - name: Verify nvcc installation
       run: nvcc --version
