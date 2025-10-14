@@ -16,7 +16,7 @@ from .utils import patchify_image_mask, int_verbosity_to_logger_level
 
 
 logging.basicConfig()
-log = logging.getLogger('fastlbp_imbg')
+log = logging.getLogger('fastlbp')
 
 DEFAULT_LEVEL = logging.WARNING
 

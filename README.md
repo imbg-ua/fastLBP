@@ -27,9 +27,9 @@ Python requirements are:
 	git clone git@github.com:imbg-ua/fastLBP.git
 	cd fastLBP
 	# git checkout <branchname> # if you need a specific branch
-	pip install . # this will install the fastlbp_imbg package in the current env
+	pip install . # this will install the fastlbp package in the current env
 	```
-- You can use `import fastlbp_imbg as fastlbp` now
+- You can use `import fastlbp as fastlbp` now
 
 ## Testing
 ```
@@ -47,7 +47,7 @@ You can report a bug or suggest an improvement using [our github issues](https:/
 Computes multiradial LBP of a single multichannel image in a parallel fashion.
 
 Features:
-- Powered by `fastlbp_imbg.lbp`, our implementation of `skimage.feature.local_binary_pattern`
+- Powered by `fastlbp.lbp`, our implementation of `skimage.feature.local_binary_pattern`
 - Concurrency is managed by Python's [`multiprocessing`](https://docs.python.org/3/library/multiprocessing.html) module
 - Parallel computation via `multiprocessing.Pool` of size `ncpus`
 - Efficient memory usage via  `multiprocessing.shared_memory` to make sure processes do not create redundant copies of data

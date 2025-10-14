@@ -64,7 +64,7 @@ class build_ext_with_cuda(build_ext):
         # compile CUDA module
         subprocess.check_call([
             "nvcc", "-c", "-O2", "-Xcompiler", "-fPIC",
-            "src/fastlbp_imbg/cuda/cuda/main.cu",
+            "src/fastlbp/cuda/cuda/main.cu",
             "-o", "build/temp_cuda/main.o",
             "-I", f"{CUDA['include']}"
         ])
@@ -79,15 +79,15 @@ class build_ext_with_cuda(build_ext):
 
 extensions = [
     Extension(
-        "fastlbp_imbg._lbp", 
+        "fastlbp._lbp", 
         [f"src/_lbp{ext}"],
         include_dirs=[np.get_include()]
     ),
 
     # CUDA LBP extension
     Extension(
-        "fastlbp_imbg._lbp_gpu", 
-        [f"src/fastlbp_imbg/cuda/_lbp_gpu{ext}"],
+        "fastlbp._lbp_gpu", 
+        [f"src/fastlbp/cuda/_lbp_gpu{ext}"],
         libraries=['cudart'],  # , os.path.join(CUDA['lib64'], 'cudart')],
         language='c++',
         include_dirs=[CUDA['include'], np.get_include()],

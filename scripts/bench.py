@@ -1,4 +1,4 @@
-import fastlbp_imbg as fastlbp
+import fastlbp as fastlbp
 import numpy as np
 
 import memory_profiler as mprof

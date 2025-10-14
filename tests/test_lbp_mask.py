@@ -1,10 +1,10 @@
 import numpy as np
-from fastlbp_imbg.utils import (
+from fastlbp.utils import (
     get_patch,
     patchify_image_mask,
     load_sample_image
 )
-from fastlbp_imbg.lbp import (
+from fastlbp.lbp import (
     uniform_lbp_uint8,
     uniform_lbp_uint8_masked,
     uniform_lbp_uint8_patch_masked,

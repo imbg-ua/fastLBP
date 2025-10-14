@@ -1,5 +1,5 @@
 import numpy as np
-from fastlbp_imbg.utils import (
+from fastlbp.utils import (
     get_patch,
     patchify_image_mask,
     get_reduced_hist_masks,
@@ -9,7 +9,7 @@ from fastlbp_imbg.utils import (
     ReducedHistMasks,
     MinimalHistMasks,
 )
-from fastlbp_imbg import get_radii, get_p_for_r
+from fastlbp import get_radii, get_p_for_r
 import unittest
 import itertools
 from math import floor

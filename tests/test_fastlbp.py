@@ -1,5 +1,5 @@
 import numpy as np
-from fastlbp_imbg import run_fastlbp, get_p_for_r
+from fastlbp import run_fastlbp, get_p_for_r
 import unittest
 from PIL import Image
 import os

@@ -1,4 +1,4 @@
-# This file does not depend on fastlbp_imbg lib and fastlbp.py file.
+# This file does not depend on fastlbp lib and fastlbp.py file.
 
 import numpy as np
 import logging

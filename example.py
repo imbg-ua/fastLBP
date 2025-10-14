@@ -3,7 +3,7 @@ from PIL import Image
 Image.MAX_IMAGE_PIXELS = None
 
 ### if installed as pip package 
-import fastlbp_imbg as fastlbp
+import fastlbp as fastlbp
 
 def main():
     print(f"hewlo. running fastlbp ver. {fastlbp.__version__}")

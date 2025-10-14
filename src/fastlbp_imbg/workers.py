@@ -1,5 +1,5 @@
 import logging
-log = logging.getLogger('fastlbp_imbg')
+log = logging.getLogger('fastlbp')
 log.setLevel('DEBUG')
 
 import time
