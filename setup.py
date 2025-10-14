@@ -57,24 +57,24 @@ from Cython.Distutils import build_ext
 CUDA = locate_cuda()
 
 class build_ext_with_cuda(build_ext):
-    def build_extension(self):
+    def build_extensions(self):
         
-        os.makedirs('buid/tmp_cuda', exist_ok=True)
+        os.makedirs('build/temp_cuda', exist_ok=True)
 
         # compile CUDA module
         subprocess.check_call([
             "nvcc", "-c", "-O2", "-Xcompiler", "-fPIC",
-            "src/cuda/cuda/main.cu",
-            "-o", "build/tmp_cuda/main.o",
+            "src/fastlbp_imbg/cuda/cuda/main.cu",
+            "-o", "build/temp_cuda/main.o",
             "-I", f"{CUDA['include']}"
         ])
 
         # Add the object file to the CUDA extension's extra_objects
         for ext in self.extensions:
             if getattr(ext, "name", "").endswith("_gpu") or "cuda" in ext.name:
-                ext.extra_objects = ["build/tmp_cuda/main.o"]
+                ext.extra_objects = ["build/temp_cuda/main.o"]
 
-        super().build_extension()
+        super().build_extensions()
 
 
 extensions = [
@@ -103,7 +103,7 @@ setup(
     name="fastlbp",
     include_dirs=[CUDA['include'], np.get_include()],
     ext_modules=extensions,
-    cmdclass={"build_exit": build_ext_with_cuda}
+    cmdclass={"build_ext": build_ext_with_cuda}
 )
 
 

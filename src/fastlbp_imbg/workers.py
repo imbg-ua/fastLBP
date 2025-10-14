@@ -19,7 +19,7 @@ from .lbp import (
 )
 
 # import lbp_cuda # import cuda worker from a separate package
-from .cuda.lbp_cuda import cuda_lbp
+from ._lbp_gpu import cuda_lbp
 
 def __worker_fastlbp(args):
     row_id, job = args
