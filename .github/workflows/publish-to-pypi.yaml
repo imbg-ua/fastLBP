@@ -21,6 +21,12 @@ jobs:
       with:
         python-version: ">=3.11"
 
+    - name: Install CUDA Toolkit
+      uses: Jimver/cuda-toolkit@master
+    
+    - name: Verify nvcc installation
+      run: nvcc --version
+
     - name: Install pypa/build and dependencies
       run: >-
         python3 -m
@@ -41,7 +47,7 @@ jobs:
 
   publish-to-testpypi:
     name: Publish to TestPyPI 📦
-    if: ${{ contains(github.ref_name, 'dev') }}
+    if: ${{ contains(github.ref_name, 'DEBUG_placeholder_to_test_build_only') }}
     needs:
     - build
     runs-on: ubuntu-latest
@@ -67,7 +73,7 @@ jobs:
 
   publish-to-pypi:
     name: Publish to PyPI 📦
-    if: ${{ !contains(github.ref_name, 'dev') }}
+    if: ${{ contains(github.ref_name, 'DEBUG_placeholder_to_test_build_only') }}
     needs:
     - build
     runs-on: ubuntu-latest
