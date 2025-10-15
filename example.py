@@ -1,41 +1,46 @@
 import numpy as np
-from PIL import Image 
+from PIL import Image
+
 Image.MAX_IMAGE_PIXELS = None
 
-### if installed as pip package 
+### if installed as pip package
 import fastlbp as fastlbp
+
 
 def main():
     print(f"hewlo. running fastlbp ver. {fastlbp.__version__}")
 
     # Will a create random input image in ./tmp if not exists yet
-    img_data = fastlbp.load_sample_image(5000,5000,3,'tiff',create=True)
+    img_data = fastlbp.load_sample_image(5000, 5000, 3, "tiff", create=True)
     print(img_data.shape)
 
     # Alternatively, load an image from existing file
-    # img = Image.open('data/bark.tiff') 
+    # img = Image.open('data/bark.tiff')
     # img_data = np.asarray(img)
 
-    # if len(img_data.shape) == 2: 
+    # if len(img_data.shape) == 2:
     #     img_data = img_data[:,:,None]
     #     print(img_data.shape)
 
-    radii_list = [1,2,3,4,5]
-    npoints_list = fastlbp.get_p_for_r(radii_list) 
+    radii_list = [1, 2, 3, 4, 5]
+    npoints_list = fastlbp.get_p_for_r(radii_list)
     print(npoints_list)
 
     patchsize = 16
 
     features_details = fastlbp.get_all_features_details(3, radii_list, npoints_list)
-    print("\n".join(map(str,features_details)))
+    print("\n".join(map(str, features_details)))
 
     output_abs_path, mask = fastlbp.run_fastlbp(
-        img_data, radii_list, npoints_list, patchsize, 
-        ncpus=-1, 
+        img_data,
+        radii_list,
+        npoints_list,
+        patchsize,
+        ncpus=-1,
         outfile_name="lbp_features.npy",  # output file name, will be in the ./data/out
-        img_name="whitenoise",    # human-friendly name, optional
+        img_name="whitenoise",  # human-friendly name, optional
         save_intermediate_results=False,  # do not use cache
-        overwrite_output=True     # no error if output file already exists
+        overwrite_output=True,  # no error if output file already exists
     )
 
     print("output_abs_path", output_abs_path)
@@ -73,5 +78,5 @@ def main():
     # plt.show()
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     main()

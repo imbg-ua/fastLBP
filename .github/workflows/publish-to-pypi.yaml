@@ -4,7 +4,7 @@ on:
   push:
     # trigger on tags only
     # branches: [ "main" ]
-    tags: [ "v*" ]
+    tags: ["v*"]
 
 jobs:
   build:
@@ -13,46 +13,45 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
-      with:
-        persist-credentials: false
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: ">=3.11"
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ">=3.11"
 
-    - name: Install CUDA Toolkit
-      uses: Jimver/cuda-toolkit@master
-      with:
-        method: 'network'
-        sub-packages: '["nvcc"]'
-    
-    - name: Verify nvcc installation
-      run: nvcc --version
+      - name: Install CUDA Toolkit
+        uses: Jimver/cuda-toolkit@master
+        with:
+          method: "network"
+          sub-packages: '["nvcc"]'
 
-    - name: Install pypa/build and dependencies
-      run: >-
-        python3 -m
-        pip install
-        build numpy cython auditwheel
-        --user
-    - name: Build a binary wheel and a source tarball
-      run: python3 -m build
-    - name: Repair the wheel
-      run: >-
-        auditwheel repair dist/*whl 
-    - name: Store the repaired wheel
-      uses: actions/upload-artifact@v4
-      with: 
-        name: repaired-python-package-distributions
-        path: wheelhouse/
-      
+      - name: Verify nvcc installation
+        run: nvcc --version
+
+      - name: Install pypa/build and dependencies
+        run: >-
+          python3 -m
+          pip install
+          build numpy cython auditwheel
+          --user
+      - name: Build a binary wheel and a source tarball
+        run: python3 -m build
+      - name: Repair the wheel
+        run: >-
+          auditwheel repair dist/*whl
+      - name: Store the repaired wheel
+        uses: actions/upload-artifact@v4
+        with:
+          name: repaired-python-package-distributions
+          path: wheelhouse/
 
   publish-to-testpypi:
     name: Publish to TestPyPI 📦
     if: ${{ contains(github.ref_name, 'dev') }}
     needs:
-    - build
+      - build
     runs-on: ubuntu-latest
 
     environment:
@@ -60,25 +59,25 @@ jobs:
       url: https://test.pypi.org/p/fastlbp
 
     permissions:
-      id-token: write  # IMPORTANT: mandatory for trusted publishing
+      id-token: write # IMPORTANT: mandatory for trusted publishing
 
     steps:
-    - name: Download all the dists
-      uses: actions/download-artifact@v4
-      with:
-        name: repaired-python-package-distributions
-        path: dist/
-    - name: Publish distribution 📦 to TestPyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        repository-url: https://test.pypi.org/legacy/
-        verbose: true
+      - name: Download all the dists
+        uses: actions/download-artifact@v4
+        with:
+          name: repaired-python-package-distributions
+          path: dist/
+      - name: Publish distribution 📦 to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
+          verbose: true
 
   publish-to-pypi:
     name: Publish to PyPI 📦
     if: ${{ !contains(github.ref_name, 'dev') }}
     needs:
-    - build
+      - build
     runs-on: ubuntu-latest
 
     environment:
@@ -86,15 +85,15 @@ jobs:
       url: https://pypi.org/p/fastlbp
 
     permissions:
-      id-token: write  # IMPORTANT: mandatory for trusted publishing
+      id-token: write # IMPORTANT: mandatory for trusted publishing
 
     steps:
-    - name: Download all the dists
-      uses: actions/download-artifact@v4
-      with:
-        name: repaired-python-package-distributions
-        path: dist/
-    - name: Publish distribution 📦 to TestPyPI
-      uses: pypa/gh-action-pypi-publish@release/v1
-      with:
-        repository-url: https://test.pypi.org/legacy/
+      - name: Download all the dists
+        uses: actions/download-artifact@v4
+        with:
+          name: repaired-python-package-distributions
+          path: dist/
+      - name: Publish distribution 📦 to TestPyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          repository-url: https://test.pypi.org/legacy/
