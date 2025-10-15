@@ -50,7 +50,7 @@ jobs:
 
   publish-to-testpypi:
     name: Publish to TestPyPI 📦
-    if: ${{ contains(github.ref_name, 'DEBUG_placeholder_to_test_build_only') }}
+    if: ${{ contains(github.ref_name, 'dev') }}
     needs:
     - build
     runs-on: ubuntu-latest
@@ -76,7 +76,7 @@ jobs:
 
   publish-to-pypi:
     name: Publish to PyPI 📦
-    if: ${{ contains(github.ref_name, 'DEBUG_placeholder_to_test_build_only') }}
+    if: ${{ !contains(github.ref_name, 'dev') }}
     needs:
     - build
     runs-on: ubuntu-latest
