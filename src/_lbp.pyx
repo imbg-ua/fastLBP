@@ -3,8 +3,10 @@
 #cython: nonecheck=False
 #cython: wraparound=False
 import numpy as np
+
 cimport numpy as cnp
-from libc.math cimport sin, cos
+from libc.math cimport cos, sin
+
 # from .._shared.interpolation cimport bilinear_interpolation, round
 # from .._shared.transform cimport integrate
 
