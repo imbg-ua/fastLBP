@@ -1,2 +1,2 @@
-recursive-include src *.pyx *.c *.cu *.h *.py
+recursive-include src *.pyx *.c *.cpp *.cu *.h *.py
 include pyproject.toml README.md LICENSE
