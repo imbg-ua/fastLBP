@@ -1,2 +1,2 @@
-include src/_lbp.pyx
-include src/_lbp.c
+recursive-include src *.pyx *.c *.cpp *.cu *.h *.py
+include pyproject.toml README.md LICENSE

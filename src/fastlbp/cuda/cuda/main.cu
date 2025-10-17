@@ -3,7 +3,6 @@
 #include <cmath>
 #include <iostream>
 #include <stdint.h>
-// #include "helpers.h"
 #include "common.h"
 
 // const unsigned int THREADS_PER_BLOCK = 1;
