@@ -917,6 +917,10 @@ def run_chunked_fastlbp(
 
     log.info(f"run_chunked_fastlbp({pipeline_hash}): start computation")
     t0 = time.perf_counter()
+
+    # TODO: https://stackoverflow.com/questions/62748654/python-3-8-shared-memory-resource-tracker-producing-unexpected-warnings-at-appli
+    # fix leaked shared memory warnings
+
     with Pool(ncpus) as pool:
         jobs_results = pool.map(func=__chunked_worker_fastlbp, iterable=jobs.iterrows())
     t_elapsed = time.perf_counter() - t0
