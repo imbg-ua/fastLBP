@@ -1,5 +1,5 @@
 name: Publish Python 🐍 distribution 📦 to PyPI and TestPyPI
-
+# TODO: use cibuildwheel for multi-platform builds
 on:
   push:
     # trigger on tags only
@@ -77,8 +77,17 @@ jobs:
           pattern: wheel-*
           merge_multiple: true
 
-      - name: Verify built wheels
-        run: ls -la dist/
+      - name: Flatten directory structure
+        run: |
+          # Create a clean dist directory
+          mkdir -p clean_dist
+          # Find and copy all .whl files to clean_dist
+          find dist -name "*.whl" -exec cp {} clean_dist/ \;
+          # Replace dist with clean_dist
+          rm -rf dist
+          mv clean_dist dist
+          echo "Final distribution files:"
+          ls -la dist/
 
       - name: Publish distribution 📦 to TestPyPI
         uses: pypa/gh-action-pypi-publish@release/v1
@@ -108,8 +117,17 @@ jobs:
           pattern: wheel-*
           merge_multiple: true
 
-      - name: Verify built wheels
-        run: ls -la dist/
+      - name: Flatten directory structure
+        run: |
+          # Create a clean dist directory
+          mkdir -p clean_dist
+          # Find and copy all .whl files to clean_dist
+          find dist -name "*.whl" -exec cp {} clean_dist/ \;
+          # Replace dist with clean_dist
+          rm -rf dist
+          mv clean_dist dist
+          echo "Final distribution files:"
+          ls -la dist/
 
       - name: Publish distribution 📦 to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
