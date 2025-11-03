@@ -10,7 +10,13 @@ from multiprocessing import shared_memory
 import numpy as np
 
 # import lbp_cuda # import cuda worker from a separate package
-from ._lbp_gpu import cuda_lbp
+try:
+    from ._lbp_gpu import cuda_lbp  # noqa: F401
+
+    _HAS_CUDA_EXT = True
+except Exception:
+    _HAS_CUDA_EXT = False
+
 from .common import _features_dtype
 from .lbp import (
     uniform_lbp_uint8,
@@ -658,6 +664,8 @@ def __single_patch_fastlbp_worker(df_row_args):
 
 
 def __cuda_worker_fastlbp(df_row_args):
+    if not _HAS_CUDA_EXT:
+        raise ImportError("fastlbp GPU extension not available. Install with CUDA and the [gpu] extra.")
 
     row_id, job = df_row_args
     tmp_fpath = job["tmp_fpath"]

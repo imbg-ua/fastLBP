@@ -24,7 +24,7 @@ Python requirements are:
 - Verify you are using the right env
   - `python --version` and `pip --version`
 - Install a stable version from PyPI  
-  `pip install fastlbp-imbg`
+  `pip install fastlbp`
 - Or build the latest version from sources
   ```
   git clone git@github.com:imbg-ua/fastLBP.git
@@ -43,11 +43,11 @@ Python requirements are:
 - GPU build (opt-in): ensure CUDA is discoverable by setting `CUDA_HOME` (or having `nvcc` on PATH) and install the extra:
   ```bash
   export CUDA_HOME=/usr/local/cuda  # adjust to your CUDA install
-  pip install "fastlbp[gpu]"
+  pip install fastlbp
   ```
 - To hard-require CUDA and fail if not found, set:
   ```bash
-  FORCE_CUDA=1 pip install "fastlbp[gpu]"
+  FORCE_CUDA=1 pip install fastlbp
   ```
 
 If CUDA isn’t detected, the build will proceed with CPU-only features. At runtime, you can check availability:
