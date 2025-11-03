@@ -34,6 +34,29 @@ Python requirements are:
   ```
 - You can use `import fastlbp as fastlbp` now
 
+### GPU (CUDA) optional install
+
+- CPU-only install (default):
+  ```bash
+  pip install fastlbp
+  ```
+- GPU build (opt-in): ensure CUDA is discoverable by setting `CUDA_HOME` (or having `nvcc` on PATH) and install the extra:
+  ```bash
+  export CUDA_HOME=/usr/local/cuda  # adjust to your CUDA install
+  pip install "fastlbp[gpu]"
+  ```
+- To hard-require CUDA and fail if not found, set:
+  ```bash
+  FORCE_CUDA=1 pip install "fastlbp[gpu]"
+  ```
+
+If CUDA isn’t detected, the build will proceed with CPU-only features. At runtime, you can check availability:
+
+```python
+import fastlbp
+fastlbp.fastlbp.is_cuda_available()  # -> True/False
+```
+
 ## Testing
 
 ```
