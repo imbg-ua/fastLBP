@@ -26,6 +26,10 @@ dependencies = [
 ]
 dynamic = ["version"]
 
+[project.optional-dependencies]
+# Opt-in extra to signal GPU installation; no Python deps required at the moment.
+gpu = []
+
 [project.urls]
 "Homepage" = "https://github.com/imbg-ua/fastLBP"
 "Bug Tracker" = "https://github.com/imbg-ua/fastLBP/issues"

@@ -62,6 +62,16 @@ def __get_tmp_dir_explicit(pipeline_name, path: str):
     return os.path.join(path, pipeline_name)
 
 
+def is_cuda_available() -> bool:
+    """Return True if the compiled CUDA extension is importable."""
+    try:
+        from ._lbp_gpu import cuda_lbp  # noqa: F401
+
+        return True
+    except Exception:
+        return False
+
+
 def __check_existing_result_on_disk(
     outdir: str, outfile_name: str, caller: str = "run_fastlbp", pipeline_hash: str = "", overwrite_output: bool = False
 ):
