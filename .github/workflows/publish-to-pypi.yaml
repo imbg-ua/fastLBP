@@ -16,8 +16,6 @@ jobs:
       matrix:
         # Target different Ubuntu versions for different GLIBC compatibility
         include:
-          - os: ubuntu-20.04
-            python-version: "3.11"
           - os: ubuntu-22.04
             python-version: "3.11"
           - os: ubuntu-22.04
@@ -67,7 +65,7 @@ jobs:
       - name: Store the repaired wheel
         uses: actions/upload-artifact@v4
         with:
-          name: wheel-py${{ matrix.python-version }}
+          name: wheel-${{ matrix.os }}-py${{ matrix.python-version }}
           path: wheelhouse/*.whl
 
   publish-to-testpypi:
