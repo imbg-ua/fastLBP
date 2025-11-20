@@ -18,16 +18,22 @@ jobs:
         include:
           - os: ubuntu-22.04
             python-version: "3.11"
+            cuda-version: "11.8.0"
           - os: ubuntu-22.04
             python-version: "3.12"
+            cuda-version: "11.8.0"
           - os: ubuntu-22.04
             python-version: "3.13"
+            cuda-version: "11.8.0"
           - os: ubuntu-24.04
             python-version: "3.11"
+            cuda-version: "12.4.0"
           - os: ubuntu-24.04
             python-version: "3.12"
+            cuda-version: "12.4.0"
           - os: ubuntu-24.04
             python-version: "3.13"
+            cuda-version: "12.4.0"
 
     steps:
       - uses: actions/checkout@v4
@@ -42,7 +48,7 @@ jobs:
       - name: Install CUDA Toolkit
         uses: Jimver/cuda-toolkit@master
         with:
-          cuda: "11.8.0"
+          cuda: ${{ matrix.cuda-version }}
           method: "network"
           sub-packages: '["nvcc"]'
 
