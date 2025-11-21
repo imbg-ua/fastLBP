@@ -18,22 +18,22 @@ jobs:
         include:
           - os: ubuntu-22.04
             python-version: "3.11"
-            cuda-version: "11.8"
+            cuda-version: "11.8.0"
           - os: ubuntu-22.04
             python-version: "3.12"
-            cuda-version: "11.8"
+            cuda-version: "11.8.0"
           - os: ubuntu-22.04
             python-version: "3.13"
-            cuda-version: "11.8"
+            cuda-version: "11.8.0"
           - os: ubuntu-24.04
             python-version: "3.11"
-            cuda-version: "12.8"
+            cuda-version: "13.0.2"
           - os: ubuntu-24.04
             python-version: "3.12"
-            cuda-version: "12.8"
+            cuda-version: "13.0.2"
           - os: ubuntu-24.04
             python-version: "3.13"
-            cuda-version: "12.8"
+            cuda-version: "13.0.2"
 
     steps:
       - uses: actions/checkout@v4
