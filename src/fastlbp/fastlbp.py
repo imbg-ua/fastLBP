@@ -1154,7 +1154,7 @@ def run_cuda_fastlbp(
     import pandas as pd
     from pandas import DataFrame
 
-    from .common import _features_dtype
+    from .common import _features_dtype, _raw_features_dtype
     from .utils import int_verbosity_to_logger_level, patchify_image_mask
     from .workers import __cuda_worker_fastlbp
 
@@ -1263,6 +1263,8 @@ def run_cuda_fastlbp(
     nprows, npcols = h // patchsize, w // patchsize
     nfeatures_cumsum = np.cumsum(np.array(npoints_list) + 2)
     nfeatures_per_channel = nfeatures_cumsum[-1]
+    nraw_features_cumsum = np.arange(len(npoints_list))
+    nraw_features_per_channel = len(npoints_list)
     channel_list = range(nchannels)
 
     if chunksize is None:
@@ -1314,7 +1316,9 @@ def run_cuda_fastlbp(
             "img_shape_1",
             "img_shape_2",
             "output_shm_name",
+            "raw_output_shm_name",
             "output_offset",
+            "raw_output_dimension",
             "tmp_fpath",
             "patch_mask_shm_name",
             "tmp_fpath_pixel",
@@ -1326,6 +1330,7 @@ def run_cuda_fastlbp(
     jobs["img_name"] = img_name
 
     channel_output_offset = 0
+    raw_features_channel_output_offset = 0
     # print(f'{jobs = } {channel_output_offset = } {nfeatures_per_channel = } DEBUG \n {107 + np.hstack([[0],nfeatures_cumsum[:-1]]) = }')
     # print(f'{row_chunk_indices = } {col_chunk_indices = } DBEUG')
     for c in channel_list:
@@ -1336,7 +1341,9 @@ def run_cuda_fastlbp(
                 jobs.loc[jobs_idx[c, :, chunk_i, chunk_j], "output_offset"] = channel_output_offset + np.hstack(
                     [[0], nfeatures_cumsum[:-1]]
                 )
+                jobs.loc[jobs_idx[c, :, chunk_i, chunk_j], "raw_output_dimension"] = raw_features_channel_output_offset + nraw_features_cumsum
         channel_output_offset += nfeatures_per_channel
+        raw_features_channel_output_offset += nraw_features_per_channel # 1 layer per each channel
 
     for idx_rr, rr in enumerate(radii_list):
         jobs.loc[jobs_idx[:, rr, :, :], "radius"] = rr
@@ -1389,9 +1396,12 @@ def run_cuda_fastlbp(
         jobs["tmp_fpath_pixel"] = ""
 
     total_nfeatures = nfeatures_per_channel * len(channel_list)
+    total_raw_nfeatures = len(npoints_list) * len(channel_list)
     chunk_features_shape = (n_chunk_rows, n_chunk_rows, total_nfeatures)
     patch_features_shape = (nprows, npcols, total_nfeatures)
+    raw_features_shape = (h, w, total_raw_nfeatures)
     jobs["total_nfeatures"] = total_nfeatures
+    jobs["total_raw_nfeatures"] = total_raw_nfeatures
 
     # Prepare contiguous array.
     # Channels will go first. Then h and w.
@@ -1440,8 +1450,18 @@ def run_cuda_fastlbp(
     patch_features_shm = shared_memory.SharedMemory(
         create=True, size=(int(np.prod(patch_features_shape)) * np.dtype(_features_dtype).itemsize)
     )
+
+    raw_features_shm = shared_memory.SharedMemory(
+        create=True, 
+        size=(int(np.prod(raw_features_shape)) * np.dtype(_raw_features_dtype).itemsize)
+    )
+
     patch_features = np.ndarray(patch_features_shape, _features_dtype, buffer=patch_features_shm.buf)
     patch_features.fill(0)
+
+    raw_features = np.ndarray(raw_features_shape, _raw_features_dtype, buffer=raw_features_shm.buf)
+    raw_features.fill(0)
+
     log.info(f"run_cuda_fastlbp({pipeline_hash}): shared memory created")
 
     jobs["img_shm_name"] = input_img_shm.name
@@ -1452,6 +1472,7 @@ def run_cuda_fastlbp(
     jobs["img_shape_1"] = input_img_np.shape[1]  # h
     jobs["img_shape_2"] = input_img_np.shape[2]  # w
     jobs["output_shm_name"] = patch_features_shm.name
+    jobs["raw_output_shm_name"] = raw_features_shm.name
 
     # Sort jobs starting from the longest ones, i.e. from larger radii to smaller ones.
     # `level=1` values are radii
@@ -1483,6 +1504,7 @@ def run_cuda_fastlbp(
 
     # save results
     lbp_result = None
+    raw_lbp_result = raw_features.copy() # DEBUG
     if savefile:
         np.save(output_fpath, patch_features)
     else:
@@ -1492,6 +1514,8 @@ def run_cuda_fastlbp(
     input_img_shm.close()
     patch_features_shm.unlink()
     patch_features_shm.close()
+    raw_features_shm.unlink()
+    raw_features_shm.close()
 
     # if img_mask_shm is not None:
     #     img_mask_shm.unlink()
@@ -1505,6 +1529,6 @@ def run_cuda_fastlbp(
     log.setLevel(DEFAULT_LEVEL)
 
     if savefile:
-        return FastlbpResult(output_abspath, patch_mask)
+        return FastlbpResult(output_abspath, patch_mask), raw_lbp_result
     else:
-        return lbp_result
+        return lbp_result, raw_lbp_result

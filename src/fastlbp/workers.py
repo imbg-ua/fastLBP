@@ -17,7 +17,7 @@ try:
 except Exception:
     _HAS_CUDA_EXT = False
 
-from .common import _features_dtype
+from .common import _features_dtype, _raw_features_dtype
 from .lbp import (
     uniform_lbp_uint8,
     uniform_lbp_uint8_masked,
@@ -683,7 +683,9 @@ def __cuda_worker_fastlbp(df_row_args):
         # TODO: add support for arbitrary number of axes
         shape = job["img_shape_0"], job["img_shape_1"], job["img_shape_2"]
         total_nfeatures = job["total_nfeatures"]
+        total_raw_nfeatures = job["total_raw_nfeatures"]
         output_offset = job["output_offset"]
+        raw_output_dimension = job["raw_output_dimension"]
 
         patchsize = job["patchsize"]
         chunksize = job["chunksize"]
@@ -728,8 +730,10 @@ def __cuda_worker_fastlbp(df_row_args):
 
         # Obtain output memory
         output_shm = shared_memory.SharedMemory(name=job["output_shm_name"])
+        raw_output_shm = shared_memory.SharedMemory(name=job["raw_output_shm_name"])
 
         all_histograms = np.ndarray((nprows, npcols, total_nfeatures), dtype=_features_dtype, buffer=output_shm.buf)
+        all_raw_features = np.ndarray((h, w, total_raw_nfeatures), dtype=_raw_features_dtype, buffer=raw_output_shm.buf)
 
         # each job processes only one chunk
 
@@ -741,8 +745,17 @@ def __cuda_worker_fastlbp(df_row_args):
             :,
         ]
 
+        chunk_raw_features = all_raw_features[
+                (chunk_row_in_pixels - padding_top) : (chunk_row_in_pixels + chunk_dim_0 + padding_bottom),
+                (chunk_col_in_pixels - padding_left) : (chunk_col_in_pixels + chunk_dim_1 + padding_right),
+                :
+        ]
+
+        # print(f'{all_raw_features.shape = } {chunk_raw_features.shape = }') DEBUG
+
         # get features for the current chunk
         job_chunk_histogram = chunk_histograms[..., output_offset : (output_offset + job_nfeatures)]
+        job_chunk_raw_features = chunk_raw_features[..., raw_output_dimension]
 
         # Try to use cached data
         cached_result_mm = None
@@ -856,6 +869,8 @@ def __cuda_worker_fastlbp(df_row_args):
                 padding_right,
             )
 
+            # print(f'{img_channel_chunk_not_contiguous.shape = } {(chunk_dim_0, chunk_dim_1) = }') DEBUG
+
             # TODO: DEBUG:
             # not sure if this is true for the chunk only
 
@@ -897,6 +912,8 @@ def __cuda_worker_fastlbp(df_row_args):
             img_data_shm.close()
 
             # group lbp results in the chunk patch-wise
+            # print(f'{job_chunk_raw_features.shape = } {lbp_results.shape = } {(padding_top, padding_bottom, padding_left, padding_right) = }') DEBUG
+            np.copyto(job_chunk_raw_features, lbp_results)
 
             # compute histograms for patches inside the current chunk
             for patch_i in range(chunk_dim_0_patches):
