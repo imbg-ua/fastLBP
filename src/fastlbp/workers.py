@@ -554,8 +554,10 @@ def __single_patch_fastlbp_worker(df_row_args):
 
     pid = os.getpid()
     jobname = job["label"]
-    log.info(f"run_patched_fastlbp: worker {pid}: starting job {jobname}")
 
+    return_raw_features = job["return_raw_features"]
+
+    log.info(f"run_patched_fastlbp: worker {pid}: starting job {jobname}")
     try:
         t0 = time.perf_counter()
 
@@ -662,7 +664,10 @@ def __single_patch_fastlbp_worker(df_row_args):
         log.error(f"run_patched_fastlbp: worker {jobname}({pid}): exception! Aborting execution.")
         log.error(e, exc_info=True)
 
-    return lbp_results, img_padded_patch_to_return
+    if return_raw_features:
+        return lbp_results
+    else:
+        return 0
 
 
 def __cuda_worker_fastlbp(df_row_args):
@@ -730,10 +735,19 @@ def __cuda_worker_fastlbp(df_row_args):
 
         # Obtain output memory
         output_shm = shared_memory.SharedMemory(name=job["output_shm_name"])
-        raw_output_shm = shared_memory.SharedMemory(name=job["raw_output_shm_name"])
+
+        raw_output_shm = None
+        if job["raw_output_shm_name"] is not None:
+            raw_output_shm = shared_memory.SharedMemory(name=job["raw_output_shm_name"])
 
         all_histograms = np.ndarray((nprows, npcols, total_nfeatures), dtype=_features_dtype, buffer=output_shm.buf)
-        all_raw_features = np.ndarray((h, w, total_raw_nfeatures), dtype=_raw_features_dtype, buffer=raw_output_shm.buf)
+
+        if raw_output_shm is not None:
+            all_raw_features = np.ndarray(
+                (h, w, total_raw_nfeatures), dtype=_raw_features_dtype, buffer=raw_output_shm.buf
+            )
+        else:
+            all_raw_features = None
 
         # each job processes only one chunk
 
@@ -745,17 +759,23 @@ def __cuda_worker_fastlbp(df_row_args):
             :,
         ]
 
-        chunk_raw_features = all_raw_features[
+        chunk_raw_features = (
+            all_raw_features[
                 (chunk_row_in_pixels - padding_top) : (chunk_row_in_pixels + chunk_dim_0 + padding_bottom),
                 (chunk_col_in_pixels - padding_left) : (chunk_col_in_pixels + chunk_dim_1 + padding_right),
-                :
-        ]
+                :,
+            ]
+            if all_raw_features is not None
+            else None
+        )
 
         # print(f'{all_raw_features.shape = } {chunk_raw_features.shape = }') DEBUG
 
         # get features for the current chunk
         job_chunk_histogram = chunk_histograms[..., output_offset : (output_offset + job_nfeatures)]
-        job_chunk_raw_features = chunk_raw_features[..., raw_output_dimension]
+        job_chunk_raw_features = (
+            chunk_raw_features[..., raw_output_dimension] if chunk_raw_features is not None else None
+        )
 
         # Try to use cached data
         cached_result_mm = None
@@ -913,7 +933,8 @@ def __cuda_worker_fastlbp(df_row_args):
 
             # group lbp results in the chunk patch-wise
             # print(f'{job_chunk_raw_features.shape = } {lbp_results.shape = } {(padding_top, padding_bottom, padding_left, padding_right) = }') DEBUG
-            np.copyto(job_chunk_raw_features, lbp_results)
+            if job_chunk_raw_features is not None:
+                np.copyto(job_chunk_raw_features, lbp_results)
 
             # compute histograms for patches inside the current chunk
             for patch_i in range(chunk_dim_0_patches):
