@@ -96,16 +96,21 @@ class build_ext_with_cuda(build_ext):
         if cuda_cfg:
             os.makedirs("build/temp_cuda", exist_ok=True)
             print(f"building cuda module with {cuda_cfg =}")
-            subprocess.check_call([
-                cuda_cfg["nvcc"],
-                "-c",
-                "-O2",
-                "-Xcompiler", "-fPIC",
-                "-std=c++14",
-                "src/fastlbp/cuda/cuda/main.cu",
-                "-o", "build/temp_cuda/main.o",
-                "-I", cuda_cfg["include"]
-            ])
+            subprocess.check_call(
+                [
+                    cuda_cfg["nvcc"],
+                    "-c",
+                    "-O2",
+                    "-Xcompiler",
+                    "-fPIC",
+                    "-std=c++14",
+                    "src/fastlbp/cuda/cuda/main.cu",
+                    "-o",
+                    "build/temp_cuda/main.o",
+                    "-I",
+                    cuda_cfg["include"],
+                ]
+            )
 
             for ext in self.extensions:
                 if getattr(ext, "name", "").endswith("_gpu") or "cuda" in ext.name:
@@ -128,8 +133,6 @@ class build_ext_with_cuda(build_ext):
                     # Make sure CUDA runtime library is linked properly
                     if "cudart" not in ext.libraries:
                         ext.libraries.append("cudart")
-                    if "cuda" not in ext.libraries:
-                        ext.libraries.append("cuda")
 
         if not cuda_cfg:
             self.extensions = [e for e in self.extensions if getattr(e, "name", "") != "fastlbp._lbp_gpu"]
@@ -142,7 +145,7 @@ extensions = [
     Extension(
         "fastlbp._lbp_gpu",
         [f"src/fastlbp/cuda/_lbp_gpu{ext}"],
-        libraries=["cudart", "cuda"],
+        libraries=["cudart"],
         language="c++",
         include_dirs=[np.get_include()],
     ),
