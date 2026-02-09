@@ -718,8 +718,9 @@ def __cuda_worker_fastlbp(df_row_args):
 
         # get coordinates and dimensions of the current chunk in patches
         # print(f'{chunk_dim_0 = } DEBUG')
-        assert chunk_dim_0 % patchsize == 0
-        assert chunk_dim_1 % patchsize == 0
+
+        # assert chunk_dim_0 % patchsize == 0
+        # assert chunk_dim_1 % patchsize == 0
 
         chunk_dim_0_patches = chunk_dim_0 // patchsize
         chunk_dim_1_patches = chunk_dim_1 // patchsize

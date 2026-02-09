@@ -1309,24 +1309,28 @@ def run_cuda_fastlbp(
 
     if chunksize is None:
         chunksize = max(nprows, npcols)
+        n_chunk_rows, n_chunk_cols = 1, 1
+        row_chunk_indices, col_chunk_indices = [0], [0]
+        row_chunk_dims, col_chunk_dims = [h], [w]
 
-    # get chunk origins and shapes
-    n_chunk_rows = nprows // chunksize
-    n_chunk_cols = npcols // chunksize
-    row_chunk_indices, col_chunk_indices = np.arange(n_chunk_rows), np.arange(n_chunk_cols)
+    else:
+        # get chunk origins and shapes
+        n_chunk_rows = nprows // chunksize
+        n_chunk_cols = npcols // chunksize
+        row_chunk_indices, col_chunk_indices = np.arange(n_chunk_rows), np.arange(n_chunk_cols)
 
-    row_chunk_dims = np.full(n_chunk_rows, patchsize * chunksize)
-    col_chunk_dims = np.full(n_chunk_cols, patchsize * chunksize)
+        row_chunk_dims = np.full(n_chunk_rows, patchsize * chunksize)
+        col_chunk_dims = np.full(n_chunk_cols, patchsize * chunksize)
 
-    remaining_pixels_rows = (nprows % chunksize) * patchsize
-    if remaining_pixels_rows > 0:
-        row_chunk_indices = np.append(row_chunk_indices, [n_chunk_rows])
-        row_chunk_dims = np.append(row_chunk_dims, [remaining_pixels_rows])
+        remaining_pixels_rows = (nprows % chunksize) * patchsize
+        if remaining_pixels_rows > 0:
+            row_chunk_indices = np.append(row_chunk_indices, [n_chunk_rows])
+            row_chunk_dims = np.append(row_chunk_dims, [remaining_pixels_rows])
 
-    remaining_pixels_cols = (npcols % chunksize) * patchsize
-    if remaining_pixels_cols > 0:
-        col_chunk_indices = np.append(col_chunk_indices, [n_chunk_cols])
-        col_chunk_dims = np.append(col_chunk_dims, [remaining_pixels_cols])
+        remaining_pixels_cols = (npcols % chunksize) * patchsize
+        if remaining_pixels_cols > 0:
+            col_chunk_indices = np.append(col_chunk_indices, [n_chunk_cols])
+            col_chunk_dims = np.append(col_chunk_dims, [remaining_pixels_cols])
 
     assert len(row_chunk_indices) == len(row_chunk_dims)
     assert len(col_chunk_indices) == len(col_chunk_dims)
