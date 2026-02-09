@@ -311,7 +311,39 @@ def get_radii(n: int = 15) -> list[float]:
     The formula is `round(1.499*1.327**(float(x)))`.
     It was coined by Ben in his initial lbp pipeline.
     """
+    return get_radii_exp(n)
+
+
+def get_radii_exp(n: int = 15, a: float = 1.499, b: float = 1.327) -> list[float]:
+    """
+    Get a default exponential radii progression list.
+
+    The formula is `round(1.499*1.327**(float(x)))`.
+    It was coined by Ben in his initial lbp pipeline.
+    """
     radius_list = [round(1.499 * 1.327 ** (float(x))) for x in range(0, n)]
+    return radius_list
+
+
+def get_radii_linear(n: int = 15, a: float = 1, b: float = 1) -> list[float]:
+    """
+    Get a standard sequence of radii.
+
+    The formula is `round(1.499*1.327**(float(x)))`.
+    It was coined by Ben in his initial lbp pipeline.
+    """
+    radius_list = [round(a + b * float(x)) for x in range(0, n)]
+    return radius_list
+
+
+def get_radii_power(n: int = 15, a: float = 1, b: float = 1, c: float = 2) -> list[float]:
+    """
+    Get a standard sequence of radii.
+
+    The formula is `round(1.499*1.327**(float(x)))`.
+    It was coined by Ben in his initial lbp pipeline.
+    """
+    radius_list = [round(a + b * float(x) ** c) for x in range(0, n)]
     return radius_list
 
 
@@ -1215,7 +1247,6 @@ def run_cuda_fastlbp(
         "fastlbp-cuda",
         [
             str(img_data.shape),
-            patchsize,
             chunksize,
             "mask" if img_mask is not None else "no_mask",
             mask_method if img_mask is not None else "",
