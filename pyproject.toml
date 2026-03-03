@@ -7,15 +7,23 @@ authors = [
 maintainers = [
   { name="Dmytro Horyslavets", email="nepotlet@gmail.com" }
 ]
-description = "Parallel multiradial LBP features"
-keywords = ["lbp", "texture", "features", "image processing", "parallel"]
+description = "fastLBP: parallelised and GPU-powered multi-radii Local Binary Patterns computation"
+keywords = ["local binary patterns", "visual descriptor", "computer vision", "image processing", "parallel"]
 readme = "README.md"
-requires-python = ">=3.11"
+requires-python = ">=3.11, <3.14"
 classifiers = [
-  "Programming Language :: Python :: 3",
-  "License :: OSI Approved :: MIT License",
-  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Development Status :: 4 - Beta",
+  "Operating System :: POSIX",
+  "Operating System :: POSIX :: Linux",
+  "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
+  "Topic :: Scientific/Engineering :: Image Processing",
+  "Topic :: Scientific/Engineering :: Bio-Informatics"
 ]
+
 dependencies = [
   "wheel",
   "scikit-image>=0.22.0",
