@@ -594,6 +594,8 @@ def run_fastlbp(
     # create shared memory for input image
     input_img_shm = shared_memory.SharedMemory(create=True, size=img_data.nbytes)
 
+    shm_segments_to_cleanup = [input_img_shm]
+
     # copy image to shared memory
     input_img_np = np.ndarray(img_data.shape, img_data.dtype, input_img_shm.buf)
     np.copyto(input_img_np, img_data, casting="no")
@@ -609,11 +611,17 @@ def run_fastlbp(
 
     if patch_mask_shm_result is not None:
         patch_mask, patch_mask_shm = patch_mask_shm_result
+        shm_segments_to_cleanup.append(patch_mask_shm)
 
     # create and initialize shared memory for output
     patch_features_shm = shared_memory.SharedMemory(
         create=True, size=(int(np.prod(patch_features_shape)) * np.dtype(_features_dtype).itemsize)
     )
+
+    shm_segments_to_cleanup.append(patch_features_shm)
+
+    __register_cleanup(log, shm_segments_to_cleanup)
+
     patch_features = np.ndarray(patch_features_shape, _features_dtype, buffer=patch_features_shm.buf)
 
     patch_features.fill(0)
@@ -1469,6 +1477,8 @@ def run_cuda_fastlbp(
     # create shared memory for input image
     input_img_shm = shared_memory.SharedMemory(create=True, size=img_data.nbytes)
 
+    shm_segments_to_cleanup = [input_img_shm]
+
     # copy image to shared memory
     input_img_np = np.ndarray(img_data.shape, img_data.dtype, input_img_shm.buf)
     np.copyto(input_img_np, img_data, casting="no")
@@ -1504,10 +1514,15 @@ def run_cuda_fastlbp(
 
         log.info(f"run_cuda_fastlbp({pipeline_hash}): created shared memory for patch mask.")
 
+    if patch_mask_shm:
+        shm_segments_to_cleanup.append(patch_mask_shm)
+
     # create and initialize shared memory for output
     patch_features_shm = shared_memory.SharedMemory(
         create=True, size=(int(np.prod(patch_features_shape)) * np.dtype(_features_dtype).itemsize)
     )
+
+    shm_segments_to_cleanup.append(patch_features_shm)
 
     patch_features = np.ndarray(patch_features_shape, _features_dtype, buffer=patch_features_shm.buf)
     patch_features.fill(0)
@@ -1518,8 +1533,11 @@ def run_cuda_fastlbp(
         raw_features_shm = shared_memory.SharedMemory(
             create=True, size=(int(np.prod(raw_features_shape)) * np.dtype(_raw_features_dtype).itemsize)
         )
+        shm_segments_to_cleanup.append(raw_features_shm)
         raw_features = np.ndarray(raw_features_shape, _raw_features_dtype, buffer=raw_features_shm.buf)
         raw_features.fill(0)
+
+    __register_cleanup(log, shm_segments_to_cleanup)
 
     log.info(f"run_cuda_fastlbp({pipeline_hash}): shared memory created")
 
