@@ -321,7 +321,7 @@ def get_radii_exp(n: int = 15, a: float = 1.499, b: float = 1.327) -> list[float
     The formula is `round(1.499*1.327**(float(x)))`.
     It was coined by Ben in his initial lbp pipeline.
     """
-    radius_list = [round(1.499 * 1.327 ** (float(x))) for x in range(0, n)]
+    radius_list = [round(a * b ** (float(x))) for x in range(0, n)]
     return radius_list
 
 
