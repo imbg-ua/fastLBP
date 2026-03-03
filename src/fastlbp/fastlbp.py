@@ -1,3 +1,4 @@
+import atexit
 import logging
 import os
 import time
@@ -12,7 +13,7 @@ from numpy.typing import ArrayLike, NDArray
 from pandas import DataFrame
 
 from .common import _features_dtype
-from .utils import int_verbosity_to_logger_level, patchify_image_mask
+from .utils import int_verbosity_to_logger_level, patchify_image_mask, cleanup_shared_memory
 from .workers import (
     __chunked_worker_fastlbp,
     __single_patch_fastlbp_worker,
@@ -28,6 +29,9 @@ log.setLevel(DEFAULT_LEVEL)
 
 #####
 # MISC ROUTINES FOR INTERNAL USAGE
+
+def __register_cleanup(log, shm_segments):
+    atexit.register(cleanup_shared_memory, log, shm_segments)
 
 
 def __create_pipeline_hash(method_name, *pipeline_params):
@@ -898,6 +902,8 @@ def run_chunked_fastlbp(
     # create shared memory for input image
     input_img_shm = shared_memory.SharedMemory(create=True, size=img_data.nbytes)
 
+    shm_segments_to_cleanup = [input_img_shm]
+
     # copy image to shared memory
     input_img_np = np.ndarray(img_data.shape, img_data.dtype, input_img_shm.buf)
     np.copyto(input_img_np, img_data, casting="no")
@@ -918,6 +924,11 @@ def run_chunked_fastlbp(
     patch_features_shm = shared_memory.SharedMemory(
         create=True, size=(int(np.prod(patch_features_shape)) * np.dtype(_features_dtype).itemsize)
     )
+
+    shm_segments_to_cleanup.append(patch_features_shm)
+
+    __register_cleanup(log, shm_segments_to_cleanup)
+
     patch_features = np.ndarray(patch_features_shape, _features_dtype, buffer=patch_features_shm.buf)
     patch_features.fill(0)
     log.info(f"run_chunked_fastlbp({pipeline_hash}): shared memory created")

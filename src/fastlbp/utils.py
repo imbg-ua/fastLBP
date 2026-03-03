@@ -426,3 +426,20 @@ def get_all_reduced_features_details(
                     features.append(ReducedFeatureDetails(nc, r, p, reduced_feat_names[i], feature_number, label))
                     feature_number += 1
     return features
+
+
+# cleanup upon exit
+def cleanup_shared_memory(log, shm_segments):
+    """Iterates through and unlinks all registered shared memory regions."""
+    log.debug(f"Unlinking shared memory segments")
+    for shm in shm_segments:
+        try:
+            shm.close()   # Always close before unlinking
+            shm.unlink()  # Removes the name from the system
+            log.debug(f"Unlinked: {shm.name}")
+        except FileNotFoundError:
+            log.debug(f"Error: {shm.name}")
+            pass
+        except Exception as e:
+            log.debug(f"Error during cleanup: {e}")
+            pass
