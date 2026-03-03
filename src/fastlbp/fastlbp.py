@@ -919,6 +919,7 @@ def run_chunked_fastlbp(
 
     if patch_mask_shm_result is not None:
         patch_mask, patch_mask_shm = patch_mask_shm_result
+        shm_segments_to_cleanup.append(patch_mask_shm)
 
     # create and initialize shared memory for output
     patch_features_shm = shared_memory.SharedMemory(
