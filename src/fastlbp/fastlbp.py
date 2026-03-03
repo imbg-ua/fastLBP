@@ -13,7 +13,11 @@ from numpy.typing import ArrayLike, NDArray
 from pandas import DataFrame
 
 from .common import _features_dtype
-from .utils import int_verbosity_to_logger_level, patchify_image_mask, cleanup_shared_memory
+from .utils import (
+    cleanup_shared_memory,
+    int_verbosity_to_logger_level,
+    patchify_image_mask,
+)
 from .workers import (
     __chunked_worker_fastlbp,
     __single_patch_fastlbp_worker,
@@ -29,6 +33,7 @@ log.setLevel(DEFAULT_LEVEL)
 
 #####
 # MISC ROUTINES FOR INTERNAL USAGE
+
 
 def __register_cleanup(log, shm_segments):
     atexit.register(cleanup_shared_memory, log, shm_segments)

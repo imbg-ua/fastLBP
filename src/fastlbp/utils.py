@@ -434,7 +434,7 @@ def cleanup_shared_memory(log, shm_segments):
     log.debug(f"Unlinking shared memory segments")
     for shm in shm_segments:
         try:
-            shm.close()   # Always close before unlinking
+            shm.close()  # Always close before unlinking
             shm.unlink()  # Removes the name from the system
             log.debug(f"Unlinked: {shm.name}")
         except FileNotFoundError:
