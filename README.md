@@ -1,3 +1,9 @@
+[![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-darkgreen)](https://github.com/imbg-ua/fastLBP/blob/main/LICENSE)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/fastlbp)
+![PyPI - Status](https://img.shields.io/pypi/status/fastlbp)
+![GitHub release](https://img.shields.io/github/v/release/imbg-ua/fastLBP)
+[![PyPI](https://img.shields.io/pypi/v/fastlbp)](https://pypi.org/project/fastlbp)
+
 # fastLBP
 
 Highly parallel LBP implementation
